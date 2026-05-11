@@ -232,38 +232,23 @@ export default function WestKilimanjaroPage() {
                                 <CardContent className="pt-8 space-y-6">
                                     <div>
                                         <p className="text-sm text-muted-foreground font-medium uppercase tracking-wider mb-1">
-                                            Starting From
+                                            Bespoke Day Hike
                                         </p>
                                         <div className="flex items-baseline gap-1">
-                                            <span className="text-4xl font-bold font-serif text-primary">
-                                                $240
+                                            <span className="text-3xl font-bold font-serif text-primary">
+                                                Private Expedition
                                             </span>
-                                            <span className="text-muted-foreground">/ person</span>
                                         </div>
                                     </div>
 
                                     <div className="space-y-3 pt-4 border-t border-dashed">
-                                        <h4 className="font-semibold text-sm uppercase tracking-wide">Group Pricing</h4>
-                                        {[
-                                            { pax: "Solo / 1 person", price: "$327-$453" },
-                                            { pax: "2 people", price: "$285-$345 each" },
-                                            { pax: "3-4 people", price: "$250-$285 each" },
-                                            { pax: "5+ people", price: "$240-$250 each" }
-                                        ].map((price, i) => (
-                                            <div key={i} className="flex justify-between text-sm">
-                                                <span className="font-medium text-foreground">{price.pax}</span>
-                                                <span className="font-bold text-primary">{price.price}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-md flex items-start gap-3 text-sm text-blue-700 dark:text-blue-300">
-                                        <AlertTriangle size={18} className="shrink-0 mt-0.5" />
-                                        <p>Prices vary by group size. Larger groups enjoy better rates. Contact us for exact pricing.</p>
+                                        <p className="text-sm text-muted-foreground leading-relaxed">
+                                            Every West Kilimanjaro day hike is customized to your group size and preferences. Contact us for a personalized itinerary and quote.
+                                        </p>
                                     </div>
 
                                     <Button size="lg" className="w-full text-lg font-semibold py-6" asChild>
-                                        <Link href="/request-quote">Request a Quote</Link>
+                                        <Link href="/request-quote">Enquire Now</Link>
                                     </Button>
                                 </CardContent>
                             </Card>

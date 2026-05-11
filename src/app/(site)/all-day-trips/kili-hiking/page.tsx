@@ -13,15 +13,9 @@ const dayTrips = [
         difficulty: "Moderate",
         icon: Mountain,
         description: "Hike from Marangu Gate through rainforest to Mandara Hut. Optional visit to Maundi Crater for panoramic views.",
-        pricing: [
-            { pax: "Solo traveler", price: "$220-$250" },
-            { pax: "2 people", price: "$180-$215 each" },
-            { pax: "3 people", price: "$160-$190 each" },
-            { pax: "4+ people", price: "$140-$180 each" }
-        ],
-        includes: ["Transport from Moshi", "English-speaking guide", "Park entry fees", "Packed lunch", "Drinking water"],
-        excludes: ["Tips for guides/crew"],
-        highlights: ["Rainforest wildlife", "Mandara Hut", "Maundi Crater views", "Taste of Kilimanjaro"]
+        highlights: ["Rainforest wildlife", "Mandara Hut", "Maundi Crater views", "Taste of Kilimanjaro"],
+        includes: ["Park fees", "English-speaking guide", "Transport from Moshi", "Packed lunch & water"],
+        excludes: ["Personal equipment", "Gratuities", "Travel insurance"]
     },
     {
         name: "Materuni Waterfalls + Hot Springs",
@@ -31,12 +25,9 @@ const dayTrips = [
         difficulty: "Easy-Moderate",
         icon: Waves,
         description: "Visit Materuni Village for a scenic waterfall hike and coffee experience, then relax at Kikuletwa (Chemka) Hot Springs.",
-        pricing: [
-            { pax: "Per person", price: "$140" }
-        ],
-        includes: ["Transport from Moshi", "Local guide", "Waterfall hike", "Coffee tour & tasting", "Local lunch", "Hot springs swim"],
-        excludes: ["Tips for guides", "Personal expenses"],
-        highlights: ["Materuni Waterfalls", "Coffee plantation tour", "Cultural experience", "Natural hot springs"]
+        highlights: ["Materuni Waterfalls", "Coffee plantation tour", "Cultural experience", "Natural hot springs"],
+        includes: ["Transport from Moshi", "English-speaking guide", "Village fees", "Lunch & water"],
+        excludes: ["Personal gear", "Gratuities", "Travel insurance"]
     },
     {
         name: "Materuni Waterfall + Coffee Tour",
@@ -46,12 +37,9 @@ const dayTrips = [
         difficulty: "Easy",
         icon: Coffee,
         description: "Simpler day trip focusing on Materuni Waterfall and traditional coffee tasting without the hot springs.",
-        pricing: [
-            { pax: "Per person", price: "$50-$80" }
-        ],
-        includes: ["Transport from Moshi", "Local guide", "Waterfall hike", "Coffee tour & tasting", "Local lunch"],
-        excludes: ["Tips for guides", "Hot springs visit"],
-        highlights: ["Scenic waterfall", "Traditional coffee roasting", "Chagga culture", "Budget-friendly"]
+        highlights: ["Scenic waterfall", "Traditional coffee roasting", "Chagga culture", "Budget-friendly"],
+        includes: ["Transport from Moshi", "Guide", "Village entry fee", "Coffee tasting"],
+        excludes: ["Lunch (on own)", "Gratuities", "Travel insurance"]
     },
     {
         name: "Lake Chala Day Trip",
@@ -61,12 +49,9 @@ const dayTrips = [
         difficulty: "Easy-Moderate",
         icon: Camera,
         description: "Visit the stunning crater lake on the Tanzania-Kenya border. Great for views, photos, short walks, and optional kayaking.",
-        pricing: [
-            { pax: "Per person", price: "$150" }
-        ],
-        includes: ["Transport from Moshi", "Guide", "Entry fees", "Packed lunch", "Drinking water"],
-        excludes: ["Kayaking fees (optional)", "Tips for guides"],
-        highlights: ["Crater lake views", "Tanzania-Kenya border", "Photography", "Swimming/kayaking options"]
+        highlights: ["Crater lake views", "Tanzania-Kenya border", "Photography", "Swimming/kayaking options"],
+        includes: ["Transport from Moshi", "Guide", "Lake entry fee", "Packed lunch & water"],
+        excludes: ["Kayak hire (optional)", "Gratuities", "Travel insurance"]
     }
 ];
 
@@ -138,21 +123,7 @@ export default function KiliHikingPage() {
                                         </div>
                                     </div>
 
-                                    {/* Pricing */}
-                                    <div className="border-t pt-4">
-                                        <h4 className="font-semibold mb-3 flex items-center gap-2">
-                                            <DollarSign size={16} className="text-primary" />
-                                            Pricing
-                                        </h4>
-                                        <div className="space-y-2">
-                                            {trip.pricing.map((price, idx) => (
-                                                <div key={idx} className="flex justify-between text-sm">
-                                                    <span className="text-muted-foreground">{price.pax}</span>
-                                                    <span className="font-bold text-primary">{price.price}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
+
 
                                     {/* Includes/Excludes */}
                                     <div className="grid grid-cols-1 gap-4 text-sm">
@@ -194,14 +165,7 @@ export default function KiliHikingPage() {
                 <div className="container max-w-4xl mx-auto px-4">
                     <h3 className="text-2xl font-serif font-bold mb-6 text-center">Important Information</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <Card>
-                            <CardContent className="pt-6">
-                                <h4 className="font-semibold mb-3">Group Discounts</h4>
-                                <p className="text-sm text-muted-foreground">
-                                    Larger groups enjoy better per-person rates. Contact us for custom group pricing for 10+ people.
-                                </p>
-                            </CardContent>
-                        </Card>
+
                         <Card>
                             <CardContent className="pt-6">
                                 <h4 className="font-semibold mb-3">Tipping Guidelines</h4>

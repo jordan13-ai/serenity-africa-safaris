@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Users, Home, Music, Heart } from "lucide-react";
 
 const tours = [
-    { icon: Users, name: "Maasai Village Visit", price: "$100", desc: "Spend a day with Maasai warriors, learn traditional dances, visit homesteads" },
-    { icon: Home, name: "Hadzabe Tribe Experience", price: "$150", desc: "Join hunter-gatherers, learn ancient hunting, make fire traditionally" },
-    { icon: Music, name: "Chagga Cultural Tour", price: "$80", desc: "Visit Chagga villages, learn coffee cultivation, enjoy local meals" }
+    { icon: Users, name: "Maasai Village Visit", desc: "Spend a day with Maasai warriors, learn traditional dances, visit homesteads" },
+    { icon: Home, name: "Hadzabe Tribe Experience", desc: "Join hunter-gatherers, learn ancient hunting, make fire traditionally" },
+    { icon: Music, name: "Chagga Cultural Tour", desc: "Visit Chagga villages, learn coffee cultivation, enjoy local meals" }
 ];
 
 export default function CulturalToursPage() {
@@ -36,9 +36,7 @@ export default function CulturalToursPage() {
                                     </div>
                                     <h3 className="font-bold text-xl mb-2 text-center">{tour.name}</h3>
                                     <p className="text-sm text-muted-foreground text-center mb-4">{tour.desc}</p>
-                                    <div className="text-center mb-4">
-                                        <span className="text-2xl font-bold text-primary">{tour.price}</span>
-                                    </div>
+
                                     <Button className="w-full" asChild><Link href="/contact">Book Tour</Link></Button>
                                 </CardContent>
                             </Card>

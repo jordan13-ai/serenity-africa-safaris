@@ -1,5 +1,5 @@
 // Comprehensive Kilimanjaro Routes Data
-// Tanzania Wisdom Safaris
+// Serenity Africa Safaris
 
 export interface DayItinerary {
     day: number;
@@ -26,12 +26,12 @@ export interface RouteData {
     bestFor: string[];
     highlights: string[];
     itinerary: DayItinerary[];
-    pricing: { pax: string; price: string }[];
     accommodation: string;
     meals: string;
     bestTime: string;
     packingEssentials: string[];
     faqs: { question: string; answer: string }[];
+    pricing?: { pax: string; price: string }[];
 }
 
 export const routesData: Record<string, RouteData> = {
@@ -140,13 +140,6 @@ export const routesData: Record<string, RouteData> = {
                 terrain: "Rainforest - muddy, steep descent",
                 meals: "Breakfast, Lunch"
             }
-        ],
-        pricing: [
-            { pax: "1 Person", price: "$2,650" },
-            { pax: "2 People", price: "$2,400 pp" },
-            { pax: "3-4 People", price: "$2,250 pp" },
-            { pax: "5-6 People", price: "$2,150 pp" },
-            { pax: "7+ People", price: "$2,050 pp" }
         ],
         accommodation: "Mountain tents (2-person tents for single occupancy)",
         meals: "3 meals daily - breakfast, lunch, dinner. Vegetarian and special diets accommodated.",
@@ -276,10 +269,6 @@ export const routesData: Record<string, RouteData> = {
                 meals: "Breakfast, Lunch"
             }
         ],
-        pricing: [
-            { pax: "1-5 People", price: "$2,200 pp" },
-            { pax: "5-10 People", price: "$1,850 pp" }
-        ],
         accommodation: "Mountain tents (2-person tents for single occupancy)",
         meals: "3 meals daily. Hot breakfast, packed lunch, 3-course dinner. Vegetarian options available.",
         bestTime: "January-March and June-October. Avoid April-May (heavy rains).",
@@ -398,10 +387,6 @@ export const routesData: Record<string, RouteData> = {
                 terrain: "Moorland and rainforest - long descent",
                 meals: "Breakfast, Lunch"
             }
-        ],
-        pricing: [
-            { pax: "1-5 People", price: "$1,750 pp" },
-            { pax: "5-10 People", price: "$1,550 pp" }
         ],
         accommodation: "Mountain huts with bunk beds (4-6 beds per room). Shared dining halls and bathrooms. Bring sleeping bag.",
         meals: "3 meals daily in dining halls. Hot breakfast, packed lunch, 3-course dinner.",
@@ -533,10 +518,6 @@ export const routesData: Record<string, RouteData> = {
                 meals: "Breakfast, Lunch"
             }
         ],
-        pricing: [
-            { pax: "1-4 People", price: "$2,200 pp" },
-            { pax: "5-10 People", price: "$1,850 pp" }
-        ],
         accommodation: "Mountain tents (2-person tents for single occupancy). Kibo Hut on summit night.",
         meals: "3 meals daily. Hot breakfast, packed lunch, 3-course dinner.",
         bestTime: "Excellent year-round. Best choice during rainy season (April-May, November) as northern side is drier.",
@@ -657,13 +638,6 @@ export const routesData: Record<string, RouteData> = {
                 terrain: "Rainforest - muddy, steep descent",
                 meals: "Breakfast, Lunch"
             }
-        ],
-        pricing: [
-            { pax: "1 Person", price: "$2,250" },
-            { pax: "2 People", price: "$2,000 pp" },
-            { pax: "3-4 People", price: "$1,850 pp" },
-            { pax: "5-6 People", price: "$1,750 pp" },
-            { pax: "7+ People", price: "$1,650 pp" }
         ],
         accommodation: "Mountain tents (2-person tents for single occupancy)",
         meals: "3 meals daily. Hot breakfast, packed lunch, 3-course dinner.",

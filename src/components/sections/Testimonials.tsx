@@ -3,22 +3,22 @@ import { Star } from "lucide-react";
 export function Testimonials() {
     const reviews = [
         {
-            name: "Sarah Jenkins, UK",
+            name: "Sarah & Daniel",
             rating: 5,
-            text: "Climbing Kilimanjaro was the hardest thing I've ever done, but the team at Tanzania Wisdom made it possible. The guides were incredible!",
-            trip: "7-Day Machame Route"
+            text: "Our safari experience with Serenity Africa Safaris exceeded every expectation. The guides were incredible, the accommodations were luxurious, and every day felt unforgettable.",
+            trip: "Luxury Safari"
         },
         {
-            name: "Michael & Emily, USA",
+            name: "Michael T.",
             rating: 5,
-            text: "Our honeymoon safari was pure magic. From the luxury tented camps to seeing the Big Five on day one. Flawless organization.",
-            trip: "Luxury Honeymoon Safari"
+            text: "From the Serengeti to Zanzibar, everything was perfectly organized. The team made us feel comfortable and cared for throughout the entire journey.",
+            trip: "Tanzania Safari & Zanzibar"
         },
         {
-            name: "David Chen, Singapore",
+            name: "Emma & James",
             rating: 5,
-            text: "I appreciated the sustainable approach. Knowing my trip supported local porters and conservation made the experience even better.",
-            trip: "5-Day Safari"
+            text: "The best safari experience we have ever had. Amazing wildlife, beautiful camps, and exceptional service from start to finish.",
+            trip: "Honeymoon Safari"
         }
     ];
 

@@ -1,12 +1,14 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import "../../node_modules/tailwindcss/index.css";
+@import "../../node_modules/tw-animate-css/dist/tw-animate.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-poppins);
+  --font-sans: 'Poppins', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+  --font-great-vibes: 'Great Vibes', cursive;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   
   --color-sidebar-ring: var(--sidebar-ring);
@@ -51,99 +53,98 @@
 :root {
   --radius: 0.5rem;
   
-  /* Brand Colors (OKLCH) */
-  /* Background: Off-White #F9F9F7 -> oklch(0.98 0.005 90) */
-  --background: oklch(0.98 0.005 90);
-  
-  /* Foreground: Midnight #0F1A27 -> oklch(0.18 0.04 260) */
-  --foreground: oklch(0.18 0.04 260);
+  /* Boutique Luxury Palette (Hex) */
+  /* Background: Warm Sand #F5F2ED */
+  --background: #F5F2ED;
+  --foreground: #1A1A1A;
 
-  /* Card: White #FFFFFF -> oklch(1 0 0) */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.04 260);
+  /* Card: Light Sand #F9F7F4 */
+  --card: #F9F7F4;
+  --card-foreground: #1A1A1A;
 
   /* Popover: White */
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.04 260);
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
 
-  /* Primary: Safari Gold #E4BC6E -> oklch(0.8 0.12 85) */
-  --primary: oklch(0.8 0.12 85);
-  --primary-foreground: oklch(0.18 0.04 260); /* Midnight Text on Gold */
+  /* Primary: Champagne Gold #C5A059 */
+  --primary: #C5A059;
+  --primary-foreground: #FFFFFF;
 
-  /* Secondary: Midnight Button #0F1A27 */
-  --secondary: oklch(0.18 0.04 260);
-  --secondary-foreground: oklch(1 0 0); /* White Text */
+  /* Secondary: Deep Charcoal #1A1A1A */
+  --secondary: #1A1A1A;
+  --secondary-foreground: #F5F2ED;
 
-  /* Muted: Light Gray #EAEAEA -> oklch(0.93 0 0) */
-  --muted: oklch(0.93 0 0);
-  --muted-foreground: oklch(0.45 0 0);
+  /* Muted: Soft Gray-Sand */
+  --muted: #EBE8E3;
+  --muted-foreground: #737373;
 
-  /* Accent: Terra Cotta #DB8758 -> oklch(0.65 0.15 45) */
-  --accent: oklch(0.65 0.15 45);
-  --accent-foreground: oklch(1 0 0); /* White Text */
+  /* Accent: Muted Gold */
+  --accent: #E5DCC5;
+  --accent-foreground: #C5A059;
 
-  /* Destructive: Deep Red #B13D14 -> oklch(0.45 0.2 30) */
-  --destructive: oklch(0.45 0.2 30);
-  /* Success: WhatsApp Green #25D366 -> oklch(0.7 0.2 145) */
+  /* Destructive: Deep Red */
+  --destructive: #EF4444;
   
-  --border: oklch(0.85 0 0); /* #CCCCCC */
-  --input: oklch(0.85 0 0);
-  --ring: oklch(0.8 0.12 85); /* Gold Ring */
+  --border: #E2E0DB;
+  --input: #E2E0DB;
+  --ring: #C5A059;
 
   /* Charts - Keeping default or mapping to brand */
   --chart-1: oklch(0.8 0.12 85); /* Gold */
-  --chart-2: oklch(0.18 0.04 260); /* Midnight */
-  --chart-3: oklch(0.65 0.15 45); /* Terra Cotta */
-  --chart-4: oklch(0.7 0.2 145); /* Green */
-  --chart-5: oklch(0.6 0.1 240); /* Blue */
+  /* Charts */
+  --chart-1: #C5A059;
+  --chart-2: #1A1A1A;
+  --chart-3: #D27D2D;
+  --chart-4: #4A5D23;
+  --chart-5: #2D4A5D;
 
   /* Sidebar */
-  --sidebar: oklch(0.18 0.04 260); /* Deep Midnight */
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.8 0.12 85); /* Gold */
-  --sidebar-primary-foreground: oklch(0.18 0.04 260);
-  --sidebar-accent: oklch(0.25 0.04 260); /* Lighter Midnight */
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.25 0.04 260);
-  --sidebar-ring: oklch(0.8 0.12 85);
+  --sidebar: #1A1A1A;
+  --sidebar-foreground: #F5F2ED;
+  --sidebar-primary: #C5A059;
+  --sidebar-primary-foreground: #1A1A1A;
+  --sidebar-accent: #2D2422;
+  --sidebar-accent-foreground: #F5F2ED;
+  --sidebar-border: #2D2422;
+  --sidebar-ring: #C5A059;
 }
 
 .dark {
   /* Dark Mode: Deep Midnight Background */
-  --background: oklch(0.15 0.04 260);
-  --foreground: oklch(0.98 0 0);
+  --background: #111111;
+  --foreground: #F5F2ED;
 
-  --card: oklch(0.2 0.04 260); /* Just slightly lighter midnight */
-  --card-foreground: oklch(0.98 0 0);
+  --card: #1A1A1A;
+  --card-foreground: #F5F2ED;
 
-  --popover: oklch(0.2 0.04 260);
-  --popover-foreground: oklch(0.98 0 0);
+  --popover: #1A1A1A;
+  --popover-foreground: #F5F2ED;
 
-  --primary: oklch(0.8 0.12 85); /* Gold still works */
-  --primary-foreground: oklch(0.18 0.04 260);
+  --primary: #C5A059;
+  --primary-foreground: #111111;
 
-  --secondary: oklch(0.3 0.04 260); /* Lighter Midnight */
-  --secondary-foreground: oklch(0.98 0 0);
+  --secondary: #2D2422;
+  --secondary-foreground: #F5F2ED;
 
-  --muted: oklch(0.3 0.04 260);
-  --muted-foreground: oklch(0.7 0 0);
+  --muted: #2D2422;
+  --muted-foreground: #737373;
 
-  --accent: oklch(0.65 0.15 45);
-  --accent-foreground: oklch(0.98 0 0);
+  --accent: #D27D2D;
+  --accent-foreground: #F5F2ED;
 
-  --destructive: oklch(0.5 0.2 30);
-  --border: oklch(0.3 0.04 260);
-  --input: oklch(0.3 0.04 260);
-  --ring: oklch(0.8 0.12 85);
+  --destructive: #EF4444;
+  --border: #2D2422;
+  --input: #2D2422;
+  --ring: #C5A059;
   
-  --sidebar: oklch(0.12 0.04 260);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.8 0.12 85);
-  --sidebar-primary-foreground: oklch(0.18 0.04 260);
-  --sidebar-accent: oklch(0.2 0.04 260);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.2 0.04 260);
-  --sidebar-ring: oklch(0.8 0.12 85);
+  --sidebar: #0A0A0A;
+  --sidebar-foreground: #F5F2ED;
+  --sidebar-primary: #C5A059;
+  --sidebar-primary-foreground: #0A0A0A;
+  --sidebar-accent: #1A1A1A;
+  --sidebar-accent-foreground: #F5F2ED;
+  --sidebar-border: #1A1A1A;
+  --sidebar-ring: #C5A059;
 }
 
 @layer base {
@@ -152,5 +153,24 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .blog-content h2 {
+    @apply text-3xl font-serif text-[#1A1A1A] mb-6 mt-12;
+  }
+  .blog-content h3 {
+    @apply text-2xl font-serif text-[#1A1A1A] mb-4 mt-8;
+  }
+  .blog-content p {
+    @apply text-gray-500 leading-relaxed text-lg mb-8;
+  }
+  .blog-content ul {
+    @apply list-disc list-inside mb-8 space-y-2 text-gray-500;
+  }
+  .blog-content li {
+    @apply ml-4;
+  }
+  .blog-content strong {
+    @apply font-bold text-[#1A1A1A];
   }
 }

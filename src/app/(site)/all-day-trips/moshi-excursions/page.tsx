@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Droplets, Coffee, Footprints, Check } from "lucide-react";
 
 const excursions = [
-    { icon: Droplets, name: "Chemka Hot Springs", duration: "4-5 hours", price: "$80", desc: "Swim in crystal-clear natural hot springs surrounded by lush vegetation" },
-    { icon: Coffee, name: "Coffee Plantation Tour", duration: "3-4 hours", price: "$60", desc: "Learn coffee-making from bean to cup with traditional Chagga lunch" },
-    { icon: Footprints, name: "Materuni Waterfalls", duration: "5-6 hours", price: "$90", desc: "Hike to stunning 80m waterfall with coffee tour included" }
+    { icon: Droplets, name: "Chemka Hot Springs", duration: "4-5 hours", desc: "Swim in crystal-clear natural hot springs surrounded by lush vegetation" },
+    { icon: Coffee, name: "Coffee Plantation Tour", duration: "3-4 hours", desc: "Learn coffee-making from bean to cup with traditional Chagga lunch" },
+    { icon: Footprints, name: "Materuni Waterfalls", duration: "5-6 hours", desc: "Hike to stunning 80m waterfall with coffee tour included" }
 ];
 
 export default function MoshiExcursionsPage() {
@@ -38,7 +38,6 @@ export default function MoshiExcursionsPage() {
                                     <p className="text-sm text-muted-foreground text-center mb-4">{exc.desc}</p>
                                     <div className="flex justify-between items-center mb-4 text-sm">
                                         <span className="text-muted-foreground">{exc.duration}</span>
-                                        <span className="text-xl font-bold text-primary">{exc.price}</span>
                                     </div>
                                     <Button className="w-full" asChild><Link href="/contact">Book Now</Link></Button>
                                 </CardContent>

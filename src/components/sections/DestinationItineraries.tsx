@@ -61,9 +61,7 @@ export function DestinationItineraries({ location, title, subtitle }: Destinatio
                                         {tour.title}
                                     </h3>
                                     <div className="flex items-center gap-2 text-white/90 text-sm">
-                                        <Badge variant="outline" className="border-white/40 text-white hover:bg-white/10">
-                                            {tour.price}
-                                        </Badge>
+                                        <span className="text-[10px] uppercase tracking-widest font-bold text-white/60">Bespoke Experience</span>
                                     </div>
                                 </div>
                             </div>

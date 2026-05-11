@@ -59,11 +59,6 @@ export function ImageGallery({ images, title, description }: ImageGalleryProps) 
                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                 <Maximize2 className="text-white w-8 h-8" />
                             </div>
-                            {image.caption && (
-                                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                                    <p className="text-white text-sm font-medium">{image.caption}</p>
-                                </div>
-                            )}
                         </div>
                     ))}
                 </div>
@@ -105,12 +100,7 @@ export function ImageGallery({ images, title, description }: ImageGalleryProps) 
                                 fill
                                 className="object-contain"
                             />
-                            {images[currentIndex].caption && (
-                                <div className="absolute -bottom-12 left-0 right-0 text-center">
-                                    <p className="text-white text-lg">{images[currentIndex].caption}</p>
-                                </div>
-                            )}
-                            <div className="absolute -bottom-20 left-0 right-0 text-center text-white/60 text-sm">
+                            <div className="absolute -bottom-16 left-0 right-0 text-center text-white/60 text-sm">
                                 {currentIndex + 1} / {images.length}
                             </div>
                         </div>

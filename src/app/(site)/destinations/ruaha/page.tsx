@@ -5,6 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { Check, Calendar, Sun, CloudRain } from "lucide-react";
 import { ImageGallery } from "@/components/sections/ImageGallery";
 import { DestinationItineraries } from "@/components/sections/DestinationItineraries";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Ruaha National Park Safari | Serenity Africa Safaris",
+    description: "Discover the wild and remote Ruaha National Park. Experience rugged landscapes, massive elephant herds, and incredible predator density.",
+    keywords: ["Ruaha", "Tanzania Safari", "Wilderness", "Elephants", "National Park"]
+};
 
 const stats = { size: "20,226 km²", established: "1964", wildlife: "Enormous elephant herds", status: "Wild & Remote" };
 
@@ -14,7 +21,7 @@ export default function RuahaPage() {
             <section className="relative h-[70vh] flex items-center overflow-hidden">
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: 'url("/images/destinations/ruaha/ruaha-ruaha-national-park-tanzania.webp")' }}
+                    style={{ backgroundImage: 'url("/images/destinations/ruaha/ruaha-8.webp")' }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
@@ -52,7 +59,7 @@ export default function RuahaPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="order-2 lg:order-1 relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                             <Image
-                                src="/images/destinations/ruaha/Ruaha-elephants-1-1900x640-1.webp"
+                                src="/images/destinations/ruaha/ruaha-4.webp"
                                 alt="Baobab trees in Ruaha"
                                 fill
                                 className="object-cover transition-transform duration-700 hover:scale-105"
@@ -89,12 +96,12 @@ export default function RuahaPage() {
                 title="Ruaha National Park Gallery"
                 description="Experience the raw, unadulterated beauty of Tanzania's remote interior."
                 images={[
-                    { src: "/images/destinations/ruaha/Purple_On_The_River.webp", alt: "Ruaha River", caption: "Purple sunset over the Great Ruaha River" },
-                    { src: "/images/destinations/ruaha/Ruaha-NP-1900x1000-1.webp", alt: "Ruaha Wildlife", caption: "Diverse wildlife in the heart of Ruaha" },
-                    { src: "/images/destinations/ruaha/jabaliridge2.webp", alt: "Ruaha Accommodation", caption: "Luxury lodge with a view" },
-                    { src: "/images/destinations/ruaha/Ruaha-national-park-BW60CD.webp", alt: "Ruaha Landscape", caption: "Iconic baobab-studded landscape" },
-                    { src: "/images/destinations/ruaha/Cultural-tourss.webp", alt: "Ruaha Culture", caption: "Cultural encounters in the region" },
-                    { src: "/images/destinations/ruaha/Tanzania-Safari-Tours-16.webp", alt: "Ruaha Safari", caption: "Expert-led game drives" },
+                    { src: "/images/destinations/ruaha/ruaha-1.webp", alt: "Ruaha River", caption: "Purple sunset over the Great Ruaha River" },
+                    { src: "/images/destinations/ruaha/ruaha-2.webp", alt: "Ruaha Wildlife", caption: "Diverse wildlife in the heart of Ruaha" },
+                    { src: "/images/destinations/ruaha/ruaha-3.webp", alt: "Ruaha Accommodation", caption: "Luxury lodge with a view" },
+                    { src: "/images/destinations/ruaha/ruaha-4.webp", alt: "Ruaha Landscape", caption: "Iconic baobab-studded landscape" },
+                    { src: "/images/destinations/ruaha/ruaha-5.webp", alt: "Ruaha Culture", caption: "Cultural encounters in the region" },
+                    { src: "/images/destinations/ruaha/ruaha-6.webp", alt: "Ruaha Safari", caption: "Expert-led game drives" },
                 ]}
             />
 

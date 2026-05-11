@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Tent, Compass, Mountain, MapPin, Phone, Binoculars, Calendar, BookOpen } from "lucide-react"
+import { Menu, X, Tent, Compass, Mountain, MapPin, Phone, Binoculars, Calendar, BookOpen, Facebook, Instagram, Twitter, Youtube } from "lucide-react"
 
 
 export function MobileMenu() {
@@ -21,7 +21,7 @@ export function MobileMenu() {
                 <div className="flex flex-col h-full bg-secondary text-white">
                     {/* Header */}
                     <div className="flex items-center justify-between p-6 pb-2">
-                        <h2 className="text-2xl font-serif font-bold text-primary">Tanzania Wisdom</h2>
+                        <h2 className="text-2xl font-serif font-bold text-primary">Serenity Africa</h2>
                         <SheetClose className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors">
                             <X className="h-5 w-5 text-primary" />
                             <span className="sr-only">Close</span>
@@ -144,10 +144,26 @@ export function MobileMenu() {
                     <div className="p-6 pt-2">
                         <div className="h-px bg-white/10 mb-6" />
                         <SheetClose asChild>
-                            <Button className="w-full text-lg py-7 rounded-full font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-xl" asChild>
+                            <Button className="w-full text-lg py-7 rounded-full font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-xl mb-8" asChild>
                                 <Link href="/request-quote">Book Your Safari</Link>
                             </Button>
                         </SheetClose>
+
+                        {/* Social Icons for Mobile */}
+                        <div className="flex justify-center gap-6 text-gray-400">
+                            <a href="https://www.facebook.com/profile.php?id=61572280686311" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors p-2 bg-white/5 rounded-full">
+                                <Facebook size={20} fill="currentColor" />
+                            </a>
+                            <a href="https://www.instagram.com/serenityafricasafaris" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors p-2 bg-white/5 rounded-full">
+                                <Instagram size={20} />
+                            </a>
+                            <a href="https://twitter.com/serenityafrica" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors p-2 bg-white/5 rounded-full">
+                                <Twitter size={20} fill="currentColor" />
+                            </a>
+                            <a href="https://youtube.com/@serenityafricasafaris" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors p-2 bg-white/5 rounded-full">
+                                <Youtube size={20} fill="currentColor" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </SheetContent>

@@ -1,176 +1,150 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Camera, Check, ArrowRight, AlertCircle } from "lucide-react";
+import { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
 
-const migrationCalendar = [
-    { month: "January-March", location: "Southern Serengeti", event: "Calving season - 8,000 wildebeest born daily", best: true },
-    { month: "April-May", location: "Central Serengeti", event: "Herds move north, green season", best: false },
-    { month: "June-July", location: "Western Corridor", event: "Grumeti River crossings begin", best: true },
-    { month: "July-October", location: "Northern Serengeti", event: "Mara River crossings - peak action", best: true },
-    { month: "November-December", location: "Eastern Serengeti", event: "Short rains, herds return south", best: false }
+export const metadata: Metadata = {
+    title: "Great Migration Safari Tanzania | Serenity Africa Safaris",
+    description: "Witness 2 million wildebeest on their epic journey across the Serengeti. Time your visit perfectly with our migration calendar.",
+};
+
+const calendar = [
+    { months: "January – March", location: "Southern Serengeti", event: "Calving season — 8,000 wildebeest born daily", best: true },
+    { months: "April – May", location: "Central Serengeti", event: "Herds move north, lush green season", best: false },
+    { months: "June – July", location: "Western Corridor", event: "Grumeti River crossings begin", best: true },
+    { months: "July – October", location: "Northern Serengeti", event: "Mara River crossings — peak dramatic action", best: true },
+    { months: "November – December", location: "Eastern Serengeti", event: "Short rains, herds begin journey south", best: false },
 ];
 
 const packages = [
     {
         name: "Calving Season Special",
-        months: "January - March",
+        months: "January – March",
         days: 7,
-        price: "$2,650",
-        highlights: ["Witness 8,000 births daily", "Predator action", "Ndutu Plains", "Ngorongoro Crater"]
+        highlights: ["Witness 8,000 births daily", "Predator action in Ndutu", "Ngorongoro Crater visit"],
     },
     {
         name: "River Crossing Adventure",
-        months: "July - October",
+        months: "July – October",
         days: 8,
-        price: "$3,200",
-        highlights: ["Mara River crossings", "Northern Serengeti", "Crocodile action", "Peak migration"]
+        highlights: ["Mara River crossings", "Northern Serengeti camps", "Crocodile ambush scenes"],
     },
     {
         name: "Complete Migration Circuit",
         months: "Year-round",
         days: 10,
-        price: "$3,800",
-        highlights: ["Follow the herds", "Multiple locations", "Best seasonal timing", "Flexible dates"]
-    }
+        highlights: ["Follow the herds", "Multiple Serengeti zones", "Best seasonal timing guaranteed"],
+    },
 ];
 
 export default function MigrationSafarisPage() {
     return (
-        <div className="bg-background min-h-screen">
-            {/* Hero */}
-            <section className="relative h-[70vh] flex items-center overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url("/images/destinations/migration/migration-1.webp")' }} />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+        <div className="bg-[#FDFBF7] min-h-screen">
 
-                <div className="relative z-10 container max-w-7xl mx-auto px-4">
+            {/* HERO */}
+            <section className="relative h-[80vh] flex items-end overflow-hidden">
+                <Image src="/images/destinations/migration/migration-1.webp" alt="Great Migration Safari" fill className="object-cover scale-105" priority />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+                <div className="relative z-10 container px-6 mx-auto pb-16 lg:pb-24">
                     <div className="max-w-3xl">
-                        <Badge className="mb-4 bg-orange-500 text-white">Migration Safaris</Badge>
-                        <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">
-                            The Greatest Show on Earth
-                        </h1>
-                        <p className="text-xl text-gray-200 mb-8">
-                            Witness 2 million wildebeest, zebras, and gazelles on their epic journey across the Serengeti. Nature's most spectacular event.
+                        <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase block mb-4">Migration Safaris</span>
+                        <h1 className="text-5xl md:text-7xl font-serif text-white leading-tight mb-6">The Greatest Show <span className="italic text-white/70">on Earth</span></h1>
+                        <p className="text-white/70 font-light text-xl mb-8 max-w-xl">Two million wildebeest, zebras, and gazelles — an epic cycle of life playing out across the Serengeti year-round.</p>
+                        <Link href="/request-quote" className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 text-[11px] font-bold tracking-widest uppercase hover:bg-primary/90 transition-colors">
+                            Plan My Migration Safari <ArrowRight className="w-4 h-4" />
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* MIGRATION CALENDAR */}
+            <section className="py-24 bg-[#FDFBF7]">
+                <div className="container px-6 mx-auto max-w-4xl">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-8 h-[1px] bg-primary" />
+                        <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Seasonal Guide</span>
+                    </div>
+                    <h2 className="text-4xl font-serif text-[#1A1A1A] mb-4">The Migration <span className="italic text-gray-400">Calendar</span></h2>
+                    <p className="text-gray-500 font-light mb-16 max-w-xl">The herds move year-round following rainfall. Timing your visit correctly is everything.</p>
+
+                    <div className="space-y-0">
+                        {calendar.map((period) => (
+                            <div key={period.months} className={`flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-gray-200 gap-4 ${period.best ? "text-[#1A1A1A]" : "text-gray-400"}`}>
+                                <div className="md:w-1/4">
+                                    <div className="text-sm font-semibold">{period.months}</div>
+                                    {period.best && <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Best Time</span>}
+                                </div>
+                                <div className="md:w-1/4 text-sm font-light text-gray-500">{period.location}</div>
+                                <div className="md:w-2/4 text-sm font-light">{period.event}</div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-10 bg-primary/5 border border-primary/20 rounded-2xl p-6">
+                        <p className="text-gray-600 font-light text-sm leading-relaxed">
+                            <strong className="text-[#1A1A1A] font-semibold">Note on timing:</strong> The migration follows rainfall patterns and can vary by 2–3 weeks year to year. We monitor herd movements daily and adjust itineraries in real-time for the best encounters.
                         </p>
-                        <Button size="lg" asChild>
-                            <Link href="/contact">Plan My Migration Safari</Link>
-                        </Button>
                     </div>
                 </div>
             </section>
 
-            {/* Migration Calendar */}
-            <section className="py-24 bg-background">
-                <div className="container max-w-6xl mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-serif font-bold mb-6">Migration Calendar</h2>
-                        <p className="text-xl text-muted-foreground">The herds move year-round - timing is everything</p>
+            {/* PACKAGES */}
+            <section className="py-24 bg-[#F5F0E8]">
+                <div className="container px-6 mx-auto">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-8 h-[1px] bg-primary" />
+                        <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Safari Packages</span>
                     </div>
-
-                    <div className="space-y-4">
-                        {migrationCalendar.map((period, index) => (
-                            <Card key={index} className={period.best ? "border-2 border-primary" : ""}>
-                                <CardContent className="pt-6">
-                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <Calendar className="text-primary" size={20} />
-                                                <h3 className="font-bold text-lg">{period.month}</h3>
-                                                {period.best && <Badge className="bg-green-600">Best Time</Badge>}
-                                            </div>
-                                            <div className="flex items-start gap-2 mb-2">
-                                                <MapPin size={16} className="text-muted-foreground mt-1" />
-                                                <span className="text-muted-foreground">{period.location}</span>
-                                            </div>
-                                            <p className="text-sm">{period.event}</p>
-                                        </div>
-                                        <Button variant="outline" size="sm" asChild>
-                                            <Link href="/contact">Book This Period</Link>
-                                        </Button>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-
-                    <div className="mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200">
-                        <div className="flex gap-3">
-                            <AlertCircle className="text-blue-600 shrink-0 mt-1" size={20} />
-                            <div>
-                                <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-2">Timing is Crucial</h4>
-                                <p className="text-sm text-blue-800 dark:text-blue-200">
-                                    The migration follows rainfall patterns and can vary by 2-3 weeks each year. We monitor herd movements daily and adjust itineraries for the best viewing opportunities.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Migration Packages */}
-            <section className="py-24 bg-muted/30">
-                <div className="container max-w-7xl mx-auto px-4">
-                    <h2 className="text-4xl font-serif font-bold text-center mb-16">Migration Safari Packages</h2>
-
+                    <h2 className="text-4xl font-serif text-[#1A1A1A] mb-16">Migration <span className="italic text-gray-400">Itineraries</span></h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {packages.map((pkg, index) => (
-                            <Card key={index} className="hover:shadow-xl transition-shadow">
-                                <CardHeader>
-                                    <CardTitle className="text-2xl font-serif">{pkg.name}</CardTitle>
-                                    <div className="flex gap-2 mt-2">
-                                        <Badge>{pkg.days} Days</Badge>
-                                        <Badge variant="outline">{pkg.months}</Badge>
-                                    </div>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="space-y-2 mb-6">
-                                        {pkg.highlights.map((highlight, i) => (
-                                            <div key={i} className="flex items-start gap-2 text-sm">
-                                                <Check size={16} className="text-green-600 mt-0.5" />
-                                                <span>{highlight}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className="flex justify-between items-center pt-4 border-t">
-                                        <div>
-                                            <div className="text-sm text-muted-foreground">From</div>
-                                            <div className="text-2xl font-bold text-primary">{pkg.price}</div>
-                                        </div>
-                                        <Button asChild>
-                                            <Link href="/contact">Book Now</Link>
-                                        </Button>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                        {packages.map((pkg) => (
+                            <div key={pkg.name} className="bg-white rounded-[2rem] p-8 border border-[#EAE3D6] hover:shadow-xl transition-shadow">
+                                <div className="flex justify-between items-start mb-6">
+                                    <span className="text-[10px] font-bold tracking-widest uppercase text-gray-400">{pkg.days} Days</span>
+                                </div>
+                                <h3 className="text-2xl font-serif text-[#1A1A1A] mb-2">{pkg.name}</h3>
+                                <p className="text-gray-400 text-sm mb-6">{pkg.months}</p>
+                                <ul className="space-y-2 mb-8">
+                                    {pkg.highlights.map((h) => (
+                                        <li key={h} className="flex items-start gap-3 text-gray-500 text-sm font-light">
+                                            <span className="text-primary mt-0.5 shrink-0">—</span>{h}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <Link href="/request-quote" className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-primary hover:gap-4 transition-all">
+                                    Enquire <ArrowRight className="w-3.5 h-3.5" />
+                                </Link>
+                            </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Why Migration Safari */}
-            <section className="py-24 bg-background">
-                <div className="container max-w-6xl mx-auto px-4">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* WHY + IMAGE */}
+            <section className="py-24 bg-[#FDFBF7]">
+                <div className="container px-6 mx-auto max-w-5xl">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div>
-                            <h2 className="text-4xl font-serif font-bold mb-6">Why a Migration Safari?</h2>
-                            <div className="space-y-4 text-lg">
-                                <p>
-                                    <strong className="text-foreground">Unparalleled Wildlife Density:</strong> See hundreds of thousands of animals in a single view - something impossible anywhere else on earth.
-                                </p>
-                                <p>
-                                    <strong className="text-foreground">Dramatic River Crossings:</strong> Watch wildebeest brave crocodile-infested waters in a life-or-death spectacle.
-                                </p>
-                                <p>
-                                    <strong className="text-foreground">Predator Action:</strong> Lions, leopards, cheetahs, and hyenas follow the herds, providing incredible hunting scenes.
-                                </p>
-                                <p>
-                                    <strong className="text-foreground">Calving Season Magic:</strong> Witness 8,000 wildebeest calves born daily in February - nature's nursery.
-                                </p>
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-8 h-[1px] bg-primary" />
+                                <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Why Migration?</span>
+                            </div>
+                            <h2 className="text-4xl font-serif text-[#1A1A1A] mb-10">Nature's Most Spectacular <span className="italic text-gray-400">Event</span></h2>
+                            <div className="space-y-6">
+                                {[
+                                    { title: "Unparalleled Wildlife Density", body: "Hundreds of thousands of animals in a single view — impossible anywhere else on earth." },
+                                    { title: "Dramatic River Crossings", body: "Wildebeest brave crocodile-infested waters in a life-or-death spectacle unlike anything else." },
+                                    { title: "Predator Action", body: "Lions, leopards, and cheetahs follow the herds, providing the best hunting scenes on the continent." },
+                                    { title: "Calving Season Magic", body: "8,000 calves born daily in February — nature's nursery in action." },
+                                ].map((point) => (
+                                    <div key={point.title}>
+                                        <h4 className="font-semibold text-[#1A1A1A] mb-1">{point.title}</h4>
+                                        <p className="text-gray-500 font-light text-sm leading-relaxed">{point.body}</p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+                        <div className="relative h-[550px] rounded-[2rem] overflow-hidden shadow-2xl">
                             <Image src="/images/destinations/migration/migration-2.webp" alt="Migration Crossing" fill className="object-cover" />
                         </div>
                     </div>
@@ -178,19 +152,13 @@ export default function MigrationSafarisPage() {
             </section>
 
             {/* CTA */}
-            <section className="py-24 bg-primary/10">
-                <div className="container max-w-4xl mx-auto px-4 text-center">
-                    <h2 className="text-4xl font-serif font-bold mb-6">Witness the Great Migration</h2>
-                    <p className="text-xl text-muted-foreground mb-10">
-                        Let us position you perfectly to see nature's greatest spectacle
-                    </p>
+            <section className="py-24 bg-primary">
+                <div className="container px-6 mx-auto text-center max-w-2xl">
+                    <h2 className="text-4xl font-serif text-white mb-6">Witness the Great Migration</h2>
+                    <p className="text-white/70 font-light mb-10">Tell us your travel dates and we'll position you perfectly for peak wildlife drama.</p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" asChild>
-                            <Link href="/contact">Get Migration Itinerary</Link>
-                        </Button>
-                        <Button size="lg" variant="outline" asChild>
-                            <Link href="/destinations/serengeti">Explore Serengeti</Link>
-                        </Button>
+                        <Link href="/request-quote" className="bg-white text-primary px-10 py-4 text-[11px] font-bold tracking-widest uppercase hover:bg-gray-100 transition-colors">Get Migration Itinerary</Link>
+                        <Link href="/destinations/serengeti" className="border border-white/30 text-white px-10 py-4 text-[11px] font-bold tracking-widest uppercase hover:bg-white/10 transition-colors">Explore Serengeti</Link>
                     </div>
                 </div>
             </section>

@@ -5,6 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, Calendar, Binoculars, Camera, Check } from "lucide-react";
 import { ImageGallery } from "@/components/sections/ImageGallery";
 import { DestinationItineraries } from "@/components/sections/DestinationItineraries";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Nyerere National Park Safari (Selous) | Serenity Africa Safaris",
+    description: "Explore Africa's largest stand-alone park. Boat safaris on the Rufiji River and unique wilderness encounters in Nyerere National Park.",
+    keywords: ["Nyerere National Park", "Selous", "Tanzania Safari", "Boat Safari", "Rufiji River"]
+};
 
 const stats = { size: "30,893 km²", established: "2019", wildlife: "Largest elephant population", status: "UNESCO Heritage Site" };
 
@@ -14,7 +21,7 @@ export default function NyererePage() {
             <section className="relative h-[70vh] flex items-center overflow-hidden">
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: 'url("/images/destinations/nyerere/selous_08-scaled.webp")' }}
+                    style={{ backgroundImage: 'url("/images/destinations/nyerere/nyerere-5.webp")' }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
@@ -72,7 +79,7 @@ export default function NyererePage() {
                         </div>
                         <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                             <Image
-                                src="/images/destinations/nyerere/MG_9670-1-1.webp"
+                                src="/images/destinations/nyerere/nyerere-1.webp"
                                 alt="Rufiji River in Nyerere"
                                 fill
                                 className="object-cover transition-transform duration-700 hover:scale-105"
@@ -89,12 +96,12 @@ export default function NyererePage() {
                 title="Nyerere National Park Gallery"
                 description="Explore the raw beauty of Tanzania's southernmost wilderness."
                 images={[
-                    { src: "/images/destinations/nyerere/Selous-Game-Reserve_Elephants.webp", alt: "Nyerere Elephants", caption: "Elephants in the reserve" },
-                    { src: "/images/destinations/nyerere/Selous-giraffe-river-reflections-RR.webp", alt: "Nyerere Giraffes", caption: "Giraffes reflecting in the water" },
-                    { src: "/images/destinations/nyerere/herd-of-elephants-and-water-selous.webp", alt: "Nyerere Herd", caption: "Vast herds near the water" },
-                    { src: "/images/destinations/nyerere/shutterstock_28285924_1_1.webp", alt: "Nyerere Wildlife", caption: "Rich biodiversity of Nyerere" },
-                    { src: "/images/destinations/nyerere/selous_08-scaled.webp", alt: "Nyerere Landscape", caption: "Stunning riverine scenery" },
-                    { src: "/images/destinations/nyerere/MG_9670-1-1.webp", alt: "Nyerere Birdlife", caption: "Unique avian species" },
+                    { src: "/images/destinations/nyerere/nyerere-1.webp", alt: "Nyerere Elephants", caption: "Elephants in the reserve" },
+                    { src: "/images/destinations/nyerere/nyerere-2.webp", alt: "Nyerere Giraffes", caption: "Giraffes reflecting in the water" },
+                    { src: "/images/destinations/nyerere/nyerere-3.webp", alt: "Nyerere Herd", caption: "Vast herds near the water" },
+                    { src: "/images/destinations/nyerere/nyerere-4.webp", alt: "Nyerere Wildlife", caption: "Rich biodiversity of Nyerere" },
+                    { src: "/images/destinations/nyerere/nyerere-5.webp", alt: "Nyerere Landscape", caption: "Stunning riverine scenery" },
+                    { src: "/images/destinations/nyerere/nyerere-6.webp", alt: "Nyerere Birdlife", caption: "Unique avian species" },
                 ]}
             />
 

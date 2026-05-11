@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, Clock, DollarSign, Check } from "lucide-react";
 
 const parks = [
-    { name: "Arusha National Park", duration: "10 hours", price: "$200", highlights: ["Mount Meru views", "Colobus monkeys", "Momella Lakes", "Walking safari option"] },
-    { name: "Tarangire National Park", duration: "12 hours", price: "$250", highlights: ["Massive elephant herds", "Baobab trees", "Bird watching", "River wildlife"] },
-    { name: "Ngorongoro Crater", duration: "12 hours", price: "$350", highlights: ["Big 5 in one day", "Crater floor game drive", "Black rhino sightings", "Spectacular views"] }
+    { name: "Arusha National Park", duration: "10 hours", highlights: ["Mount Meru views", "Colobus monkeys", "Momella Lakes", "Walking safari option"] },
+    { name: "Tarangire National Park", duration: "12 hours", highlights: ["Massive elephant herds", "Baobab trees", "Bird watching", "River wildlife"] },
+    { name: "Ngorongoro Crater", duration: "12 hours", highlights: ["Big 5 in one day", "Crater floor game drive", "Black rhino sightings", "Spectacular views"] }
 ];
 
 export default function OneDaySafariPage() {
@@ -36,7 +36,6 @@ export default function OneDaySafariPage() {
                                         <span className="flex items-center gap-1 text-muted-foreground">
                                             <Clock size={16} /> {park.duration}
                                         </span>
-                                        <span className="text-2xl font-bold text-primary">{park.price}</span>
                                     </div>
                                     <div className="space-y-2 mb-6">
                                         {park.highlights.map((h, j) => (

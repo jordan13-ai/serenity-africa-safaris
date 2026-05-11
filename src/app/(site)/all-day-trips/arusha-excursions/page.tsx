@@ -5,10 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Coffee, Mountain, ShoppingBag, Utensils } from "lucide-react";
 
 const activities = [
-    { icon: Coffee, name: "Coffee Plantation Tour", price: "$60", desc: "Learn coffee-making process from bean to cup with tasting" },
-    { icon: Mountain, name: "Mount Meru Foothills Hike", price: "$70", desc: "Easy hike through lush forests with waterfall visit" },
-    { icon: ShoppingBag, name: "Arusha Market Tour", price: "$40", desc: "Explore vibrant local markets with cultural guide" },
-    { icon: Utensils, name: "Tanzanian Cooking Class", price: "$80", desc: "Learn to cook traditional dishes with local chef" }
+    { icon: Coffee, name: "Coffee Plantation Tour", desc: "Learn coffee-making process from bean to cup with tasting" },
+    { icon: Mountain, name: "Mount Meru Foothills Hike", desc: "Easy hike through lush forests with waterfall visit" },
+    { icon: ShoppingBag, name: "Arusha Market Tour", desc: "Explore vibrant local markets with cultural guide" },
+    { icon: Utensils, name: "Tanzanian Cooking Class", desc: "Learn to cook traditional dishes with local chef" }
 ];
 
 export default function ArushaExcursionsPage() {
@@ -37,9 +37,7 @@ export default function ArushaExcursionsPage() {
                                     </div>
                                     <h3 className="font-bold text-lg mb-2 text-center">{activity.name}</h3>
                                     <p className="text-sm text-muted-foreground text-center mb-4">{activity.desc}</p>
-                                    <div className="text-center mb-4">
-                                        <span className="text-xl font-bold text-primary">{activity.price}</span>
-                                    </div>
+
                                     <Button size="sm" className="w-full" asChild><Link href="/contact">Book</Link></Button>
                                 </CardContent>
                             </Card>

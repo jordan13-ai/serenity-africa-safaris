@@ -1,11 +1,9 @@
 "use client"
-import { MessageCircle, X } from "lucide-react";
-import { useState } from "react";
+import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function WhatsAppButton() {
-    const [isOpen, setIsOpen] = useState(false);
-    const whatsappNumber = "+255759333679"; // Tanzania Wisdom Safaris WhatsApp
+    const whatsappNumber = "+255626371646";
     const defaultMessage = "Hi! I'm interested in booking a safari/Kilimanjaro trek. Can you help me?";
 
     const handleWhatsAppClick = () => {

@@ -1,11 +1,11 @@
 "use client"
 import Link from "next/link"
 import Image from "next/image"
-import { Clock, Check, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import { motion } from "framer-motion"
 
 import { tours } from "@/lib/tours-data"
 
@@ -13,7 +13,13 @@ export function FeaturedTours() {
     return (
         <section className="py-24 bg-gradient-to-b from-muted/30 via-background to-muted/30">
             <div className="container px-4 mx-auto max-w-7xl">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6 }}
+                    className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4"
+                >
                     <div>
                         <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-4">
                             Featured Tours
@@ -25,7 +31,7 @@ export function FeaturedTours() {
                     <Button variant="outline" className="hidden md:flex gap-2 hover:bg-primary hover:text-primary-foreground transition-all" asChild>
                         <Link href="/all-safaris">View All Tours <ArrowRight size={16} /></Link>
                     </Button>
-                </div>
+                </motion.div>
 
                 <Carousel
                     opts={{
@@ -37,7 +43,13 @@ export function FeaturedTours() {
                     <CarouselContent className="-ml-6 pb-10">
                         {tours.map((tour, index) => (
                             <CarouselItem key={index} className="pl-6 md:basis-1/2 lg:basis-1/3">
-                                <div className="group relative h-[500px] w-full overflow-hidden rounded-3xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl border border-gray-100 flex flex-col">
+                                <motion.div 
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true, margin: "-50px" }}
+                                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                                    className="group relative h-[500px] w-full overflow-hidden rounded-3xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl border border-gray-100 flex flex-col"
+                                >
                                     {/* Image Section */}
                                     <div className="relative h-[60%] w-full overflow-hidden">
                                         <Image
@@ -61,9 +73,7 @@ export function FeaturedTours() {
                                                 {tour.title}
                                             </h3>
                                             <div className="flex items-center gap-2 text-white/90 text-sm">
-                                                <Badge variant="outline" className="border-white/40 text-white hover:bg-white/10">
-                                                    {tour.price}
-                                                </Badge>
+                                                <span className="text-[10px] uppercase tracking-widest font-bold text-white/60">Bespoke Experience</span>
                                             </div>
                                         </div>
                                     </div>
@@ -105,7 +115,7 @@ export function FeaturedTours() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
                             </CarouselItem>
                         ))}
                     </CarouselContent>

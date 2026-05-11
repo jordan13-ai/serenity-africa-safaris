@@ -1,101 +1,67 @@
 "use client"
+
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { useEffect, useState } from "react"
-import { cn } from "@/lib/utils"
+import { motion, AnimatePresence } from "framer-motion"
+import { Menu, X, Compass } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { MobileMenu } from "./MobileMenu"
-import { MegaMenuPane } from "./MegaMenuPane"
-import { ChevronDown, Search, Star, MessageCircle } from "lucide-react"
+import { cn } from "@/lib/utils"
 import {
     NavigationMenu,
     NavigationMenuContent,
     NavigationMenuItem,
-    NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 
-const ListItem = ({ className, title, children, href, ...props }: any) => {
-    return (
-        <li>
-            <NavigationMenuLink asChild>
-                <Link
-                    href={href}
-                    className={cn(
-                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground hover:translate-x-1",
-                        className
-                    )}
-                    {...props}
-                >
-                    <div className="text-sm font-medium leading-none text-primary group-hover:text-primary/80">{title}</div>
-                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground mt-1">
-                        {children}
-                    </p>
-                </Link>
-            </NavigationMenuLink>
-        </li>
-    )
-}
-
-
 export function Header() {
-    // Removed scroll logic as header is now always solid
+    const [isScrolled, setIsScrolled] = useState(false)
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50)
+        }
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
 
     return (
-        <>
-            {/* Top Bar - No TripAdvisor */}
-            <div className="hidden lg:block bg-[#1A1A1A] text-gray-300 border-b border-gray-800 text-xs font-medium py-2.5">
-                <div className="container max-w-screen-2xl mx-auto px-4 flex justify-between items-center">
-                    <div className="flex items-center gap-6">
-                        <a href="mailto:info@tanzaniawisdomsafaris.com" className="hover:text-white transition-colors flex items-center gap-2">
-                            <span>info@tanzaniawisdomsafaris.com</span>
-                        </a>
-                        <div className="w-px h-3 bg-white/20"></div>
-                        <a href="tel:+255759333679" className="hover:text-white transition-colors">
-                            +255 759 333 679
-                        </a>
-                    </div>
-
-                    <div className="flex items-center gap-6">
-                        {/* Removed TripAdvisor from Header as requested */}
-                        <div className="flex gap-4">
-                            <button className="hover:text-white transition-colors">USD</button>
-                            <button className="hover:text-white transition-colors">EN</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <header className="sticky top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm py-2">
-                <div className="container max-w-screen-2xl mx-auto px-4 grid grid-cols-2 lg:grid-cols-12 items-center gap-4">
-
-                    {/* LOGO - Left col */}
-                    <Link href="/" className="relative z-50 flex-shrink-0 group py-2 lg:col-span-3">
-                        <div className="relative h-12 w-48 md:h-[60px] md:w-[220px]">
+        <header 
+            className={cn(
+                "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+                isScrolled 
+                    ? "bg-[#F5F2ED] py-4 shadow-sm" 
+                    : "bg-transparent py-8"
+            )}
+        >
+            <div className="container mx-auto px-6">
+                <nav className="flex items-center justify-between">
+                    
+                    {/* LOGO */}
+                    <Link href="/" className="relative z-10">
+                        <div className="relative w-44 h-12 md:w-52 md:h-14">
                             <Image
                                 src="/images/logo.webp"
-                                alt="Tanzania Wisdom Safaris"
+                                alt="Serenity Africa Safaris"
                                 fill
-                                className="object-contain object-left"
+                                className="object-contain"
                                 priority
                             />
                         </div>
                     </Link>
 
-                    {/* DESKTOP NAV - Center col (Spans 6) */}
-                    <div className="hidden lg:flex items-center justify-center lg:col-span-6">
+                    {/* DESKTOP NAVIGATION */}
+                    <div className="hidden lg:flex items-center justify-center flex-1">
                         <NavigationMenu>
-                            <NavigationMenuList className="font-bold text-sm tracking-widest text-gray-900">
+                            <NavigationMenuList className={cn("font-medium text-[13px] tracking-[0.2em] uppercase transition-colors", isScrolled ? "text-foreground" : "text-white")}>
 
                                 {/* KILIMANJARO MEGA MENU */}
                                 <NavigationMenuItem>
-                                    <Link href="/kilimanjaro" legacyBehavior passHref>
-                                        <NavigationMenuTrigger className="bg-transparent text-gray-900 hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4">
-                                            Kilimanjaro
-                                        </NavigationMenuTrigger>
-                                    </Link>
+                                    <NavigationMenuTrigger className={cn("bg-transparent hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4", isScrolled ? "text-foreground" : "text-white")}>
+                                        Kilimanjaro
+                                    </NavigationMenuTrigger>
                                     <NavigationMenuContent>
                                         <MegaMenuPane
                                             defaultTitle="Climbing Kilimanjaro"
@@ -119,16 +85,14 @@ export function Header() {
 
                                 {/* SAFARI MEGA MENU */}
                                 <NavigationMenuItem>
-                                    <Link href="/all-safaris" legacyBehavior passHref>
-                                        <NavigationMenuTrigger className="bg-transparent text-gray-900 hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4">
-                                            Safari
-                                        </NavigationMenuTrigger>
-                                    </Link>
+                                    <NavigationMenuTrigger className={cn("bg-transparent hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4", isScrolled ? "text-foreground" : "text-white")}>
+                                        Safari
+                                    </NavigationMenuTrigger>
                                     <NavigationMenuContent>
                                         <MegaMenuPane
                                             defaultTitle="Tanzania Safari"
                                             defaultDescription="Experience the wild heart of Africa. From the Great Migration to private luxury lodges, discover the perfect safari adventure tailored to your dreams."
-                                            defaultLink="/all-safaris"
+                                            defaultLink="/safari"
                                             defaultLinkText="View All Safaris ›"
                                             defaultImage="/images/intro/safari-card.webp"
                                             items={[
@@ -148,79 +112,37 @@ export function Header() {
 
                                 {/* DESTINATIONS MEGA MENU */}
                                 <NavigationMenuItem>
-                                    <Link href="/destinations" legacyBehavior passHref>
-                                        <NavigationMenuTrigger className="bg-transparent text-gray-900 hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4">
-                                            Destinations
-                                        </NavigationMenuTrigger>
-                                    </Link>
+                                    <NavigationMenuTrigger className={cn("bg-transparent hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4", isScrolled ? "text-foreground" : "text-white")}>
+                                        Destinations
+                                    </NavigationMenuTrigger>
                                     <NavigationMenuContent>
                                         <MegaMenuPane
                                             defaultTitle="Explore Destinations"
-                                            defaultDescription="Uncover the jewels of Tanzania. From the endless plains of the Serengeti to the turquoise waters of Zanzibar, explore our country's most iconic sites."
+                                            defaultDescription="Beyond the savannah, discover a world of diverse landscapes. From the snow-capped peak of Kilimanjaro to the turquoise waters of Zanzibar and the wild south."
                                             defaultLink="/destinations"
-                                            defaultLinkText="Discover All Places ›"
+                                            defaultLinkText="All Destinations ›"
                                             defaultImage="/images/intro/destinations-card.webp"
                                             items={[
-                                                { title: "Serengeti National Park", href: "/destinations/serengeti", description: "The quintessential African savannah. Famous for the Great Migration and its high density of predators.", image: "/images/destinations/serengeti/serengeti-1.webp" },
-                                                { title: "Ngorongoro Crater", href: "/destinations/ngorongoro", description: "A UNESCO World Heritage site. The world's largest inactive volcanic caldera, teeming with wildlife.", image: "/images/destinations/ngorongoro/ngorongoro-1.webp" },
-                                                { title: "Tarangire National Park", href: "/destinations/tarangire", description: "Known for its massive elephant herds and iconic baobab trees. A dry season gem.", image: "/images/destinations/tarangire/tarangire-1.webp" },
-                                                { title: "Lake Manyara", href: "/destinations/manyara", description: "Famous for tree-climbing lions and vast flocks of pink flamingos along the lake shores.", image: "/images/destinations/manyara/manyara-1.webp" },
-                                                { title: "Zanzibar Archipelago", href: "/destinations/zanzibar", description: "The Spice Island. Pristine white sands, historic Stone Town, and crystal clear indian ocean waters.", image: "/images/destinations/zanzibar/zanzibar-1.webp" },
-                                                { title: "Arusha National Park", href: "/destinations/arusha-park", description: "Home to Mount Meru. A diverse park offering walking safaris, canoeing, and rich birdlife.", image: "/images/destinations/arusha/arusha-1.webp" },
-                                                { title: "Nyerere National Park", href: "/destinations/nyerere", description: "Africa's largest stand-alone park. A wilderness of oxbow lakes, riverine forests, and vast savannahs.", image: "/images/destinations/nyerere/Selous-Game-Reserve_Elephants.webp" },
-                                                { title: "Ruaha National Park", href: "/destinations/ruaha", description: "Rugged scenery and massive predator populations. The remote heart of Tanzania.", image: "/images/destinations/ruaha/Ruaha-NP-1900x1000-1.webp" }
+                                                { title: "Serengeti", href: "/destinations/serengeti", description: "Iconic endless plains and the world's most famous wildlife spectacle.", image: "/images/destinations/serengeti/serengeti-1.webp" },
+                                                { title: "Ngorongoro", href: "/destinations/ngorongoro", description: "A unique volcanic caldera teeming with life in a natural amphitheater.", image: "/images/destinations/ngorongoro/ngorongoro-1.webp" },
+                                                { title: "Zanzibar", href: "/destinations/zanzibar", description: "Historic Stone Town and pristine white sand beaches of the spice islands.", image: "/images/destinations/zanzibar/zanzibar-1.webp" },
+                                                { title: "Tarangire", href: "/destinations/tarangire", description: "The land of giants. Famous for massive elephant herds and ancient baobab trees.", image: "/images/destinations/tarangire/tarangire-1.webp" },
+                                                { title: "Lake Manyara", href: "/destinations/lake-manyara", description: "Home of tree-climbing lions and a diverse soda lake ecosystem.", image: "/images/destinations/lake-manyara/lake-manyara-1.webp" },
+                                                { title: "Selous (Nyerere)", href: "/destinations/nyerere", description: "Wild, remote, and offering unique boat safaris in Africa's largest reserve.", image: "/images/destinations/nyerere/nyerere-5.webp" }
                                             ]}
                                         />
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
 
-                                {/* DAY TRIPS MEGA MENU */}
+                                {/* SIMPLE LINKS */}
                                 <NavigationMenuItem>
-                                    <Link href="/all-day-trips" legacyBehavior passHref>
-                                        <NavigationMenuTrigger className="bg-transparent text-gray-900 hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4">
-                                            Day Trips
-                                        </NavigationMenuTrigger>
-                                    </Link>
-                                    <NavigationMenuContent>
-                                        <MegaMenuPane
-                                            defaultTitle="One Day Adventures"
-                                            defaultDescription="Short on time? Experience the magic of Tanzania in a single day. From coffee tours to hiking and game drives."
-                                            defaultLink="/all-day-trips"
-                                            defaultLinkText="View All Day Trips ›"
-                                            defaultImage="/images/intro/day-trips-card.webp"
-                                            items={[
-                                                { title: "Kilimanjaro Day Hike", href: "/all-day-trips/kili-hiking", description: "Get a taste of Kilimanjaro on a day hike through the rainforest zone to the first huts.", image: "/images/destinations/kilimanjaro/kilimanjaro-4.webp" },
-                                                { title: "West Kilimanjaro (Shira)", href: "/all-day-trips/west-kilimanjaro", description: "Explore the stunning Shira Plateau on Kilimanjaro's western side.", image: "/images/destinations/kilimanjaro/kilimanjaro-1.webp" },
-                                                { title: "One-Day Safari", href: "/all-day-trips/one-day-safari", description: "Visit Arusha National Park, Tarangire, or Ngorongoro for a full game drive experience in one day.", image: "/images/destinations/ngorongoro/ngorongoro-5.webp" },
-                                                { title: "Moshi Excursions", href: "/all-day-trips/moshi-excursions", description: "Chemka Hot Springs, waterfalls, and coffee plantation tours around Moshi.", image: "/images/destinations/kilimanjaro/kilimanjaro-5.webp" },
-                                                { title: "Cultural Tours", href: "/all-day-trips/cultural-tours", description: "Visit Maasai, Hadzabe, and Chagga villages for authentic cultural experiences.", image: "/images/destinations/tarangire/tarangire-3.webp" },
-                                                { title: "Arusha Excursions", href: "/all-day-trips/arusha-excursions", description: "Explore the city, markets, coffee plantations, and Mount Meru foothills.", image: "/images/destinations/kilimanjaro/kilimanjaro-6.webp" }
-                                            ]}
-                                        />
-                                    </NavigationMenuContent>
-                                </NavigationMenuItem>
-
-                                <NavigationMenuItem>
-                                    <Link href="/blog" legacyBehavior passHref>
-                                        <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent uppercase tracking-widest text-gray-900 hover:text-primary hover:bg-primary/5")}>
-                                            Blog
-                                        </NavigationMenuLink>
+                                    <Link href="/about" className={cn("flex items-center bg-transparent hover:text-primary focus:bg-transparent text-sm uppercase px-4 h-10 transition-colors", isScrolled ? "text-foreground" : "text-white")}>
+                                        About
                                     </Link>
                                 </NavigationMenuItem>
-
                                 <NavigationMenuItem>
-                                    <Link href="/about" legacyBehavior passHref>
-                                        <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent uppercase tracking-widest text-gray-900 hover:text-primary hover:bg-primary/5")}>
-                                            About
-                                        </NavigationMenuLink>
-                                    </Link>
-                                </NavigationMenuItem>
-
-                                <NavigationMenuItem>
-                                    <Link href="/contact" legacyBehavior passHref>
-                                        <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent uppercase tracking-widest text-gray-900 hover:text-primary hover:bg-primary/5")}>
-                                            Contact
-                                        </NavigationMenuLink>
+                                    <Link href="/blog" className={cn("flex items-center bg-transparent hover:text-primary focus:bg-transparent text-sm uppercase px-4 h-10 transition-colors", isScrolled ? "text-foreground" : "text-white")}>
+                                        Stories
                                     </Link>
                                 </NavigationMenuItem>
 
@@ -228,31 +150,205 @@ export function Header() {
                         </NavigationMenu>
                     </div>
 
-                    {/* ACTIONS - Right col (Spans 3) */}
-                    <div className="hidden lg:flex items-center justify-end gap-3 lg:col-span-3">
-                        <Button asChild className="rounded-full bg-primary text-white hover:bg-primary/90 font-bold text-sm px-6 py-5 shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 flex items-center gap-2">
-                            <Link href="/request-quote">
-                                Request Quote
-                            </Link>
+                    {/* CALL TO ACTION */}
+                    <div className="flex items-center gap-6">
+                        <Button 
+                            className={cn(
+                                "hidden md:flex rounded-full px-8 py-6 text-[11px] font-bold tracking-[0.2em] uppercase transition-all duration-500",
+                                isScrolled 
+                                    ? "bg-primary text-white hover:bg-primary/90" 
+                                    : "bg-white text-foreground hover:bg-white/90"
+                            )}
+                            asChild
+                        >
+                            <Link href="/request-quote">Enquire Now</Link>
                         </Button>
-                        <Button asChild size="icon" className="rounded-full bg-[#25D366] hover:bg-[#128C7E] text-white w-10 h-10 shadow-md">
-                            <a href="https://wa.me/255759333679" target="_blank" rel="noopener noreferrer">
-                                <MessageCircle size={20} fill="currentColor" />
-                            </a>
-                        </Button>
+
+                        {/* MOBILE MENU TOGGLE */}
+                        <button 
+                            className={cn(
+                                "lg:hidden p-2 transition-colors",
+                                isScrolled ? "text-foreground" : "text-white"
+                            )}
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        >
+                            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                        </button>
                     </div>
 
-                    {/* MOBILE MENU TOGGLE */}
-                    <div className="flex items-center gap-4 lg:hidden justify-end">
-                        <Button size="sm" className="rounded-full bg-[#25D366] hover:bg-[#128C7E] text-white p-2" asChild>
-                            <a href="https://wa.me/255759333679">
-                                <MessageCircle size={20} fill="currentColor" />
-                            </a>
-                        </Button>
-                        <MobileMenu />
-                    </div>
-                </div>
-            </header>
-        </>
+                </nav>
+            </div>
+
+            {/* MOBILE MENU OVERLAY */}
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, x: "100%" }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: "100%" }}
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        className="fixed inset-0 z-[60] lg:hidden bg-white flex flex-col"
+                    >
+                        {/* Mobile Menu Header */}
+                        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+                            <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+                                <div className="relative w-44 h-12">
+                                    <Image
+                                        src="/images/logo.webp"
+                                        alt="Serenity Africa Safaris"
+                                        fill
+                                        className="object-contain"
+                                    />
+                                </div>
+                            </Link>
+                            <button 
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="p-2 text-[#1A1A1A] hover:bg-gray-50 rounded-full transition-colors"
+                            >
+                                <X size={28} />
+                            </button>
+                        </div>
+
+                        {/* Mobile links */}
+                        <div className="flex-1 flex flex-col items-center justify-center gap-10 px-6 overflow-y-auto py-12">
+                            {["Kilimanjaro", "Safari", "Destinations", "About", "Stories"].map((item, index) => (
+                                <motion.div
+                                    key={item}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 + index * 0.05 }}
+                                >
+                                    <Link 
+                                        href={
+                                            item === "Safari" ? "/safari" : 
+                                            item === "Stories" ? "/blog" : 
+                                            item === "Destinations" ? "/destinations" : 
+                                            `/${item.toLowerCase()}`
+                                        }
+                                        className="text-3xl font-serif text-[#1A1A1A] hover:text-primary transition-colors"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        {item}
+                                    </Link>
+                                </motion.div>
+                            ))}
+                            
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4 }}
+                                className="w-full max-w-xs mt-4"
+                            >
+                                <Button className="w-full rounded-full py-8 text-sm font-bold tracking-[0.2em] uppercase bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20" asChild>
+                                    <Link href="/request-quote" onClick={() => setIsMobileMenuOpen(false)}>
+                                        Enquire Now
+                                    </Link>
+                                </Button>
+                            </motion.div>
+                        </div>
+
+                        {/* Mobile Footer Decor */}
+                        <div className="p-10 flex justify-center opacity-10">
+                            <Compass className="w-12 h-12 text-primary" />
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </header>
+    )
+}
+
+function MegaMenuPane({ defaultTitle, defaultDescription, defaultLink, defaultLinkText, defaultImage, items }: any) {
+    const [activeItem, setActiveItem] = useState({
+        title: defaultTitle,
+        description: defaultDescription,
+        link: defaultLink,
+        linkText: defaultLinkText,
+        image: defaultImage
+    })
+
+    return (
+        <div className="flex w-[85vw] max-w-6xl bg-white rounded-3xl overflow-hidden shadow-2xl">
+            {/* Left Column: Navigation Items */}
+            <div className="w-1/2 p-10 border-r border-gray-100 grid grid-cols-2 gap-x-8 gap-y-4 max-h-[600px] overflow-y-auto">
+                {items.map((item: any, i: number) => (
+                    <Link 
+                        key={i} 
+                        href={item.href}
+                        className="group flex flex-col p-4 rounded-2xl hover:bg-primary/5 transition-all"
+                        onMouseEnter={() => setActiveItem({
+                            title: item.title,
+                            description: item.description,
+                            link: item.href,
+                            linkText: "View Itinerary ›",
+                            image: item.image
+                        })}
+                    >
+                        <div className="flex items-center justify-between mb-1">
+                            <span className="text-[13px] font-bold text-foreground group-hover:text-primary transition-colors uppercase tracking-widest">
+                                {item.title}
+                            </span>
+                            {item.badge && (
+                                <span className={cn("text-[9px] px-2 py-0.5 rounded-full font-bold uppercase", item.badgeColor)}>
+                                    {item.badge}
+                                </span>
+                            )}
+                        </div>
+                        <p className="text-[11px] text-gray-400 line-clamp-1 italic">
+                            {item.description}
+                        </p>
+                    </Link>
+                ))}
+            </div>
+
+            {/* Right Column: Featured Preview */}
+            <div className="w-1/2 relative group">
+                <AnimatePresence mode="wait">
+                    <motion.div 
+                        key={activeItem.title}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0"
+                    >
+                        <Image
+                            src={activeItem.image}
+                            alt={activeItem.title}
+                            fill
+                            className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                        
+                        <div className="absolute inset-0 p-12 flex flex-col justify-end">
+                            <motion.h4 
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                className="text-3xl font-serif text-white mb-4"
+                            >
+                                {activeItem.title}
+                            </motion.h4>
+                            <motion.p 
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.1 }}
+                                className="text-white/70 text-sm leading-relaxed mb-8 max-w-sm"
+                            >
+                                {activeItem.description}
+                            </motion.p>
+                            <motion.div
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                <Link href={activeItem.link} className="inline-flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest hover:gap-4 transition-all">
+                                    {activeItem.linkText}
+                                </Link>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+        </div>
     )
 }

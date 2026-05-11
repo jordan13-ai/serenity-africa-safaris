@@ -1,5 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { Partners } from "@/components/sections/Partners";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 
 export default function SiteLayout({
@@ -13,6 +14,7 @@ export default function SiteLayout({
             <main className="flex-1">
                 {children}
             </main>
+            <Partners />
             <Footer />
             <WhatsAppButton />
         </div>

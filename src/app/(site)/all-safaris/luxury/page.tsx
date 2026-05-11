@@ -1,161 +1,135 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Check, Sparkles, Wine, Utensils, Bed, Camera, ArrowRight } from "lucide-react";
+import { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
+
+export const metadata: Metadata = {
+    title: "Luxury Safaris Tanzania | Serenity Africa Safaris",
+    description: "Exclusive 5-star lodges, gourmet dining, and private game vehicles. Experience Tanzania in absolute luxury.",
+};
 
 const packages = [
     {
         name: "Serengeti Luxury Experience",
         days: 7,
         lodges: ["Four Seasons Safari Lodge", "Singita Grumeti"],
-        price: "$5,800",
-        highlights: ["Private game drives", "Gourmet dining", "Infinity pools", "Spa treatments"]
+        highlights: ["Private game drives", "Gourmet dining", "Infinity pools", "Spa treatments"],
     },
     {
         name: "Ultimate Tanzania",
         days: 10,
         lodges: ["Ngorongoro Crater Lodge", "Singita Sasakwa", "AndBeyond Manyara"],
-        price: "$8,500",
-        highlights: ["Butler service", "Hot air balloon", "Private chef", "Helicopter transfers"]
+        highlights: ["Butler service", "Hot air balloon", "Private chef", "Helicopter transfers"],
     },
     {
         name: "Romantic Honeymoon Safari",
         days: 8,
         lodges: ["Sanctuary Retreats", "Elewana Lodges"],
-        price: "$6,200",
-        highlights: ["Private plunge pools", "Couples spa", "Bush dinners", "Champagne sunsets"]
-    }
+        highlights: ["Private plunge pools", "Couples spa", "Bush dinners", "Champagne sunsets"],
+    },
 ];
 
 export default function LuxurySafarisPage() {
     return (
-        <div className="bg-background min-h-screen">
-            {/* Hero */}
-            <section className="relative h-[70vh] flex items-center overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url("/images/hero/slide-2.webp")' }} />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+        <div className="bg-[#FDFBF7] min-h-screen">
 
-                <div className="relative z-10 container max-w-7xl mx-auto px-4">
+            {/* HERO */}
+            <section className="relative h-[80vh] flex items-end overflow-hidden">
+                <Image src="/images/hero/slide-2.webp" alt="Luxury Safari Tanzania" fill className="object-cover scale-105" priority />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+                <div className="relative z-10 container px-6 mx-auto pb-16 lg:pb-24">
                     <div className="max-w-3xl">
-                        <Badge className="mb-4 bg-amber-500 text-white">Luxury Safaris</Badge>
-                        <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">
-                            The Ultimate Safari Experience
-                        </h1>
-                        <p className="text-xl text-gray-200 mb-8">
-                            Exclusive 5-star accommodations, gourmet dining, private game drives, and unparalleled service. Experience Tanzania in absolute luxury.
-                        </p>
-                        <Button size="lg" asChild>
-                            <Link href="/contact">Request Luxury Itinerary</Link>
-                        </Button>
+                        <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase block mb-4">Luxury Safaris</span>
+                        <h1 className="text-5xl md:text-7xl font-serif text-white leading-tight mb-6">The Ultimate <span className="italic text-white/70">Experience</span></h1>
+                        <p className="text-white/70 font-light text-xl mb-8 max-w-xl">Exclusive 5-star lodges, private vehicles, gourmet dining, and unparalleled personal service.</p>
+                        <Link href="/request-quote" className="inline-flex items-center gap-2 bg-white text-[#1A1A1A] px-8 py-4 text-[11px] font-bold tracking-widest uppercase hover:bg-gray-100 transition-colors">
+                            Request Luxury Itinerary <ArrowRight className="w-4 h-4" />
+                        </Link>
                     </div>
                 </div>
             </section>
 
-            {/* Luxury Features */}
-            <section className="py-24 bg-background">
-                <div className="container max-w-6xl mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-serif font-bold mb-6">Luxury Safari Features</h2>
-                        <p className="text-xl text-muted-foreground">Every detail perfected for your comfort</p>
+            {/* FEATURES */}
+            <section className="py-24 bg-[#FDFBF7]">
+                <div className="container px-6 mx-auto max-w-5xl">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-8 h-[1px] bg-primary" />
+                        <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Luxury Features</span>
                     </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <h2 className="text-4xl font-serif text-[#1A1A1A] mb-16">Every Detail <span className="italic text-gray-400">Perfected</span></h2>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
                         {[
-                            { icon: Bed, title: "5-Star Lodges", desc: "Spacious suites with king beds and private decks" },
-                            { icon: Utensils, title: "Gourmet Dining", desc: "World-class chefs and fine wine selections" },
-                            { icon: Sparkles, title: "Private Vehicles", desc: "Exclusive use with professional guide" },
-                            { icon: Wine, title: "Premium Service", desc: "Butler service and 24/7 concierge" }
-                        ].map((feature, i) => (
-                            <Card key={i} className="text-center hover:shadow-lg transition-shadow">
-                                <CardContent className="pt-8">
-                                    <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <feature.icon className="text-amber-600" size={28} />
-                                    </div>
-                                    <h3 className="font-bold mb-2">{feature.title}</h3>
-                                    <p className="text-sm text-muted-foreground">{feature.desc}</p>
-                                </CardContent>
-                            </Card>
+                            { title: "5-Star Lodges", body: "Spacious suites with king beds, private decks, and views that stretch across the wilderness." },
+                            { title: "Gourmet Dining", body: "World-class chefs, fine wine, and bush dinner settings that you'll never forget." },
+                            { title: "Private Vehicles", body: "Exclusive 4x4 with your personal guide — no sharing, no compromises." },
+                            { title: "Butler Service", body: "Concierge, laundry, champagne on arrival, and 24/7 attentive care." },
+                        ].map((f) => (
+                            <div key={f.title}>
+                                <div className="w-8 h-[1px] bg-primary mb-6" />
+                                <h3 className="text-xl font-serif text-[#1A1A1A] mb-3">{f.title}</h3>
+                                <p className="text-gray-500 font-light text-sm leading-relaxed">{f.body}</p>
+                            </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Packages */}
-            <section className="py-24 bg-muted/30">
-                <div className="container max-w-7xl mx-auto px-4">
-                    <h2 className="text-4xl font-serif font-bold text-center mb-16">Luxury Safari Packages</h2>
-
+            {/* PACKAGES */}
+            <section className="py-24 bg-[#F5F0E8]">
+                <div className="container px-6 mx-auto">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-8 h-[1px] bg-primary" />
+                        <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Safari Packages</span>
+                    </div>
+                    <h2 className="text-4xl font-serif text-[#1A1A1A] mb-16">Luxury <span className="italic text-gray-400">Itineraries</span></h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {packages.map((pkg, index) => (
-                            <Card key={index} className="hover:shadow-2xl transition-shadow border-2">
-                                <CardHeader>
-                                    <CardTitle className="text-2xl font-serif mb-2">{pkg.name}</CardTitle>
-                                    <Badge className="w-fit bg-amber-500">{pkg.days} Days</Badge>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="space-y-3 mb-6">
-                                        <p className="text-sm text-muted-foreground font-semibold">Featured Lodges:</p>
-                                        {pkg.lodges.map((lodge, i) => (
-                                            <p key={i} className="text-sm text-muted-foreground">• {lodge}</p>
-                                        ))}
-                                    </div>
-                                    <div className="space-y-2 mb-6">
-                                        {pkg.highlights.map((highlight, i) => (
-                                            <div key={i} className="flex items-center gap-2 text-sm">
-                                                <Check size={16} className="text-green-600" />
-                                                <span>{highlight}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className="flex justify-between items-center pt-4 border-t">
-                                        <div>
-                                            <div className="text-sm text-muted-foreground">From</div>
-                                            <div className="text-3xl font-bold text-amber-600">{pkg.price}</div>
-                                        </div>
-                                        <Button asChild>
-                                            <Link href="/contact">Inquire</Link>
-                                        </Button>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                        {packages.map((pkg) => (
+                            <div key={pkg.name} className="bg-white rounded-[2rem] p-8 border border-[#EAE3D6] hover:shadow-xl transition-shadow">
+                                <div className="flex justify-between items-start mb-6">
+                                    <span className="text-[10px] font-bold tracking-widest uppercase text-gray-400">{pkg.days} Days</span>
+                                </div>
+                                <h3 className="text-2xl font-serif text-[#1A1A1A] mb-3">{pkg.name}</h3>
+                                <div className="mb-5">
+                                    <p className="text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-2">Featured Lodges</p>
+                                    <ul className="space-y-1">
+                                        {pkg.lodges.map((l) => <li key={l} className="text-gray-500 font-light text-sm">{l}</li>)}
+                                    </ul>
+                                </div>
+                                <ul className="space-y-2 mb-8">
+                                    {pkg.highlights.map((h) => (
+                                        <li key={h} className="flex items-start gap-3 text-gray-500 text-sm font-light">
+                                            <span className="text-primary mt-0.5 shrink-0">—</span>{h}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <Link href="/request-quote" className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-primary hover:gap-4 transition-all">
+                                    Enquire <ArrowRight className="w-3.5 h-3.5" />
+                                </Link>
+                            </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* What's Included */}
-            <section className="py-24 bg-background">
-                <div className="container max-w-6xl mx-auto px-4">
-                    <h2 className="text-4xl font-serif font-bold text-center mb-16">Luxury Inclusions</h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <Card className="p-8">
-                            <h3 className="text-2xl font-bold mb-6 text-green-600">Premium Inclusions</h3>
-                            <ul className="space-y-3">
-                                {[
-                                    "5-star luxury lodge accommodation",
-                                    "Private safari vehicle with guide",
-                                    "All gourmet meals & premium beverages",
-                                    "Unlimited game drives",
-                                    "Hot air balloon safari (selected packages)",
-                                    "Spa treatments",
-                                    "Laundry service",
-                                    "Private airstrip transfers",
-                                    "Butler & concierge service",
-                                    "Premium wine & champagne"
-                                ].map((item, i) => (
-                                    <li key={i} className="flex items-start gap-3">
-                                        <Check size={20} className="text-green-600 shrink-0 mt-0.5" />
-                                        <span>{item}</span>
+            {/* INCLUSIONS + IMAGE */}
+            <section className="py-24 bg-[#FDFBF7]">
+                <div className="container px-6 mx-auto max-w-5xl">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                        <div>
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-8 h-[1px] bg-primary" />
+                                <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Premium Inclusions</span>
+                            </div>
+                            <h2 className="text-4xl font-serif text-[#1A1A1A] mb-10">What's <span className="italic text-gray-400">Included</span></h2>
+                            <ul className="space-y-4">
+                                {["5-star lodge accommodation", "Private safari vehicle & guide", "All gourmet meals & premium beverages", "Unlimited game drives", "Hot air balloon (selected itineraries)", "Spa treatments", "Laundry service", "Airstrip transfers", "Butler & concierge service"].map((i) => (
+                                    <li key={i} className="flex items-start gap-3 text-gray-600 font-light">
+                                        <span className="text-primary mt-0.5 shrink-0">—</span>{i}
                                     </li>
                                 ))}
                             </ul>
-                        </Card>
-
-                        <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+                        </div>
+                        <div className="relative h-[500px] rounded-[2rem] overflow-hidden shadow-2xl">
                             <Image src="/images/destinations/ngorongoro/ngorongoro-3.webp" alt="Luxury Lodge" fill className="object-cover" />
                         </div>
                     </div>
@@ -163,15 +137,14 @@ export default function LuxurySafarisPage() {
             </section>
 
             {/* CTA */}
-            <section className="py-24 bg-gradient-to-br from-amber-50 to-background">
-                <div className="container max-w-4xl mx-auto px-4 text-center">
-                    <h2 className="text-4xl font-serif font-bold mb-6">Experience Tanzania in Ultimate Luxury</h2>
-                    <p className="text-xl text-muted-foreground mb-10">
-                        Let us create a bespoke luxury safari tailored to your preferences
-                    </p>
-                    <Button size="lg" className="bg-amber-600 hover:bg-amber-700" asChild>
-                        <Link href="/contact">Design My Luxury Safari</Link>
-                    </Button>
+            <section className="py-24 bg-[#1A1A1A]">
+                <div className="container px-6 mx-auto text-center max-w-2xl">
+                    <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase block mb-6">Bespoke Planning</span>
+                    <h2 className="text-4xl font-serif text-white mb-6">Experience Tanzania <span className="italic text-white/50">in Ultimate Luxury</span></h2>
+                    <p className="text-white/50 font-light mb-10">Our luxury consultants will craft an itinerary to match your exact vision and tastes.</p>
+                    <Link href="/request-quote" className="inline-flex items-center gap-2 bg-primary text-white px-10 py-4 text-[11px] font-bold tracking-widest uppercase hover:bg-primary/90 transition-colors">
+                        Design My Luxury Safari <ArrowRight className="w-4 h-4" />
+                    </Link>
                 </div>
             </section>
         </div>

@@ -4,7 +4,6 @@ export interface Tour {
     slug: string;
     image: string;
     duration: string;
-    price: string;
     // New fields for matching Kili design
     difficulty?: string;
     distance?: string;
@@ -19,6 +18,8 @@ export interface Tour {
     activityLevel?: string; // e.g. "Moderate", "Challenging"
     gettingThere?: string;
 
+    category?: string;
+    gallery?: { src: string; alt: string }[];
     highlights: string[];
     description: string;
     itinerary: {
@@ -41,9 +42,9 @@ export const tours: Tour[] = [
         id: "1",
         title: "7-Day Machame Route",
         slug: "7-day-machame-route",
-        image: "/images/destinations/kilimanjaro/kilimanjaro-1.webp",
+        image: "/images/destinations/kilimanjaro/kilimanjaro-12.webp",
         duration: "7 Days",
-        price: "From $2,100",
+
         difficulty: "Difficult",
         distance: "62 km",
         successRate: "94%",
@@ -147,10 +148,19 @@ export const tours: Tour[] = [
         id: "2",
         title: "5-Day Big Five Safari",
         slug: "5-day-big-five-safari",
-        image: "/images/destinations/serengeti/serengeti-1.webp",
+        image: "/images/destinations/serengeti/serengeti-18.webp",
         duration: "5 Days",
-        price: "From $1,800",
+
         location: "Northern Circuit, Serengeti, Ngorongoro",
+        category: "Classic Wildlife Safari",
+        gallery: [
+            { src: "/images/destinations/serengeti/serengeti-2.webp", alt: "Lion in Serengeti" },
+            { src: "/images/destinations/serengeti/serengeti-15.webp", alt: "Elephants in Tarangire" },
+            { src: "/images/destinations/ngorongoro/ngorongoro-1.webp", alt: "Ngorongoro Crater View" },
+            { src: "/images/destinations/serengeti/serengeti-34.webp", alt: "Acacia Trees at Sunset" },
+            { src: "/images/destinations/serengeti/serengeti-19.webp", alt: "Leopard in Serengeti" },
+            { src: "/images/destinations/ngorongoro/ngorongoro-12.webp", alt: "Rhino in the Crater" }
+        ],
         difficulty: "Easy to Moderate",
         successRate: "100% Sightings",
         bestTime: "June to October for the dry season and best wildlife viewing. January to March for the calving season in Southern Serengeti.",
@@ -222,9 +232,9 @@ export const tours: Tour[] = [
         id: "3",
         title: "8-Day Lemosho Route",
         slug: "8-day-lemosho-route",
-        image: "/images/destinations/kilimanjaro/kilimanjaro-2.webp",
+        image: "/images/destinations/kilimanjaro/kilimanjaro-8.webp",
         duration: "8 Days",
-        price: "From $2,400",
+
         location: "Mount Kilimanjaro",
         difficulty: "Moderate",
         distance: "70 km",
@@ -266,9 +276,9 @@ export const tours: Tour[] = [
         id: "4",
         title: "10-Day Migration & Beach",
         slug: "10-day-migration-beach",
-        image: "/images/destinations/migration/migration-6.webp",
+        image: "/images/destinations/migration/migration-4.webp",
         duration: "10 Days",
-        price: "From $3,500",
+
         location: "Serengeti, Zanzibar",
         difficulty: "Easy",
         successRate: "100% Satisfaction",
@@ -299,9 +309,9 @@ export const tours: Tour[] = [
         id: "5",
         title: "3-Day Fly-in Serengeti",
         slug: "3-day-fly-in-serengeti",
-        image: "/images/destinations/serengeti/serengeti-3.webp",
+        image: "/images/destinations/serengeti/serengeti-30.webp",
         duration: "3 Days",
-        price: "From $1,500",
+
         location: "Serengeti NP",
         difficulty: "Easy",
         bestTime: "Excellent year-round. Wildlife is always abundant in Central Serengeti.",
@@ -325,9 +335,9 @@ export const tours: Tour[] = [
         id: "6",
         title: "5-Day Ruaha Wilderness",
         slug: "5-day-ruaha-wilderness",
-        image: "/images/destinations/ruaha/Ruaha-elephants-1-1900x640-1.webp",
+        image: "/images/destinations/ruaha/ruaha-5.webp",
         duration: "5 Days",
-        price: "From $2,200",
+
         location: "Ruaha",
         difficulty: "Moderate",
         bestTime: "Dry season (June-October) for predator action. Green season (Jan-Mar) for birding and scenery.",
@@ -352,9 +362,9 @@ export const tours: Tour[] = [
         id: "7",
         title: "7-Day Southern Circuit",
         slug: "7-day-southern-circuit",
-        image: "/images/destinations/ruaha/Ruaha-NP-1900x1000-1.webp",
+        image: "/images/destinations/ruaha/ruaha-8.webp",
         duration: "7 Days",
-        price: "From $3,100",
+
         location: "Ruaha, Nyerere",
         difficulty: "Moderate",
         bestTime: "June to October.",
@@ -382,9 +392,9 @@ export const tours: Tour[] = [
         id: "8",
         title: "3-Day Nyerere River Safari",
         slug: "3-day-nyerere-river-safari",
-        image: "/images/destinations/nyerere/MG_9670-1-1.webp",
+        image: "/images/destinations/nyerere/nyerere-1.webp",
         duration: "3 Days",
-        price: "From $1,400",
+
         location: "Nyerere",
         difficulty: "Easy",
         bestTime: "June to October is dry. Jan-Feb is green and beautiful.",
@@ -410,7 +420,7 @@ export const tours: Tour[] = [
         slug: "5-day-zanzibar-escape",
         image: "/images/destinations/zanzibar/zanzibar-1.webp",
         duration: "5 Days",
-        price: "From $1,200",
+
         location: "Zanzibar",
         difficulty: "Relaxed",
         bestTime: "Year-round, avoid heavy rains in April/May.",
@@ -435,9 +445,9 @@ export const tours: Tour[] = [
         id: "10",
         title: "8-Day Luxury Honeymoon",
         slug: "8-day-luxury-honeymoon",
-        image: "/images/destinations/zanzibar/zanzibar-6.webp",
+        image: "/images/destinations/zanzibar/zanzibar-15.webp",
         duration: "8 Days",
-        price: "From $4,500",
+
         location: "Zanzibar",
         difficulty: "Relaxed",
         bestTime: "Perfect year-round.",
@@ -466,9 +476,9 @@ export const tours: Tour[] = [
         id: "11",
         title: "2-Day Tarangire & Ngorongoro",
         slug: "2-day-tarangire-ngorongoro",
-        image: "/images/destinations/tarangire/Tarangire-National-Park-Tanzania.webp",
+        image: "/images/destinations/tarangire/tarangire-14.webp",
         duration: "2 Days",
-        price: "From $800",
+
         location: "Tarangire, Northern Circuit",
         difficulty: "Easy",
         bestTime: "Year-round.",
@@ -490,9 +500,9 @@ export const tours: Tour[] = [
         id: "12",
         title: "6-Day Ruaha & Mikumi",
         slug: "6-day-ruaha-mikumi",
-        image: "/images/destinations/ruaha/Cultural-tourss.webp",
+        image: "/images/destinations/ruaha/ruaha-1.webp",
         duration: "6 Days",
-        price: "From $2,600",
+
         location: "Ruaha, Mikumi",
         difficulty: "Moderate",
         bestTime: "June - October",
@@ -518,9 +528,9 @@ export const tours: Tour[] = [
         id: "13",
         title: "4-Day Nyerere Fly-in",
         slug: "4-day-nyerere-fly-in",
-        image: "/images/destinations/nyerere/selous_08-scaled.webp",
+        image: "/images/destinations/nyerere/nyerere-5.webp",
         duration: "4 Days",
-        price: "From $1,800",
+
         location: "Nyerere",
         difficulty: "Easy",
         bestTime: "Dry season is best.",
@@ -539,5 +549,112 @@ export const tours: Tour[] = [
         ],
         inclusions: ["Flights", "Full Board", "Activities", "Fees"],
         exclusions: ["Premium drinks", "Tips"]
+    },
+    {
+        id: "14",
+        title: "7 Days Luxury Serengeti & Ngorongoro Safari",
+        slug: "7-days-luxury-serengeti-ngorongoro-safari",
+        image: "/images/destinations/serengeti/serengeti-29.webp",
+        duration: "7 Days",
+        location: "Tarangire, Serengeti, Ngorongoro",
+        category: "Luxury Wildlife Safari",
+        difficulty: "Easy",
+        bestTime: "This safari can be enjoyed throughout the year. The dry season from June to October provides excellent wildlife viewing opportunities, while the green season offers beautiful landscapes, fewer crowds, and exceptional photography conditions.",
+        accommodationDetails: "This safari includes carefully selected luxury lodges and tented camps offering comfort, privacy, exceptional service, and immersive safari atmosphere in beautiful natural settings.",
+        minAge: "All Ages",
+        maxGroupSize: 6,
+        activityLevel: "Easy",
+        gettingThere: "Arrive at Kilimanjaro International Airport (JRO). The tour starts and ends in Arusha.",
+        highlights: [
+            "Explore Tanzania’s most iconic national parks",
+            "Witness incredible Big Five wildlife encounters",
+            "Experience the endless plains of Serengeti",
+            "Discover the breathtaking Ngorongoro Crater",
+            "Luxury lodge and tented camp accommodations",
+            "Private 4x4 safari vehicle with professional guide",
+            "Exceptional wildlife photography opportunities",
+            "Beautiful landscapes and unforgettable sunsets"
+        ],
+        description: "This 7-day luxury safari has been carefully designed to showcase the very best of Tanzania’s northern safari circuit while providing comfort, exclusivity, and unforgettable wildlife experiences. From the giant elephant herds of Tarangire National Park to the endless plains of Serengeti and the spectacular Ngorongoro Crater, this journey combines Tanzania’s most celebrated safari destinations into one seamless adventure.",
+        gallery: [
+            { src: "/images/destinations/serengeti/serengeti-11.webp", alt: "Great Migration" },
+            { src: "/images/destinations/serengeti/serengeti-16.webp", alt: "Serengeti Leopard" },
+            { src: "/images/destinations/ngorongoro/ngorongoro-1.webp", alt: "Ngorongoro Crater View" },
+            { src: "/images/destinations/serengeti/serengeti-23.webp", alt: "Serengeti Cheetah" },
+            { src: "/images/destinations/tarangire/tarangire-2.webp", alt: "Tarangire Baobabs" },
+            { src: "/images/destinations/serengeti/serengeti-27.webp", alt: "Serengeti Elephant" }
+        ],
+        itinerary: [
+            {
+                day: 1,
+                title: "Arrival in Tanzania – Welcome to Arusha",
+                description: "Upon arrival at Kilimanjaro International Airport, you will be warmly welcomed by our Serenity Africa Safaris representative and transferred to your luxury lodge in Arusha. Depending on your arrival time, you may relax at the lodge and enjoy the peaceful surroundings while preparing for the exciting safari adventure ahead.",
+                accommodation: "Luxury Lodge in Arusha",
+                meals: "Bed & Breakfast"
+            },
+            {
+                day: 2,
+                title: "Arusha to Tarangire National Park",
+                description: "After breakfast, depart for Tarangire National Park, a beautiful wildlife destination famous for its giant baobab trees and massive elephant herds. As you enter the park, the safari experience officially begins with game drives through diverse landscapes filled with wildlife. Tarangire is home to elephants, lions, giraffes, zebras, wildebeest, buffalo, and hundreds of bird species.",
+                accommodation: "Luxury Safari Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 3,
+                title: "Journey to Central Serengeti",
+                description: "After breakfast, continue your journey toward the world-famous Serengeti National Park. Along the way, pass through the beautiful Ngorongoro Conservation Area with breathtaking views of the highlands and surrounding landscapes. As you enter Serengeti, the scenery transforms into endless golden plains stretching to the horizon. Wildlife sightings begin immediately.",
+                accommodation: "Luxury Tented Camp in Serengeti",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 4,
+                title: "Full Day Safari in Serengeti National Park",
+                description: "Spend a full day exploring the incredible wildlife-rich landscapes of Serengeti National Park. Your day begins with an early morning game drive when wildlife activity is at its peak. Search for lions, cheetahs, leopards, elephants, and other animals while experiencing the peaceful beauty of the African wilderness.",
+                accommodation: "Luxury Tented Camp in Serengeti",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 5,
+                title: "Serengeti to Ngorongoro Highlands",
+                description: "Enjoy a final morning game drive in Serengeti before departing toward the Ngorongoro Highlands. This scenic journey offers additional opportunities for wildlife viewing while crossing beautiful landscapes filled with rolling hills and dramatic scenery. Arrive at your luxury lodge located near the crater rim.",
+                accommodation: "Luxury Lodge at Ngorongoro",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 6,
+                title: "Ngorongoro Crater Safari",
+                description: "Today you descend into the Ngorongoro Crater, one of Africa’s most extraordinary wildlife destinations and a UNESCO World Heritage Site. The crater floor is home to an incredible concentration of animals including lions, elephants, buffalo, zebras, hippos, hyenas, flamingos, and the rare black rhino.",
+                accommodation: "Luxury Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 7,
+                title: "Return to Arusha & Departure",
+                description: "After breakfast, depart for Arusha with scenic views along the journey. Depending on your flight schedule, you may enjoy lunch or last-minute shopping before transfer to Kilimanjaro International Airport for your onward flight. Leave Tanzania with unforgettable memories.",
+                accommodation: "N/A (End of Safari)",
+                meals: "Breakfast, Lunch"
+            }
+        ],
+        inclusions: [
+            "Private 4x4 luxury safari vehicle",
+            "Professional English-speaking safari guide",
+            "All national park entrance fees",
+            "Luxury accommodation during safari",
+            "Meals as specified in itinerary",
+            "Game drives and safari activities",
+            "Airport transfers",
+            "Drinking water during safari",
+            "Government taxes and levies"
+        ],
+        exclusions: [
+            "International flights",
+            "Visa fees",
+            "Travel insurance",
+            "Personal expenses",
+            "Alcoholic and soft drinks",
+            "Tips and gratuities",
+            "Optional activities",
+            "Laundry services"
+        ]
     }
 ];

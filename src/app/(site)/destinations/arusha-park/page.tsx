@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mountain, Footprints, Binoculars } from "lucide-react";
+import { ImageGallery } from "@/components/sections/ImageGallery";
 
 export default function ArushaPage() {
     return (
         <div className="bg-background min-h-screen">
             <section className="relative h-[60vh] flex items-center overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url("/images/destinations/arusha-park-hero.webp")' }} />
+                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url("/images/destinations/arusha/arusha-1.webp")' }} />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
                 <div className="relative z-10 container max-w-7xl mx-auto px-4">
@@ -48,6 +49,19 @@ export default function ArushaPage() {
                     </div>
                 </div>
             </section>
+
+            <ImageGallery
+                title="Arusha Park Gallery"
+                description="Explore the hidden gems of Tanzania's most accessible wilderness."
+                images={[
+                    { src: "/images/destinations/arusha/arusha-2.webp", alt: "Mount Meru", caption: "The majestic Mount Meru" },
+                    { src: "/images/destinations/arusha/arusha-3.webp", alt: "Canoeing Momella", caption: "Canoeing on Momella Lakes" },
+                    { src: "/images/destinations/arusha/arusha-4.webp", alt: "Walking Safari", caption: "Guided Bush Walks" },
+                    { src: "/images/destinations/arusha/arusha-5.webp", alt: "Giraffes in Arusha", caption: "Close encounters with Giraffes" },
+                    { src: "/images/destinations/arusha/arusha-6.webp", alt: "Colobus Monkey", caption: "Rare Black and White Colobus" },
+                    { src: "/images/destinations/arusha/arusha-7.webp", alt: "Fig Tree Arch", caption: "Iconic Fig Tree Archway" },
+                ]}
+            />
 
             <section className="py-24 bg-muted/30">
                 <div className="container max-w-4xl mx-auto px-4 text-center">

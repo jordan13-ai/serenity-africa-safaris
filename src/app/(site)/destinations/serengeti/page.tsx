@@ -1,74 +1,170 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Calendar, Binoculars, Camera, Check } from "lucide-react";
+import { CheckCircle2, MapPin, Compass, Sparkles } from "lucide-react";
 import { ImageGallery } from "@/components/sections/ImageGallery";
 import { DestinationItineraries } from "@/components/sections/DestinationItineraries";
+import { Metadata } from "next";
 
-const stats = { size: "14,763 km²", established: "1951", wildlife: "3,000+ lions, 1,000+ leopards", visitors: "350,000/year" };
-const bestTime = [
-    { period: "June-October", reason: "Dry season - best game viewing", rating: 5 },
-    { period: "January-March", reason: "Calving season - 8,000 births daily", rating: 5 },
-    { period: "November-May", reason: "Green season - fewer crowds, lush landscapes", rating: 3 }
-];
+export const metadata: Metadata = {
+    title: "Serengeti National Park | Serenity Africa Safaris",
+    description: "Experience the endless plains of Africa and witness one of the world’s greatest wildlife spectacles at Serengeti National Park.",
+    keywords: ["Serengeti", "Tanzania Safari", "Great Migration", "Big Five", "National Park"]
+};
 
 export default function SerengetiPage() {
+    const highlights = [
+        "Witness the world-famous Great Migration",
+        "Excellent opportunities to see the Big Five",
+        "Hot air balloon safaris over the plains",
+        "Luxury tented camp experiences",
+        "Exceptional wildlife photography opportunities",
+        "Beautiful golden sunsets and endless landscapes"
+    ];
+
     return (
-        <div className="bg-background min-h-screen">
-            <section className="relative h-[70vh] flex items-center overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url("/images/destinations/serengeti/serengeti-1.webp")' }} />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+        <div className="bg-[#FDFBF7] min-h-screen">
+            {/* Elegant Hero Section */}
+            <section className="relative h-[80vh] flex items-center overflow-hidden">
+                <Image
+                    src="/images/destinations/serengeti/serengeti-1.webp"
+                    alt="Serengeti National Park"
+                    fill
+                    className="object-cover scale-105"
+                    priority
+                />
+                <div className="absolute inset-0 bg-black/40" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent" />
 
-                <div className="relative z-10 container max-w-7xl mx-auto px-4">
+                <div className="relative z-10 container px-6 mx-auto mt-20">
                     <div className="max-w-3xl">
-                        <Badge className="mb-4 bg-amber-600">Serengeti National Park</Badge>
-                        <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">
-                            The Endless Plains
+                        <span className="text-white/80 text-[11px] font-bold tracking-[0.4em] uppercase mb-6 block">
+                            Iconic Destinations
+                        </span>
+                        <h1 className="text-5xl md:text-7xl font-serif text-white mb-6 leading-tight">
+                            Serengeti <br /><span className="italic text-white/80">National Park</span>
                         </h1>
-                        <p className="text-xl text-gray-200 mb-8">
-                            Home to the Great Migration and Africa's highest concentration of predators. The quintessential African savannah experience.
+                        <p className="text-lg md:text-xl text-white/80 max-w-2xl font-light leading-relaxed mb-10">
+                            Experience the endless plains of Africa and witness one of the world’s greatest wildlife spectacles.
                         </p>
-                        <Button size="lg" asChild><Link href="/request-quote">Plan Serengeti Safari</Link></Button>
+                        <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-10 py-6 text-[11px] font-bold tracking-widest uppercase" asChild>
+                            <Link href="/contact">Plan Your Serengeti Safari</Link>
+                        </Button>
                     </div>
                 </div>
             </section>
 
-            <section className="py-16 bg-primary/10">
-                <div className="container max-w-6xl mx-auto px-4">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                        {Object.entries(stats).map(([key, value]) => (
-                            <div key={key}>
-                                <div className="text-3xl font-bold text-primary mb-2">{value}</div>
-                                <div className="text-sm text-muted-foreground capitalize">{key.replace('_', ' ')}</div>
+            {/* Intro Section - Split Layout */}
+            <section className="py-24 md:py-32 bg-[#FDFBF7]">
+                <div className="container px-6 mx-auto">
+                    <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
+                        <div className="w-full lg:w-1/2 space-y-8">
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-[1px] bg-primary"></div>
+                                <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">
+                                    Introduction
+                                </span>
                             </div>
-                        ))}
+                            <h2 className="text-4xl md:text-5xl font-serif text-[#1A1A1A] leading-tight">
+                                The Heart of <br /><span className="italic text-gray-500">African Safari</span>
+                            </h2>
+                            <div className="space-y-6 text-gray-500 font-light leading-relaxed text-lg">
+                                <p>
+                                    Serengeti National Park is one of the most iconic safari destinations on Earth and the crown jewel of Tanzania’s wildlife experiences. Stretching across vast golden plains as far as the eye can see, Serengeti offers unmatched beauty, extraordinary wildlife encounters, and unforgettable safari adventures throughout the year.
+                                </p>
+                                <p>
+                                    Known globally for the Great Migration, Serengeti hosts millions of wildebeest, zebras, and gazelles as they move across the ecosystem in search of fresh grazing land. This incredible natural movement attracts predators such as lions, cheetahs, leopards, and crocodiles, creating one of the most dramatic wildlife spectacles in the world.
+                                </p>
+                                <p>
+                                    Beyond the migration, Serengeti offers incredible year-round game viewing with abundant wildlife, breathtaking landscapes, dramatic sunsets, and authentic safari experiences that connect travelers deeply with nature.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="w-full lg:w-1/2">
+                            <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl">
+                                <Image
+                                    src="/images/destinations/serengeti/serengeti-9.webp"
+                                    alt="Wildlife in Serengeti"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section className="py-24 bg-background">
-                <div className="container max-w-6xl mx-auto px-4">
-                    <h2 className="text-4xl font-serif font-bold mb-12">Why Visit Serengeti?</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <div>
-                            <h3 className="text-2xl font-bold mb-4">The Great Migration</h3>
-                            <p className="text-muted-foreground mb-6">
-                                Witness 2 million wildebeest, zebras, and gazelles on their annual 800km circular journey. River crossings, predator action, and the calving season make this nature's greatest spectacle.
-                            </p>
-                            <h3 className="text-2xl font-bold mb-4">Big Cat Capital</h3>
-                            <p className="text-muted-foreground">
-                                Serengeti has Africa's highest density of lions (3,000+) and leopards (1,000+). Cheetahs hunt on the open plains, making this a photographer's paradise.
-                            </p>
+            {/* Why Visit & Highlights */}
+            <section className="py-24 bg-[#EAE3D6] relative overflow-hidden">
+                <div className="container px-6 mx-auto relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+                        <div className="space-y-8">
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-[1px] bg-primary"></div>
+                                <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">
+                                    The Experience
+                                </span>
+                            </div>
+                            <h2 className="text-4xl font-serif text-[#1A1A1A]">Why Visit Serengeti</h2>
+                            <div className="space-y-6 text-gray-600 font-light leading-relaxed text-lg">
+                                <p>A safari in Serengeti is more than wildlife viewing — it is a journey into the heart of untamed Africa. Every day offers something unique, from watching lions resting beneath acacia trees to witnessing elephants crossing open plains at sunrise.</p>
+                                <p>Serengeti is also one of the best places in Africa to experience luxury tented camps, immersive game drives, hot air balloon safaris, and authentic bush experiences under star-filled skies.</p>
+                                <p>Whether you are visiting for the Great Migration, photography, honeymoon, family adventure, or a luxury safari escape, Serengeti delivers extraordinary moments that remain unforgettable for a lifetime.</p>
+                            </div>
                         </div>
-                        <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl">
-                            <Image src="/images/destinations/serengeti/serengeti-1.webp" alt="Serengeti Lions" fill className="object-cover" />
+
+                        <div className="bg-white/50 backdrop-blur-sm p-10 md:p-12 rounded-[2rem] border border-white/50 shadow-sm">
+                            <h3 className="text-2xl font-serif text-[#1A1A1A] mb-8">Highlights</h3>
+                            <ul className="space-y-6">
+                                {highlights.map((item, index) => (
+                                    <li key={index} className="flex items-start gap-4">
+                                        <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
+                                            <CheckCircle2 className="w-3 h-3 text-primary" />
+                                        </div>
+                                        <span className="text-gray-600 font-light">{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
                 </div>
             </section>
 
+            {/* Wildlife Section */}
+            <section className="py-24 md:py-32 bg-[#FDFBF7]">
+                <div className="container px-6 mx-auto">
+                    <div className="flex flex-col lg:flex-row-reverse gap-16 lg:gap-24 items-center">
+                        <div className="w-full lg:w-1/2 space-y-8">
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-[1px] bg-primary"></div>
+                                <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">
+                                    Nature's Bounty
+                                </span>
+                            </div>
+                            <h2 className="text-4xl font-serif text-[#1A1A1A]">Wildlife in Serengeti</h2>
+                            <div className="space-y-6 text-gray-500 font-light leading-relaxed text-lg">
+                                <p>
+                                    Serengeti is home to one of the largest concentrations of wildlife in Africa. Visitors can encounter lions, leopards, elephants, cheetahs, buffalo, giraffes, hyenas, zebras, wildebeest, gazelles, hippos, crocodiles, and hundreds of bird species.
+                                </p>
+                                <p>
+                                    The diversity of habitats — including open plains, river systems, woodlands, and rocky kopjes — supports an incredible ecosystem that makes every game drive exciting and unpredictable.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="w-full lg:w-1/2">
+                            <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl">
+                                <Image
+                                    src="/images/destinations/serengeti/serengeti-18.webp"
+                                    alt="Wildlife in Serengeti"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <DestinationItineraries location="Serengeti" title="Top Serengeti Safaris" />
 
@@ -76,50 +172,40 @@ export default function SerengetiPage() {
                 title="Serengeti Gallery"
                 description="A glimpse into the endless plains and its magnificent inhabitants."
                 images={[
-                    { src: "/images/destinations/migration/migration-7.webp", alt: "Serengeti Migration", caption: "The Great Migration in full swing" },
-                    { src: "/images/destinations/serengeti/serengeti-3.webp", alt: "Serengeti Leopard", caption: "A leopard resting on a branch" },
-                    { src: "/images/destinations/serengeti/serengeti-4.webp", alt: "Serengeti Sunset", caption: "Golden hour over the savannah" },
-                    { src: "/images/destinations/serengeti/serengeti-5.webp", alt: "Serengeti Cheetah", caption: "Cheetah on the hunt" },
-                    { src: "/images/destinations/serengeti/serengeti-6.webp", alt: "Serengeti Elephant", caption: "Gentle giants of the plains" },
-                    { src: "/images/destinations/migration/migration-8.webp", alt: "Serengeti Landscape", caption: "Iconic acacia trees" },
+                    { src: "/images/destinations/serengeti/serengeti-11.webp", alt: "Great Migration", caption: "The Great Migration in full swing" },
+                    { src: "/images/destinations/serengeti/serengeti-16.webp", alt: "Serengeti Leopard", caption: "A leopard resting on a branch" },
+                    { src: "/images/destinations/serengeti/serengeti-20.webp", alt: "Serengeti Sunset", caption: "Golden hour over the savannah" },
+                    { src: "/images/destinations/serengeti/serengeti-23.webp", alt: "Serengeti Cheetah", caption: "Cheetah on the hunt" },
+                    { src: "/images/destinations/serengeti/serengeti-27.webp", alt: "Serengeti Elephant", caption: "Gentle giants of the plains" },
+                    { src: "/images/destinations/serengeti/serengeti-34.webp", alt: "Serengeti Landscape", caption: "Iconic acacia trees" },
                 ]}
             />
 
-            <section className="py-24 bg-muted/30">
-                <div className="container max-w-6xl mx-auto px-4">
-                    <h2 className="text-4xl font-serif font-bold mb-12 text-center">When to Visit</h2>
-                    <div className="space-y-4">
-                        {bestTime.map((time, i) => (
-                            <Card key={i}>
-                                <CardContent className="pt-6">
-                                    <div className="flex justify-between items-center">
-                                        <div>
-                                            <h3 className="font-bold text-lg mb-1">{time.period}</h3>
-                                            <p className="text-muted-foreground">{time.reason}</p>
-                                        </div>
-                                        <div className="flex gap-1">
-                                            {[...Array(5)].map((_, j) => (
-                                                <div key={j} className={`w-3 h-3 rounded-full ${j < time.rating ? 'bg-amber-500' : 'bg-gray-300'}`} />
-                                            ))}
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
+            {/* Best Time Section */}
+            <section className="py-24 bg-[#EAE3D6]">
+                <div className="container px-6 mx-auto text-center max-w-4xl">
+                    <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase mb-4 block">
+                        Planning
+                    </span>
+                    <h2 className="text-4xl font-serif text-[#1A1A1A] mb-8">Best Time to Visit</h2>
+                    <p className="text-gray-600 font-light leading-relaxed text-lg mb-12">
+                        Serengeti offers incredible safari experiences throughout the year. The timing of the Great Migration changes seasonally, while the dry season from June to October provides excellent general wildlife viewing. Green season months also offer beautiful scenery, fewer crowds, and exceptional photography conditions.
+                    </p>
                 </div>
             </section>
 
-            <section className="py-24 bg-background">
-                <div className="container max-w-4xl mx-auto px-4 text-center">
-                    <h2 className="text-4xl font-serif font-bold mb-6">Experience the Serengeti</h2>
-                    <p className="text-xl text-muted-foreground mb-10">Let us create the perfect Serengeti itinerary for you</p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" asChild><Link href="/request-quote">Get Custom Quote</Link></Button>
-                        <Button size="lg" variant="outline" asChild><Link href="/all-safaris/migration">View Migration Safaris</Link></Button>
-                    </div>
+            {/* Final CTA */}
+            <section className="py-24 bg-[#1A1A1A] text-white">
+                <div className="container px-6 mx-auto text-center max-w-4xl">
+                    <h2 className="text-4xl md:text-6xl font-serif mb-6 leading-tight">Experience the <br /><span className="italic text-primary">Magic of Serengeti</span></h2>
+                    <p className="text-white/60 font-light text-lg mb-10 max-w-2xl mx-auto">
+                        Discover unforgettable safari moments in Africa’s most iconic wildlife destination.
+                    </p>
+                    <Link href="/contact" className="inline-block bg-primary text-white font-bold tracking-[0.2em] uppercase text-[11px] px-12 py-5 rounded-full hover:bg-white hover:text-primary transition-all duration-300 shadow-lg">
+                        Plan Your Serengeti Safari
+                    </Link>
                 </div>
             </section>
-        </div >
+        </div>
     );
 }

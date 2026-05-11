@@ -1,9 +1,9 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Clock, DollarSign, Users, MapPin, Coffee, Droplets, Mountain, Camera, Heart } from "lucide-react";
+import { ArrowRight, Clock, DollarSign, MapPin, Coffee, Droplets, Mountain, Camera, Heart, CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const dayTrips = [
     {
@@ -13,7 +13,7 @@ const dayTrips = [
         image: "/images/destinations/kilimanjaro/kilimanjaro-4.webp",
         duration: "Half to full day",
         difficulty: "Easy-Moderate",
-        price: "$50-250",
+
         highlights: ["Mandara Hut", "Materuni Falls", "Lake Chala", "Hot Springs"],
         icon: Mountain
     },
@@ -24,7 +24,7 @@ const dayTrips = [
         image: "/images/destinations/kilimanjaro/kilimanjaro-1.webp",
         duration: "Full day (8-10 hours)",
         difficulty: "Moderate",
-        price: "$240-453",
+
         highlights: ["Shira Plateau", "Cathedral Point", "Alpine landscape", "High altitude"],
         icon: Mountain
     },
@@ -35,7 +35,7 @@ const dayTrips = [
         image: "/images/destinations/ngorongoro/ngorongoro-5.webp",
         duration: "10-12 hours",
         difficulty: "Easy",
-        price: "$200-350",
+
         highlights: ["Game drives", "Big 5 viewing", "Packed lunch", "Professional guide"],
         icon: Camera
     },
@@ -46,7 +46,7 @@ const dayTrips = [
         image: "/images/destinations/kilimanjaro/kilimanjaro-5.webp",
         duration: "4-5 hours",
         difficulty: "Easy",
-        price: "$80",
+
         highlights: ["Natural hot springs", "Swimming", "Picnic lunch", "Scenic drive"],
         icon: Droplets
     },
@@ -57,7 +57,7 @@ const dayTrips = [
         image: "/images/destinations/tarangire/tarangire-3.webp",
         duration: "4-6 hours",
         difficulty: "Easy",
-        price: "$100",
+
         highlights: ["Village visits", "Traditional ceremonies", "Local crafts", "Authentic meals"],
         icon: Heart
     },
@@ -68,195 +68,291 @@ const dayTrips = [
         image: "/images/destinations/kilimanjaro/kilimanjaro-6.webp",
         duration: "3-4 hours",
         difficulty: "Easy",
-        price: "$60",
+
         highlights: ["Coffee roasting", "Bean picking", "Tasting session", "Local lunch"],
         icon: Coffee
     }
 ];
 
+const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
+};
+
+const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.15 }
+    }
+};
+
 export default function DayTripsPage() {
     return (
-        <div className="bg-background min-h-screen">
-            {/* Hero Section */}
-            <section className="relative h-[60vh] flex items-center overflow-hidden">
-                <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: 'url("/images/hero/slide-1.webp")' }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+        <div className="bg-[#FDFBF7] min-h-screen">
+            {/* HERO SECTION */}
+            <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0">
+                    <Image
+                        src="/images/hero/slide-1.webp"
+                        alt="Tanzania Day Trips"
+                        fill
+                        className="object-cover"
+                        priority
+                    />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/70 via-[#1A1A1A]/40 to-[#FDFBF7]" />
 
-                <div className="relative z-10 container max-w-7xl mx-auto px-4">
-                    <div className="max-w-3xl">
-                        <Badge className="mb-4 bg-primary text-primary-foreground text-base px-4 py-2">
-                            Day Trips & Excursions
-                        </Badge>
-                        <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">
-                            One Day Adventures
-                        </h1>
-                        <p className="text-xl text-gray-200 mb-8">
-                            Short on time? Experience the magic of Tanzania in a single day. From coffee tours to hiking and game drives.
-                        </p>
-                        <Button size="lg" className="text-lg px-8 py-6" asChild>
-                            <Link href="/contact">Book a Day Trip</Link>
-                        </Button>
-                    </div>
+                <div className="relative z-10 container max-w-7xl mx-auto px-6 text-center">
+                    <motion.div 
+                        initial="hidden"
+                        animate="visible"
+                        variants={staggerContainer}
+                        className="max-w-3xl mx-auto flex flex-col items-center"
+                    >
+                        <motion.span variants={fadeInUp} className="text-primary text-[11px] font-bold tracking-[0.3em] uppercase block mb-6 flex items-center gap-4">
+                            <div className="w-8 h-[1px] bg-primary"></div>
+                            Curated Experiences
+                            <div className="w-8 h-[1px] bg-primary"></div>
+                        </motion.span>
+                        <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-tight mb-8">
+                            One Day <br />
+                            <span className="italic text-white/80">Adventures</span>
+                        </motion.h1>
+                        <motion.p variants={fadeInUp} className="text-xl text-white/80 font-light mb-12 max-w-2xl leading-relaxed">
+                            Short on time? Experience the magic of Tanzania in a single day. From immersive coffee tours to thrilling game drives.
+                        </motion.p>
+                        <motion.div variants={fadeInUp}>
+                            <Link 
+                                href="/contact"
+                                className="group inline-flex items-center gap-4 bg-primary text-white px-10 py-5 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-primary/90 transition-all"
+                            >
+                                Plan Your Excursion
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                            </Link>
+                        </motion.div>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* Day Trips Grid */}
-            <section className="py-24 bg-background">
-                <div className="container max-w-7xl mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
-                            Choose Your Adventure
+            {/* DAY TRIPS GRID */}
+            <section className="py-32">
+                <div className="container max-w-7xl mx-auto px-6">
+                    <div className="text-center mb-20">
+                        <span className="text-primary text-[10px] font-bold tracking-[0.2em] uppercase block mb-4">Our Collection</span>
+                        <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1A1A1A] mb-6">
+                            Choose Your Experience
                         </h2>
-                        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                            Perfect for layovers, pre/post-safari relaxation, or when you're short on time
+                        <p className="text-lg text-gray-500 font-light max-w-2xl mx-auto">
+                            Perfect for layovers, pre or post-safari relaxation, or when you simply want a taste of the extraordinary.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                         {dayTrips.map((trip, index) => (
-                            <Card key={index} className="overflow-hidden hover:shadow-xl transition-all group">
-                                <div className="relative h-56">
+                            <motion.div 
+                                key={index}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, margin: "-100px" }}
+                                variants={fadeInUp}
+                                className="group relative bg-white rounded-none overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col"
+                            >
+                                <div className="relative h-72 overflow-hidden">
                                     <Image
                                         src={trip.image}
                                         alt={trip.title}
                                         fill
-                                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                                     />
-                                    <div className="absolute top-4 right-4">
-                                        <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center">
-                                            <trip.icon className="text-primary" size={24} />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                    
+                                    <div className="absolute top-6 right-6">
+                                        <div className="w-12 h-12 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 delay-100">
+                                            <trip.icon className="text-primary w-5 h-5" />
                                         </div>
                                     </div>
-                                    <Badge className="absolute bottom-4 left-4 bg-primary text-primary-foreground">
-                                        {trip.difficulty}
-                                    </Badge>
+                                    
+                                    <div className="absolute bottom-6 left-6">
+                                        <span className="bg-[#1A1A1A] text-white text-[9px] font-bold uppercase tracking-[0.2em] px-4 py-2">
+                                            {trip.difficulty}
+                                        </span>
+                                    </div>
                                 </div>
-                                <CardHeader>
-                                    <CardTitle className="text-2xl font-serif">{trip.title}</CardTitle>
-                                    <p className="text-muted-foreground">{trip.description}</p>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="flex justify-between items-center mb-4 text-sm">
-                                        <div className="flex items-center gap-1 text-muted-foreground">
-                                            <Clock size={16} className="text-primary" />
-                                            <span>{trip.duration}</span>
-                                        </div>
-                                        <div className="flex items-center gap-1 text-primary font-bold text-lg">
-                                            <DollarSign size={18} />
-                                            <span>{trip.price.replace('$', '')}</span>
-                                        </div>
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-2 mb-4">
-                                        {trip.highlights.map((highlight, i) => (
-                                            <div key={i} className="text-xs text-muted-foreground flex items-center gap-1">
-                                                <span className="text-primary">✓</span>
-                                                <span>{highlight}</span>
+                                
+                                <div className="p-8 flex-1 flex flex-col">
+                                    <h3 className="text-2xl font-serif text-[#1A1A1A] mb-4 group-hover:text-primary transition-colors">{trip.title}</h3>
+                                    <p className="text-gray-500 font-light text-sm leading-relaxed mb-8 flex-1">
+                                        {trip.description}
+                                    </p>
+                                    
+                                    <div className="border-t border-gray-100 pt-6 mb-8">
+                                            <div className="flex items-center gap-3 text-sm text-gray-500 font-light">
+                                                <Clock className="w-4 h-4 text-primary" />
+                                                {trip.duration}
                                             </div>
-                                        ))}
+                                        <div className="grid grid-cols-2 gap-y-3 gap-x-2">
+                                            {trip.highlights.map((highlight, i) => (
+                                                <div key={i} className="text-xs text-gray-500 font-light flex items-start gap-2">
+                                                    <div className="w-1 h-1 bg-primary rounded-full mt-1.5 shrink-0" />
+                                                    <span>{highlight}</span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                    <Button className="w-full" asChild>
-                                        <Link href={`/all-day-trips/${trip.slug}`}>
-                                            Learn More <ArrowRight size={16} className="ml-2" />
-                                        </Link>
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                                    
+                                    <Link 
+                                        href={`/all-day-trips/${trip.slug}`}
+                                        className="inline-flex items-center justify-center gap-3 w-full border border-[#1A1A1A] text-[#1A1A1A] py-4 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-[#1A1A1A] hover:text-white transition-all group/btn"
+                                    >
+                                        Discover More <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
+                                    </Link>
+                                </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Why Day Trips */}
-            <section className="py-24 bg-muted/30">
-                <div className="container max-w-6xl mx-auto px-4">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div>
-                            <h2 className="text-4xl font-serif font-bold mb-6">
-                                Why Choose Day Trips?
-                            </h2>
-                            <div className="space-y-4 text-lg text-muted-foreground">
-                                <p>
-                                    <strong className="text-foreground">Perfect for Short Stays:</strong> Maximize your limited time in Tanzania with focused, high-quality experiences.
-                                </p>
-                                <p>
-                                    <strong className="text-foreground">Budget-Friendly:</strong> Get a taste of Tanzania without committing to a multi-day safari or trek.
-                                </p>
-                                <p>
-                                    <strong className="text-foreground">Great Add-Ons:</strong> Enhance your main safari or Kilimanjaro climb with cultural or relaxation experiences.
-                                </p>
-                                <p>
-                                    <strong className="text-foreground">Flexible Scheduling:</strong> Available daily with morning or afternoon departure options.
-                                </p>
+            {/* WHY CHOOSE DAY TRIPS */}
+            <section className="py-32 bg-[#1A1A1A] text-white relative overflow-hidden">
+                <div className="absolute inset-0 opacity-10 bg-[url('/images/destinations/ngorongoro/ngorongoro-5.webp')] bg-cover bg-fixed bg-center mix-blend-luminosity" />
+                <div className="container max-w-7xl mx-auto px-6 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <motion.div 
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-100px" }}
+                            variants={staggerContainer}
+                        >
+                            <motion.span variants={fadeInUp} className="text-primary text-[10px] font-bold tracking-[0.2em] uppercase block mb-4">The Benefits</motion.span>
+                            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-serif font-bold mb-10 leading-tight">
+                                Why Opt For <br />
+                                <span className="italic text-white/70">A Day Excursion?</span>
+                            </motion.h2>
+                            
+                            <div className="space-y-8">
+                                {[
+                                    { title: "Perfect for Short Stays", desc: "Maximize your limited time in Tanzania with focused, high-quality experiences designed to deliver maximum impact." },
+                                    { title: "Budget-Friendly Intro", desc: "Get a taste of authentic Tanzania without committing to the budget of a multi-day safari or extended trek." },
+                                    { title: "Seamless Add-Ons", desc: "Enhance your main safari or Kilimanjaro climb with cultural immersion or a day of pure relaxation at the hot springs." },
+                                    { title: "Ultimate Flexibility", desc: "Available daily with morning or afternoon departure options to perfectly fit your travel schedule." }
+                                ].map((item, i) => (
+                                    <motion.div variants={fadeInUp} key={i} className="flex gap-6">
+                                        <div className="mt-1">
+                                            <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-primary font-serif">
+                                                0{i+1}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-medium mb-2">{item.title}</h3>
+                                            <p className="text-white/50 font-light text-sm leading-relaxed">{item.desc}</p>
+                                        </div>
+                                    </motion.div>
+                                ))}
                             </div>
-                        </div>
-                        <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl">
+                        </motion.div>
+                        
+                        <motion.div 
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className="relative h-[600px] hidden lg:block"
+                        >
                             <Image
                                 src="/images/intro/day-trips-card.webp"
                                 alt="Day Trips"
                                 fill
                                 className="object-cover"
                             />
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* What's Included */}
-            <section className="py-24 bg-background">
-                <div className="container max-w-4xl mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl font-serif font-bold mb-6">
-                            What's Included
+            {/* WHAT'S INCLUDED */}
+            <section className="py-32 bg-white">
+                <div className="container max-w-5xl mx-auto px-6">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl font-serif font-bold text-[#1A1A1A] mb-4">
+                            What to Expect
                         </h2>
+                        <p className="text-gray-500 font-light">Everything you need to know about your excursion inclusions.</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <Card>
-                            <CardContent className="pt-6">
-                                <h3 className="font-bold text-lg mb-4 text-green-600">✓ Included</h3>
-                                <ul className="space-y-2 text-sm">
-                                    <li>• Professional guide</li>
-                                    <li>• Transportation from/to hotel</li>
-                                    <li>• All entrance fees</li>
-                                    <li>• Lunch or snacks</li>
-                                    <li>• Bottled water</li>
-                                </ul>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent className="pt-6">
-                                <h3 className="font-bold text-lg mb-4 text-orange-600">✗ Not Included</h3>
-                                <ul className="space-y-2 text-sm text-muted-foreground">
-                                    <li>• Tips for guide</li>
-                                    <li>• Personal expenses</li>
-                                    <li>• Travel insurance</li>
-                                    <li>• Alcoholic beverages</li>
-                                    <li>• Souvenirs</li>
-                                </ul>
-                            </CardContent>
-                        </Card>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <motion.div 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="bg-[#FDFBF7] p-10 border border-gray-100"
+                        >
+                            <div className="flex items-center gap-4 mb-8 pb-8 border-b border-gray-200">
+                                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                                    <CheckCircle2 className="w-6 h-6 text-green-600" />
+                                </div>
+                                <h3 className="text-xl font-serif text-[#1A1A1A]">Always Included</h3>
+                            </div>
+                            <ul className="space-y-4">
+                                {["Professional English-speaking guide", "Private transportation from/to your hotel", "All park entry and village fees", "Picnic lunch or traditional hot meal", "Unlimited bottled drinking water"].map((item, i) => (
+                                    <li key={i} className="flex items-center gap-4 text-gray-600 font-light text-sm">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+                        
+                        <motion.div 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="bg-[#FDFBF7] p-10 border border-gray-100"
+                        >
+                            <div className="flex items-center gap-4 mb-8 pb-8 border-b border-gray-200">
+                                <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                                    <span className="text-red-600 text-xl font-bold">×</span>
+                                </div>
+                                <h3 className="text-xl font-serif text-[#1A1A1A]">Not Included</h3>
+                            </div>
+                            <ul className="space-y-4">
+                                {["Gratuities for your guide/driver", "Personal expenses and souvenirs", "Comprehensive travel insurance", "Alcoholic beverages", "International or domestic flights"].map((item, i) => (
+                                    <li key={i} className="flex items-center gap-4 text-gray-500 font-light text-sm">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-red-300 shrink-0" />
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* Final CTA */}
-            <section className="py-24 bg-primary/10">
-                <div className="container max-w-4xl mx-auto px-4 text-center">
-                    <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
-                        Book Your Day Adventure
+            {/* FINAL CTA */}
+            <section className="py-32 bg-[#FDFBF7] text-center border-t border-gray-100">
+                <div className="container max-w-3xl mx-auto px-6">
+                    <span className="text-primary text-[10px] font-bold tracking-[0.2em] uppercase block mb-6">Ready to Explore?</span>
+                    <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1A1A1A] mb-8">
+                        Secure Your Date Today
                     </h2>
-                    <p className="text-xl text-muted-foreground mb-10">
-                        Available daily. Last-minute bookings welcome!
+                    <p className="text-lg text-gray-500 font-light mb-12">
+                        Our day trips are available daily. Last-minute bookings are welcome, subject to availability.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="text-lg px-8 py-6" asChild>
-                            <Link href="/contact">Book Now</Link>
-                        </Button>
-                        <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>
-                            <Link href="/safaris">View Multi-Day Safaris</Link>
-                        </Button>
+                    <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                        <Link 
+                            href="/contact"
+                            className="bg-primary text-white px-10 py-5 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-primary/90 transition-all"
+                        >
+                            Book Your Excursion
+                        </Link>
+                        <Link 
+                            href="/safari"
+                            className="border border-[#1A1A1A] text-[#1A1A1A] px-10 py-5 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-[#1A1A1A] hover:text-white transition-all"
+                        >
+                            View Multi-Day Safaris
+                        </Link>
                     </div>
                 </div>
             </section>
