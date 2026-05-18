@@ -1,33 +1,77 @@
 "use client"
 import Link from "next/link";
 import Image from "next/image";
-import { blogPosts } from "@/lib/blog-data";
-import { ArrowRight, Search, Tag, Clock, User, Calendar } from "lucide-react";
-import { useState } from "react";
+import { blogPosts as staticPosts } from "@/lib/blog-data";
+import { ArrowRight, Search, Clock, User, Calendar } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+
+interface Post {
+  id: string; slug: string; title: string; excerpt: string; date: string;
+  author: string; image: string; category: string;
+}
+
+function normalize(p: Record<string, unknown>): Post {
+  return {
+    id: p.id as string,
+    slug: p.slug as string,
+    title: p.title as string,
+    excerpt: (p.excerpt as string) ?? "",
+    author: (p.author as string) ?? "Serenity Africa",
+    category: (p.category as string) ?? "Safari",
+    image: (p.coverImage as string) || "/images/destinations/serengeti/serengeti-10.webp",
+    date: p.publishedAt ? new Date(p.publishedAt as string).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : (p.date as string) ?? "",
+  }
+}
+
+const tags = ["Serengeti", "Safari Tips", "Migration", "Zanzibar", "Luxury", "Photography", "Wildlife", "Conservation"];
 
 export default function BlogListingPage() {
-    const [searchTerm, setSearchTerm] = useState("");
-    const [activeCategory, setActiveCategory] = useState("All");
+  const [posts, setPosts] = useState<Post[]>([])
+  const [loading, setLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
 
-    const categories = ["All", ...Array.from(new Set(blogPosts.map(post => post.category)))];
-    
-    const filteredPosts = blogPosts.filter(post => {
-        const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                             post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = activeCategory === "All" || post.category === activeCategory;
-        return matchesSearch && matchesCategory;
-    });
+  const fetchPosts = useCallback(async () => {
+    setLoading(true)
+    try {
+      const params = new URLSearchParams({ limit: "50" })
+      if (activeCategory !== "All") params.set("category", activeCategory)
+      if (searchTerm) params.set("q", searchTerm)
+      const res = await fetch(`/api/blog?${params}`)
+      if (res.ok) {
+        const json = await res.json()
+        if (json.posts?.length > 0) {
+          setPosts(json.posts.map(normalize))
+          setLoading(false)
+          return
+        }
+      }
+    } catch { /* fall through to static */ }
+    // Fallback to static data
+    const filtered = staticPosts.filter(p => {
+      const matchSearch = !searchTerm || p.title.toLowerCase().includes(searchTerm.toLowerCase()) || p.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchCat = activeCategory === "All" || p.category === activeCategory
+      return matchSearch && matchCat
+    })
+    setPosts(filtered.map(p => ({ ...p, image: p.image })))
+    setLoading(false)
+  }, [activeCategory, searchTerm])
 
-    const featured = filteredPosts[0] || blogPosts[0];
-    const remainingPosts = filteredPosts.length > 0 ? filteredPosts.slice(1) : [];
-    
-    const popularPosts = blogPosts.slice(0, 3);
-    const tags = ["Serengeti", "Safari Tips", "Migration", "Zanzibar", "Luxury", "Photography", "Wildlife", "Conservation"];
+  useEffect(() => {
+    const t = setTimeout(() => fetchPosts(), 300)
+    return () => clearTimeout(t)
+  }, [fetchPosts])
+
+  const allCategories = ["All", ...Array.from(new Set([...posts.map(p => p.category), ...staticPosts.map(p => p.category)]))]
+  const popularPosts = posts.slice(0, 3)
+  const featured = posts[0]
+  const remainingPosts = posts.slice(1)
 
     return (
         <main className="min-h-screen bg-[#FDFBF7]">
 
             {/* MASTHEAD / FEATURED POST */}
+            {featured && (
             <section className="relative h-[80vh] flex items-end overflow-hidden">
                 <Image
                     src={featured.image}
@@ -70,20 +114,20 @@ export default function BlogListingPage() {
                     </div>
                 </div>
             </section>
+            )}
 
             {/* SEARCH & FILTERS */}
             <section className="py-12 bg-white border-b border-gray-100 sticky top-0 z-40 shadow-sm">
                 <div className="container px-6 mx-auto">
                     <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
-                        {/* Categories */}
                         <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 md:gap-4">
-                            {categories.map((cat) => (
+                            {allCategories.map((cat) => (
                                 <button
                                     key={cat}
                                     onClick={() => setActiveCategory(cat)}
                                     className={`px-6 py-2.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all duration-300 ${
-                                        activeCategory === cat 
-                                        ? "bg-primary text-white shadow-lg shadow-primary/20" 
+                                        activeCategory === cat
+                                        ? "bg-primary text-white shadow-lg shadow-primary/20"
                                         : "bg-gray-50 text-gray-400 hover:bg-gray-100"
                                     }`}
                                 >
@@ -91,11 +135,9 @@ export default function BlogListingPage() {
                                 </button>
                             ))}
                         </div>
-
-                        {/* Search */}
                         <div className="relative w-full lg:w-96">
                             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                            <input 
+                            <input
                                 type="text"
                                 placeholder="Search articles..."
                                 value={searchTerm}
@@ -111,10 +153,12 @@ export default function BlogListingPage() {
             <section className="py-24 bg-[#FDFBF7]">
                 <div className="container px-6 mx-auto">
                     <div className="flex flex-col lg:flex-row gap-20">
-                        
+
                         {/* LEFT COLUMN: ARTICLES */}
                         <div className="w-full lg:w-8/12">
-                            {remainingPosts.length > 0 ? (
+                            {loading ? (
+                              <div className="text-center py-20 text-gray-400 text-sm">Loading articles...</div>
+                            ) : remainingPosts.length > 0 ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20">
                                     {remainingPosts.map((post) => (
                                         <article key={post.id} className="group flex flex-col">
@@ -164,7 +208,7 @@ export default function BlogListingPage() {
                                 <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
                                     <h3 className="text-2xl font-serif text-gray-400 mb-2">No articles found</h3>
                                     <p className="text-gray-400 font-light">Try adjusting your search or category filter.</p>
-                                    <button 
+                                    <button
                                         onClick={() => {setSearchTerm(""); setActiveCategory("All")}}
                                         className="mt-6 text-primary font-bold text-[10px] uppercase tracking-widest"
                                     >
@@ -172,21 +216,11 @@ export default function BlogListingPage() {
                                     </button>
                                 </div>
                             )}
-
-                            {/* Pagination (Visual only) */}
-                            {remainingPosts.length > 0 && (
-                                <div className="mt-32 flex items-center justify-center gap-4">
-                                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-300 cursor-not-allowed">1</div>
-                                    <div className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:border-primary hover:text-primary transition-all cursor-pointer">2</div>
-                                    <div className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:border-primary hover:text-primary transition-all cursor-pointer">3</div>
-                                    <div className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:border-primary hover:text-primary transition-all cursor-pointer"><ArrowRight className="w-4 h-4" /></div>
-                                </div>
-                            )}
                         </div>
 
                         {/* RIGHT COLUMN: SIDEBAR */}
                         <aside className="w-full lg:w-4/12 space-y-16">
-                            
+
                             {/* Popular Posts */}
                             <div className="bg-white p-8 md:p-10 rounded-3xl border border-gray-50 shadow-sm">
                                 <h4 className="text-xl font-serif text-[#1A1A1A] mb-8 border-b border-gray-50 pb-4">Popular Stories</h4>
@@ -220,11 +254,11 @@ export default function BlogListingPage() {
                             {/* Newsletter */}
                             <div className="bg-primary/5 p-8 md:p-10 rounded-3xl border border-primary/10">
                                 <h4 className="text-xl font-serif text-[#1A1A1A] mb-4">Safari Soul</h4>
-                                <p className="text-gray-500 font-light text-sm mb-8">Join our newsletter for exclusive wildlife photography, safari guides, and secret travel spots in Tanzania.</p>
+                                <p className="text-gray-500 font-light text-sm mb-8 leading-relaxed">Join our newsletter for exclusive wildlife photography, safari guides, and secret travel spots in Tanzania.</p>
                                 <form className="space-y-4">
-                                    <input 
-                                        type="email" 
-                                        placeholder="Your email address" 
+                                    <input
+                                        type="email"
+                                        placeholder="Your email address"
                                         className="w-full bg-white border border-gray-100 rounded-xl py-4 px-6 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                                     />
                                     <button className="w-full bg-[#1A1A1A] text-white py-4 rounded-xl text-[10px] font-bold tracking-widest uppercase hover:bg-primary transition-all duration-300">
@@ -240,10 +274,10 @@ export default function BlogListingPage() {
 
             {/* PRE-FOOTER CTA */}
             <section className="relative py-32 overflow-hidden bg-[#1A1A1A]">
-                <Image 
-                    src="/images/destinations/serengeti/serengeti-10.webp" 
-                    alt="CTA Background" 
-                    fill 
+                <Image
+                    src="/images/destinations/serengeti/serengeti-10.webp"
+                    alt="CTA Background"
+                    fill
                     className="object-cover opacity-20"
                 />
                 <div className="relative z-10 container px-6 mx-auto text-center max-w-4xl">
@@ -252,7 +286,7 @@ export default function BlogListingPage() {
                         Start Planning Your <br /><span className="italic text-white/50">Tanzania Legacy</span>
                     </h2>
                     <p className="text-white/60 font-light text-xl mb-12 max-w-2xl mx-auto">
-                        Whether it's the Great Migration, the peaks of Kilimanjaro, or the spices of Zanzibar, your story starts here.
+                        Whether it&apos;s the Great Migration, the peaks of Kilimanjaro, or the spices of Zanzibar, your story starts here.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                         <Link
@@ -273,4 +307,3 @@ export default function BlogListingPage() {
         </main>
     );
 }
-

@@ -1,146 +1,101 @@
+import { MetadataRoute } from "next"
+import { prisma } from "@/lib/prisma"
 
-import { MetadataRoute } from 'next'
+export const revalidate = 3600 // regenerate sitemap every hour
 
-export const dynamic = 'force-static'
+const BASE = "https://serenityafricasafaris.com"
+
+function url(path: string, priority: number, freq: MetadataRoute.Sitemap[0]["changeFrequency"] = "monthly"): MetadataRoute.Sitemap[0] {
+  return { url: `${BASE}${path}`, lastModified: new Date(), changeFrequency: freq, priority }
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://serenityafricasafaris.com'
+  const [tours, destinations, blogPosts, lodges, camps] = await Promise.all([
+    prisma.tour.findMany({ where: { status: "PUBLISHED" }, select: { slug: true, updatedAt: true } }).catch(() => []),
+    prisma.destination.findMany({ where: { status: "PUBLISHED" }, select: { slug: true, updatedAt: true } }).catch(() => []),
+    prisma.blogPost.findMany({ where: { status: "PUBLISHED" }, select: { slug: true, updatedAt: true } }).catch(() => []),
+    prisma.lodge.findMany({ where: { status: "PUBLISHED" }, select: { slug: true, updatedAt: true } }).catch(() => []),
+    prisma.camp.findMany({ where: { status: "PUBLISHED" }, select: { slug: true, updatedAt: true } }).catch(() => []),
+  ])
 
-    const staticRoutes = [
-        { path: '', priority: 1.0 },
-        { path: '/about', priority: 0.8 },
-        { path: '/contact', priority: 0.9 },
-        { path: '/request-quote', priority: 0.9 },
-        { path: '/safari', priority: 0.9 },
-        { path: '/kilimanjaro', priority: 0.9 },
-        { path: '/destinations', priority: 0.9 },
-        { path: '/accommodation', priority: 0.9 },
-        { path: '/all-safaris', priority: 0.8 },
-        { path: '/all-day-trips', priority: 0.8 },
-        { path: '/blog', priority: 0.7 },
-        { path: '/activities', priority: 0.8 },
-        { path: '/itineraries', priority: 0.8 },
-        { path: '/privacy', priority: 0.3 },
-        { path: '/terms', priority: 0.3 },
-    ]
+  return [
+    // ── Core pages ────────────────────────────────────────────────────────
+    url("/", 1.0, "weekly"),
+    url("/about/", 0.8, "monthly"),
+    url("/contact/", 0.9, "monthly"),
+    url("/request-quote/", 0.9, "monthly"),
+    url("/safari/", 0.9, "weekly"),
+    url("/kilimanjaro/", 0.9, "monthly"),
+    url("/destinations/", 0.9, "weekly"),
+    url("/accommodation/", 0.9, "weekly"),
+    url("/blog/", 0.7, "daily"),
+    url("/all-safaris/", 0.8, "monthly"),
+    url("/all-day-trips/", 0.8, "monthly"),
+    url("/activities/", 0.8, "monthly"),
+    url("/itineraries/", 0.8, "weekly"),
+    url("/privacy/", 0.2),
+    url("/terms/", 0.2),
 
-    const accommodationSlugs = [
-        'serenity-camp-lodges',
-        'exclusive-tented-camps',
-        'luxury-safari-lodges',
-        'treehouse-suites',
-        'beachfront-villas',
-    ]
+    // ── Safari sub-pages ──────────────────────────────────────────────────
+    ...["balloon-safaris","cultural-encounters","family-safaris","great-migration",
+        "honeymoon-escapes","luxury-safari","photography-safaris","walking-safaris"]
+      .map((s) => url(`/safari/${s}/`, 0.7)),
 
-    const destinationSlugs = [
-        'serengeti', 'ngorongoro', 'tarangire', 'lake-manyara',
-        'nyerere', 'ruaha', 'zanzibar', 'arusha-park', 'kilimanjaro',
-    ]
+    // ── All-Safaris sub-pages ─────────────────────────────────────────────
+    ...["mid-range","luxury","migration","cultural","honeymoon","tented-camps","lodge","guide"]
+      .map((s) => url(`/all-safaris/${s}/`, 0.7)),
 
-    const kilimanjaroRoutes = [
-        'lemosho-route', 'machame-route', 'marangu-route',
-        'rongai-route', 'umbwe-route', 'northern-circuit',
-        'joining-groups', 'guide',
-    ]
+    // ── Day Trips ─────────────────────────────────────────────────────────
+    ...["one-day-safari","arusha-excursions","cultural-tours","kili-hiking","moshi-excursions","west-kilimanjaro"]
+      .map((s) => url(`/all-day-trips/${s}/`, 0.7)),
 
-    const safariSubPages = [
-        'balloon-safaris', 'cultural-encounters', 'family-safaris',
-        'great-migration', 'honeymoon-escapes', 'luxury-safari',
-        'photography-safaris', 'walking-safaris',
-    ]
+    // ── Kilimanjaro routes ────────────────────────────────────────────────
+    ...["lemosho-route","machame-route","marangu-route","rongai-route","umbwe-route","northern-circuit"]
+      .map((s) => url(`/kilimanjaro/${s}/`, 0.8)),
+    url("/kilimanjaro/guide/", 0.7),
+    url("/kilimanjaro/joining-groups/", 0.7),
 
-    const allSafariSubPages = [
-        'mid-range', 'luxury', 'migration', 'cultural',
-        'honeymoon', 'tented-camps', 'lodge', 'guide',
-    ]
+    // ── Activities ────────────────────────────────────────────────────────
+    ...["game-drives","balloon-safaris","walking-safaris","cultural-experiences",
+        "boat-safaris","mountain-climbing","beach-escapes"]
+      .map((s) => url(`/activities/${s}/`, 0.7)),
 
-    const allDayTripSubPages = [
-        'one-day-safari', 'arusha-excursions', 'cultural-tours',
-        'kili-hiking', 'moshi-excursions', 'west-kilimanjaro',
-    ]
+    // ── DB: Tours ─────────────────────────────────────────────────────────
+    ...tours.map((t: { slug: string; updatedAt: Date }) => ({
+      url: `${BASE}/itineraries/${t.slug}/`,
+      lastModified: t.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    })),
 
-    const activitySlugs = [
-        'game-drives', 'balloon-safaris', 'walking-safaris',
-        'cultural-experiences', 'boat-safaris', 'mountain-climbing', 'beach-escapes',
-    ]
+    // ── DB: Destinations ──────────────────────────────────────────────────
+    ...destinations.map((d: { slug: string; updatedAt: Date }) => ({
+      url: `${BASE}/destinations/${d.slug}/`,
+      lastModified: d.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
 
-    const tourSlugs = [
-        '7-day-machame-route', '5-day-big-five-safari', '8-day-lemosho-route',
-        '10-day-migration-beach', '3-day-fly-in-serengeti', '5-day-ruaha-wilderness',
-        '7-day-southern-circuit', '3-day-nyerere-river-safari', '5-day-zanzibar-escape',
-        '8-day-luxury-honeymoon', '2-day-tarangire-ngorongoro', '6-day-ruaha-mikumi',
-        '4-day-nyerere-fly-in', '7-days-luxury-serengeti-ngorongoro-safari',
-    ]
+    // ── DB: Blog Posts ────────────────────────────────────────────────────
+    ...blogPosts.map((b: { slug: string; updatedAt: Date }) => ({
+      url: `${BASE}/blog/${b.slug}/`,
+      lastModified: b.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
 
-    const blogSlugs = [
-        'great-migration-wonders', 'kilimanjaro-facts', 'zanzibar-beaches-culture',
-        'ngorongoro-crater-eden', 'tanzania-cultural-tribes', 'serengeti-big-five',
-    ]
-
-    const now = new Date()
-
-    const entries: MetadataRoute.Sitemap = [
-        ...staticRoutes.map(({ path, priority }) => ({
-            url: `${baseUrl}${path}`,
-            lastModified: now,
-            changeFrequency: 'weekly' as const,
-            priority,
-        })),
-        ...destinationSlugs.map((slug) => ({
-            url: `${baseUrl}/destinations/${slug}`,
-            lastModified: now,
-            changeFrequency: 'monthly' as const,
-            priority: 0.8,
-        })),
-        ...kilimanjaroRoutes.map((slug) => ({
-            url: `${baseUrl}/kilimanjaro/${slug}`,
-            lastModified: now,
-            changeFrequency: 'monthly' as const,
-            priority: 0.8,
-        })),
-        ...safariSubPages.map((slug) => ({
-            url: `${baseUrl}/safari/${slug}`,
-            lastModified: now,
-            changeFrequency: 'monthly' as const,
-            priority: 0.7,
-        })),
-        ...allSafariSubPages.map((slug) => ({
-            url: `${baseUrl}/all-safaris/${slug}`,
-            lastModified: now,
-            changeFrequency: 'monthly' as const,
-            priority: 0.7,
-        })),
-        ...allDayTripSubPages.map((slug) => ({
-            url: `${baseUrl}/all-day-trips/${slug}`,
-            lastModified: now,
-            changeFrequency: 'monthly' as const,
-            priority: 0.7,
-        })),
-        ...activitySlugs.map((slug) => ({
-            url: `${baseUrl}/activities/${slug}`,
-            lastModified: now,
-            changeFrequency: 'monthly' as const,
-            priority: 0.7,
-        })),
-        ...tourSlugs.map((slug) => ({
-            url: `${baseUrl}/itineraries/${slug}`,
-            lastModified: now,
-            changeFrequency: 'monthly' as const,
-            priority: 0.8,
-        })),
-        ...blogSlugs.map((slug) => ({
-            url: `${baseUrl}/blog/${slug}`,
-            lastModified: now,
-            changeFrequency: 'weekly' as const,
-            priority: 0.6,
-        })),
-        ...accommodationSlugs.map((slug) => ({
-            url: `${baseUrl}/accommodation/${slug}`,
-            lastModified: now,
-            changeFrequency: 'monthly' as const,
-            priority: 0.9,
-        })),
-    ]
-
-    return entries
+    // ── DB: Accommodation (lodges + camps) ────────────────────────────────
+    ...lodges.map((l: { slug: string; updatedAt: Date }) => ({
+      url: `${BASE}/accommodation/${l.slug}/`,
+      lastModified: l.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    })),
+    ...camps.map((c: { slug: string; updatedAt: Date }) => ({
+      url: `${BASE}/accommodation/${c.slug}/`,
+      lastModified: c.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    })),
+  ]
 }

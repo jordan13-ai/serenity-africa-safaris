@@ -1,39 +1,23 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
 import { motion } from "framer-motion"
 
 export function Hero() {
-    const [videoFailed, setVideoFailed] = useState(false)
-
     return (
         <section className="relative h-screen min-h-[700px] w-full overflow-hidden bg-black">
             {/* Background Media */}
             <div className="absolute inset-0 z-0">
-                {!videoFailed && (
-                    <video
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-cover opacity-70 scale-105"
-                        onError={() => setVideoFailed(true)}
-                    >
-                        <source src="/video/hero-bg.mp4" type="video/mp4" />
-                    </video>
-                )}
-                {/* Image fallback when video is unavailable */}
-                {videoFailed && (
-                    <Image
-                        src="/images/hero/slide-1.webp"
-                        alt="Serenity Africa Safaris"
-                        fill
-                        className="object-cover opacity-70 scale-105"
-                        priority
-                    />
-                )}
+                <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    className="absolute inset-0 w-full h-full object-cover opacity-70 scale-105"
+                >
+                    <source src="/video/hero-video.mp4" type="video/mp4" />
+                </video>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/40" />
             </div>
 

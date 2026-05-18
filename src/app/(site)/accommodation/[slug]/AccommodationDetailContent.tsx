@@ -10,6 +10,8 @@ const fadeInUp = {
 }
 
 export function AccommodationDetailContent({ data }: { data: Record<string, any> }) {
+    const isSignature = data.externalLink?.includes("serenitycampandlodges.com")
+
     return (
         <main className="min-h-screen bg-[#FDFBF7]">
             {/* HERO */}
@@ -22,7 +24,18 @@ export function AccommodationDetailContent({ data }: { data: Record<string, any>
                     priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/20 to-transparent" />
-                
+                {isSignature && (
+                    <div className="absolute top-6 right-6 z-20 bg-black/40 backdrop-blur-sm px-4 py-3 flex flex-col items-center gap-2">
+                        <span className="text-[8px] font-bold tracking-[0.3em] uppercase text-[#C5A059]">Official Partner</span>
+                        <Image
+                            src="/images/accommodation/serenity-lodge/serenity-camp-logo.png"
+                            alt="Serenity Camp & Lodges"
+                            width={110}
+                            height={45}
+                            className="brightness-0 invert"
+                        />
+                    </div>
+                )}
                 <div className="relative z-10 container max-w-7xl mx-auto px-6 pb-20">
                     <motion.div
                         initial="hidden"
@@ -104,6 +117,19 @@ export function AccommodationDetailContent({ data }: { data: Record<string, any>
                                 transition={{ duration: 0.8 }}
                                 className="bg-white p-12 shadow-xl shadow-black/[0.02] border border-gray-50"
                             >
+                                {isSignature && (
+                                    <div className="mb-8 pb-8 border-b border-gray-100 flex flex-col items-center gap-2">
+                                        <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-[#C5A059]">Signature Partner Property</span>
+                                        <a href="https://serenitycampandlodges.com/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+                                            <Image
+                                                src="/images/accommodation/serenity-lodge/serenity-camp-logo.png"
+                                                alt="Serenity Camp & Lodges"
+                                                width={140}
+                                                height={57}
+                                            />
+                                        </a>
+                                    </div>
+                                )}
                                 <h3 className="text-2xl font-serif text-[#1A1A1A] mb-6">Experience this Sanctuary</h3>
                                 <p className="text-gray-500 text-sm font-light mb-8 leading-relaxed">
                                     Ready to incorporate {data.title} into your dream Tanzania safari itinerary? Our safari designers are experts at weaving these luxury properties into seamless, unforgettable journeys.

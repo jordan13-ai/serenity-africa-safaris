@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Compass } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -16,6 +17,7 @@ import {
 } from "@/components/ui/navigation-menu"
 
 export function Header() {
+    const router = useRouter()
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -59,7 +61,7 @@ export function Header() {
 
                                 {/* KILIMANJARO MEGA MENU */}
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className={cn("bg-transparent hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4", isScrolled ? "text-foreground" : "text-white")}>
+                                    <NavigationMenuTrigger onClick={() => router.push("/kilimanjaro")} className={cn("bg-transparent hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4", isScrolled ? "text-foreground" : "text-white")}>
                                         Kilimanjaro
                                     </NavigationMenuTrigger>
                                     <NavigationMenuContent>
@@ -85,7 +87,7 @@ export function Header() {
 
                                 {/* SAFARI MEGA MENU */}
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className={cn("bg-transparent hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4", isScrolled ? "text-foreground" : "text-white")}>
+                                    <NavigationMenuTrigger onClick={() => router.push("/safari")} className={cn("bg-transparent hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4", isScrolled ? "text-foreground" : "text-white")}>
                                         Safari
                                     </NavigationMenuTrigger>
                                     <NavigationMenuContent>
@@ -112,7 +114,7 @@ export function Header() {
 
                                 {/* DESTINATIONS MEGA MENU */}
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className={cn("bg-transparent hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4", isScrolled ? "text-foreground" : "text-white")}>
+                                    <NavigationMenuTrigger onClick={() => router.push("/destinations")} className={cn("bg-transparent hover:text-primary hover:bg-primary/5 data-[state=open]:text-primary focus:bg-transparent text-sm uppercase px-4", isScrolled ? "text-foreground" : "text-white")}>
                                         Destinations
                                     </NavigationMenuTrigger>
                                     <NavigationMenuContent>
@@ -268,86 +270,108 @@ function MegaMenuPane({ defaultTitle, defaultDescription, defaultLink, defaultLi
     })
 
     return (
-        <div className="flex w-[85vw] max-w-6xl bg-white rounded-3xl overflow-hidden shadow-2xl">
-            {/* Left Column: Navigation Items */}
-            <div className="w-1/2 p-10 border-r border-gray-100 grid grid-cols-2 gap-x-8 gap-y-4 max-h-[600px] overflow-y-auto">
+        <div className="flex w-[90vw] max-w-[1200px] bg-[#FAF7F2] rounded-b-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-t-0 border-[#E2E0DB]">
+            {/* Left Column: Navigation Items (65%) */}
+            <div className="w-[65%] p-12 pr-10 grid grid-cols-2 gap-x-12 gap-y-6 max-h-[600px] overflow-y-auto">
                 {items.map((item: any, i: number) => (
                     <Link 
                         key={i} 
                         href={item.href}
-                        className="group flex flex-col p-4 rounded-2xl hover:bg-primary/5 transition-all"
+                        className="group flex flex-col pb-4 border-b border-[#E2E0DB] hover:border-[#C5A059]/40 transition-colors"
                         onMouseEnter={() => setActiveItem({
                             title: item.title,
                             description: item.description,
                             link: item.href,
-                            linkText: "View Itinerary ›",
+                            linkText: "View Details",
                             image: item.image
                         })}
                     >
-                        <div className="flex items-center justify-between mb-1">
-                            <span className="text-[13px] font-bold text-foreground group-hover:text-primary transition-colors uppercase tracking-widest">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="font-serif text-[18px] text-[#1A1A1A] group-hover:text-[#C5A059] transition-colors">
                                 {item.title}
                             </span>
                             {item.badge && (
-                                <span className={cn("text-[9px] px-2 py-0.5 rounded-full font-bold uppercase", item.badgeColor)}>
+                                <span className={cn("text-[9px] px-2 py-0.5 rounded-sm font-bold uppercase tracking-wider", item.badgeColor)}>
                                     {item.badge}
                                 </span>
                             )}
                         </div>
-                        <p className="text-[11px] text-gray-400 line-clamp-1 italic">
+                        <p className="text-[12px] text-[#737373] leading-relaxed line-clamp-2 pr-4 transition-colors group-hover:text-[#4A4A4A]">
                             {item.description}
                         </p>
+                        <div className="mt-3 flex items-center text-[10px] font-bold uppercase tracking-widest text-[#C5A059] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                            Explore <span className="ml-1 text-sm leading-none">→</span>
+                        </div>
                     </Link>
                 ))}
             </div>
 
-            {/* Right Column: Featured Preview */}
-            <div className="w-1/2 relative group">
-                <AnimatePresence mode="wait">
-                    <motion.div 
-                        key={activeItem.title}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="absolute inset-0"
-                    >
-                        <Image
-                            src={activeItem.image}
-                            alt={activeItem.title}
-                            fill
-                            className="object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                        
-                        <div className="absolute inset-0 p-12 flex flex-col justify-end">
-                            <motion.h4 
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                className="text-3xl font-serif text-white mb-4"
-                            >
-                                {activeItem.title}
-                            </motion.h4>
-                            <motion.p 
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.1 }}
-                                className="text-white/70 text-sm leading-relaxed mb-8 max-w-sm"
-                            >
-                                {activeItem.description}
-                            </motion.p>
-                            <motion.div
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.2 }}
-                            >
-                                <Link href={activeItem.link} className="inline-flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest hover:gap-4 transition-all">
-                                    {activeItem.linkText}
-                                </Link>
-                            </motion.div>
-                        </div>
-                    </motion.div>
-                </AnimatePresence>
+            {/* Right Column: Featured Preview (35%) */}
+            <div className="w-[35%] bg-white p-6 border-l border-[#E2E0DB]">
+                <div className="w-full h-full relative group rounded-xl overflow-hidden">
+                    <AnimatePresence mode="wait">
+                        <motion.div 
+                            key={activeItem.title}
+                            initial={{ opacity: 0, scale: 1.05 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.5, ease: "easeOut" }}
+                            className="absolute inset-0"
+                        >
+                            <Image
+                                src={activeItem.image}
+                                alt={activeItem.title}
+                                fill
+                                className="object-cover"
+                            />
+                            {/* Sophisticated gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/40 to-transparent" />
+                            
+                            {/* Editorial content */}
+                            <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col justify-end">
+                                <motion.span 
+                                    initial={{ y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.2, duration: 0.4 }}
+                                    className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059] mb-3"
+                                >
+                                    Featured Journey
+                                </motion.span>
+                                
+                                <motion.h4 
+                                    initial={{ y: 15, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.3, duration: 0.4 }}
+                                    className="text-3xl font-serif text-white mb-3 leading-tight"
+                                >
+                                    {activeItem.title}
+                                </motion.h4>
+                                
+                                <motion.p 
+                                    initial={{ y: 15, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.4, duration: 0.4 }}
+                                    className="text-white/70 text-[13px] leading-relaxed mb-6 line-clamp-3"
+                                >
+                                    {activeItem.description}
+                                </motion.p>
+                                
+                                <motion.div
+                                    initial={{ y: 15, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.5, duration: 0.4 }}
+                                >
+                                    <Link 
+                                        href={activeItem.link} 
+                                        className="inline-flex items-center justify-center w-full bg-white text-[#1A1A1A] hover:bg-[#C5A059] hover:text-white py-3.5 text-[11px] font-bold uppercase tracking-widest transition-colors duration-300"
+                                    >
+                                        {activeItem.linkText}
+                                    </Link>
+                                </motion.div>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
             </div>
         </div>
     )

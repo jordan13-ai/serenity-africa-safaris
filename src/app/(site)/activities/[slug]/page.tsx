@@ -1,4 +1,5 @@
 
+import type { Metadata } from "next"
 import { activitiesData } from "@/lib/activities-data"
 import { notFound } from "next/navigation"
 import Image from "next/image"
@@ -6,10 +7,36 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Check, MapPin, Calendar, ArrowRight } from "lucide-react"
 
+const BASE = "https://serenityafricasafaris.com"
+
 interface PageProps {
     params: Promise<{
         slug: string
     }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { slug } = await params
+    const activity = activitiesData.find((a) => a.slug === slug)
+    if (!activity) return { title: "Activity Not Found" }
+
+    const title = `${activity.title} | Tanzania Safari Activities`
+    const description = `${activity.description} Book with Serenity Africa Safaris – Tanzania's premier luxury safari operator.`
+
+    return {
+        title,
+        description,
+        alternates: { canonical: `${BASE}/activities/${slug}/` },
+        openGraph: {
+            title,
+            description,
+            url: `${BASE}/activities/${slug}/`,
+            siteName: "Serenity Africa Safaris",
+            images: [{ url: `${BASE}${activity.heroImage}`, width: 1200, height: 630, alt: activity.title }],
+            type: "website",
+        },
+        twitter: { card: "summary_large_image", title, description, images: [`${BASE}${activity.heroImage}`] },
+    }
 }
 
 export function generateStaticParams() {

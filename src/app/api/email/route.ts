@@ -1,5 +1,24 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { headers } from 'next/headers';
+
+// In-memory rate limiter: 5 submissions per IP per 10 minutes
+// Note: not shared across PM2 cluster workers — add Redis for distributed limiting
+const rateLimitStore = new Map<string, { count: number; reset: number }>();
+
+function checkRateLimit(ip: string): boolean {
+    const now = Date.now();
+    const window = 10 * 60 * 1000; // 10 minutes
+    const limit = 5;
+    const entry = rateLimitStore.get(ip);
+    if (!entry || now > entry.reset) {
+        rateLimitStore.set(ip, { count: 1, reset: now + window });
+        return true;
+    }
+    if (entry.count >= limit) return false;
+    entry.count++;
+    return true;
+}
 
 function esc(value: unknown): string {
     if (value === null || value === undefined) return '';
@@ -23,6 +42,19 @@ function isValidEmail(value: string): boolean {
 }
 
 export async function POST(request: Request) {
+    const headersList = await headers();
+    const ip =
+        headersList.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+        headersList.get('x-real-ip') ??
+        'unknown';
+
+    if (!checkRateLimit(ip)) {
+        return NextResponse.json(
+            { error: 'Too many requests. Please wait a few minutes before trying again.' },
+            { status: 429, headers: { 'Retry-After': '600' } }
+        );
+    }
+
     const apiKey = process.env.RESEND_API_KEY;
 
     if (!apiKey) {
@@ -107,9 +139,13 @@ export async function POST(request: Request) {
 
     const receiverEmail = process.env.CONTACT_FORM_RECEIVER || 'info@serenityafricasafaris.com';
 
+    // PRODUCTION: replace onboarding@resend.dev with a verified sender domain in Resend dashboard
+    // e.g. 'Serenity Africa Safaris <noreply@serenityafricasafaris.com>'
+    const fromAddress = process.env.RESEND_FROM_EMAIL || 'Serenity Africa Safaris <onboarding@resend.dev>';
+
     try {
         await resend.emails.send({
-            from: 'Serenity Africa Safaris <onboarding@resend.dev>',
+            from: fromAddress,
             to: [receiverEmail],
             subject,
             html: wrapper(innerHtml),
@@ -117,7 +153,7 @@ export async function POST(request: Request) {
         });
 
         await resend.emails.send({
-            from: 'Serenity Africa Safaris <onboarding@resend.dev>',
+            from: fromAddress,
             to: [email],
             subject: 'We received your inquiry — Serenity Africa Safaris',
             html: wrapper(`

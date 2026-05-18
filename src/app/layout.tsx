@@ -117,7 +117,8 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  // verification.google: add your Search Console code here before launch
+  // TODO: add Google Search Console verification before launch:
+  // verification: { google: "YOUR_VERIFICATION_CODE_FROM_SEARCH_CONSOLE" },
 };
 
 export default function RootLayout({
@@ -130,7 +131,7 @@ export default function RootLayout({
     "@type": "TravelAgency",
     "name": "Serenity Africa Safaris",
     "url": "https://serenityafricasafaris.com",
-    "logo": "https://serenityafricasafaris.com/images/logo.png",
+    "logo": "https://serenityafricasafaris.com/images/logo.webp",
     "description": "Luxury Tanzania safari operator specializing in Serengeti, Ngorongoro, Tarangire, Ruaha and Zanzibar experiences.",
     "address": {
       "@type": "PostalAddress",

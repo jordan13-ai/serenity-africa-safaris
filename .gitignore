@@ -47,3 +47,13 @@ next-env.d.ts
 /replace_brand.js
 /replace_contact.js
 /all_webp_files.txt
+
+# Video files — too large for GitHub (>100MB limit). Host on CDN/VPS instead.
+public/video/*.mp4
+public/video/*.webm
+public/video/*.mov
+
+# Local Netlify folder
+.netlify
+
+/src/generated/prisma

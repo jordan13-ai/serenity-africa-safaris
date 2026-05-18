@@ -9,8 +9,6 @@ import {
     Calendar,
     MapPin,
     ArrowRight,
-    Mountain,
-    AlertTriangle,
     TrendingUp,
     Shield,
     Camera,
@@ -18,7 +16,6 @@ import {
     Info,
     ArrowLeft,
     Share2,
-    Heart
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -122,12 +119,15 @@ export default async function ItineraryPage({ params }: ItineraryPageProps) {
                 </div>
 
                 <div className="absolute bottom-10 right-10 z-10 flex gap-4">
-                    <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-md bg-white/5 text-white hover:bg-primary transition-all duration-500">
+                    <a
+                        href={`https://wa.me/?text=${encodeURIComponent(`Check out this safari: https://serenityafricasafaris.com/itineraries/${tour.slug}/`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Share this itinerary on WhatsApp"
+                        className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-md bg-white/5 text-white hover:bg-primary transition-all duration-500"
+                    >
                         <Share2 size={18} />
-                    </button>
-                    <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-md bg-white/5 text-white hover:bg-primary transition-all duration-500">
-                        <Heart size={18} />
-                    </button>
+                    </a>
                 </div>
             </section>
 
@@ -226,7 +226,7 @@ export default async function ItineraryPage({ params }: ItineraryPageProps) {
                                                             <Shield className="w-4 h-4 text-primary" />
                                                         </div>
                                                         <div>
-                                                            <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-gray-400">Accomodation</p>
+                                                            <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-gray-400">Accommodation</p>
                                                             <p className="text-xs font-medium text-[#1A1A1A]">{day.accommodation}</p>
                                                         </div>
                                                     </div>

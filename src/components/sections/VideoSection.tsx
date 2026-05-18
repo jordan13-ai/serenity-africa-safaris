@@ -15,10 +15,12 @@ export function VideoSection() {
                         muted
                         loop
                         playsInline
+                        preload="auto"
+                        poster="/images/destinations/serengeti/serengeti-4.webp"
                         className="absolute inset-0 w-full h-full object-cover scale-105"
                         onError={() => setVideoFailed(true)}
                     >
-                        <source src="/video/serenity video.mp4" type="video/mp4" />
+                        <source src="/video/hero-video.mp4" type="video/mp4" />
                     </video>
                 )}
                 {videoFailed && (

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, MapPin, Compass } from "lucide-react";
 import { Metadata } from "next";
+import { prisma } from "@/lib/prisma";
+import { DestinationsClient } from "./DestinationsClient";
 
 export const metadata: Metadata = {
     title: "Tanzania Destinations | Serenity Africa Safaris",
@@ -18,7 +18,7 @@ interface Destination {
     highlights: string[];
 }
 
-const destinations: Destination[] = [
+const staticDestinations: Destination[] = [
     // Northern Circuit
     {
         title: "Serengeti National Park",
@@ -65,10 +65,9 @@ const destinations: Destination[] = [
         slug: "arusha-park",
         region: "Northern Circuit",
         description: "A diverse gem offering walking safaris, canoeing on the Momella Lakes, and stunning views of Mount Meru.",
-        image: "/images/destinations/tarangire/tarangire-2.webp", // Fallback image
+        image: "/images/destinations/tarangire/tarangire-2.webp",
         highlights: ["Walking Safaris", "Mount Meru", "Colobus Monkeys"]
     },
-
     // Southern & Western Circuit
     {
         title: "Ruaha National Park",
@@ -91,7 +90,7 @@ const destinations: Destination[] = [
         slug: "mikumi",
         region: "Southern & Western Circuit",
         description: "Accessible and rich in wildlife, often compared to the Serengeti for its open horizons and abundant game.",
-        image: "/images/destinations/ruaha/ruaha-1.webp", // Fallback image
+        image: "/images/destinations/ruaha/ruaha-1.webp",
         highlights: ["Mkata Floodplain", "Elephants", "Easy Access"]
     },
     {
@@ -99,7 +98,7 @@ const destinations: Destination[] = [
         slug: "mahale",
         region: "Southern & Western Circuit",
         description: "A lush, mountainous jungle dropping down to the crystal clear waters of Lake Tanganyika. The ultimate chimpanzee trekking destination.",
-        image: "/images/destinations/serengeti/serengeti-34.webp", // Fallback image
+        image: "/images/destinations/serengeti/serengeti-34.webp",
         highlights: ["Chimpanzee Trekking", "Lake Tanganyika", "Forest Walks"]
     },
     {
@@ -107,10 +106,9 @@ const destinations: Destination[] = [
         slug: "gombe",
         region: "Southern & Western Circuit",
         description: "Made famous by Jane Goodall, this intimate park offers unparalleled chimpanzee encounters in pristine forests.",
-        image: "/images/destinations/nyerere/nyerere-5.webp", // Fallback image
+        image: "/images/destinations/nyerere/nyerere-5.webp",
         highlights: ["Jane Goodall Research", "Chimpanzees", "Intimate Setting"]
     },
-
     // Coastal & Islands
     {
         title: "Zanzibar Archipelago",
@@ -125,20 +123,33 @@ const destinations: Destination[] = [
         slug: "mafia",
         region: "Coastal & Islands",
         description: "A tranquil paradise for divers and snorkelers. Swim with whale sharks in a protected marine park environment.",
-        image: "/images/destinations/zanzibar/zanzibar-8.webp", // Fallback image
+        image: "/images/destinations/zanzibar/zanzibar-8.webp",
         highlights: ["Whale Sharks", "Scuba Diving", "Marine Park"]
     }
 ];
 
-export default function DestinationsPage() {
-    // Group destinations by region
-    const groupedDestinations = destinations.reduce((acc, dest) => {
-        if (!acc[dest.region]) {
-            acc[dest.region] = [];
+export default async function DestinationsPage() {
+    let destinations: Destination[] = []
+
+    try {
+        const cms = await prisma.destination.findMany({
+            where: { status: "PUBLISHED" },
+            orderBy: { updatedAt: "desc" },
+            select: { id: true, title: true, slug: true, description: true, coverImage: true, region: true, wildlife: true, activities: true },
+        })
+        if (cms.length > 0) {
+            destinations = cms.map(d => ({
+                title: d.title,
+                slug: d.slug,
+                description: d.description || "",
+                image: d.coverImage || "/images/destinations/serengeti/serengeti-18.webp",
+                region: d.region || "Northern Circuit",
+                highlights: [...(d.wildlife ?? []).slice(0, 2), ...(d.activities ?? []).slice(0, 1)],
+            }))
         }
-        acc[dest.region].push(dest);
-        return acc;
-    }, {} as Record<string, Destination[]>);
+    } catch { /* fall through */ }
+
+    if (destinations.length === 0) destinations = staticDestinations
 
     return (
         <div className="bg-[#FDFBF7] min-h-screen">
@@ -184,7 +195,7 @@ export default function DestinationsPage() {
                     </h2>
                     <div className="space-y-6 text-gray-500 font-light leading-relaxed text-lg">
                         <p>
-                            Tanzania is arguably the greatest safari destination on earth. Almost a third of the country is protected for wildlife conservation. 
+                            Tanzania is arguably the greatest safari destination on earth. Almost a third of the country is protected for wildlife conservation.
                         </p>
                         <p>
                             Whether you're tracking the Great Migration in the north, seeking remote solitude in the southern parks, trekking chimpanzees in the western mountains, or unwinding on the Swahili coast—Tanzania delivers an unparalleled adventure.
@@ -193,62 +204,8 @@ export default function DestinationsPage() {
                 </div>
             </section>
 
-            {/* DESTINATIONS BY REGION */}
-            <section className="pb-32 bg-[#FDFBF7]">
-                <div className="container px-6 mx-auto">
-                    {Object.entries(groupedDestinations).map(([region, regionDestinations]) => (
-                        <div key={region} className="mb-32 last:mb-0">
-                            {/* Region Header */}
-                            <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gray-200 pb-6 mb-12">
-                                <div>
-                                    <div className="flex items-center gap-2 text-primary mb-3">
-                                        <Compass className="w-5 h-5" />
-                                        <span className="text-[11px] font-bold tracking-widest uppercase">{region}</span>
-                                    </div>
-                                    <h3 className="text-4xl font-serif text-[#1A1A1A]">
-                                        {region.split(" ")[0]} <span className="italic text-gray-500">{region.split(" ").slice(1).join(" ")}</span>
-                                    </h3>
-                                </div>
-                            </div>
-
-                            {/* Destination Grid */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {regionDestinations.map((dest) => (
-                                    <Link key={dest.slug} href={dest.slug === "kilimanjaro" ? "/kilimanjaro" : `/destinations/${dest.slug}`} className="group relative rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 aspect-[4/5] flex flex-col">
-                                        <Image
-                                            src={dest.image}
-                                            alt={dest.title}
-                                            fill
-                                            className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-90 transition-opacity duration-500" />
-                                        
-                                        <div className="absolute inset-0 p-8 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <h4 className="text-3xl font-serif text-white mb-3 leading-tight">{dest.title}</h4>
-                                            
-                                            <p className="text-white/70 text-sm font-light leading-relaxed mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-3">
-                                                {dest.description}
-                                            </p>
-
-                                            <div className="flex flex-wrap gap-2 mb-6">
-                                                {dest.highlights.map((highlight, idx) => (
-                                                    <span key={idx} className="bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
-                                                        {highlight}
-                                                    </span>
-                                                ))}
-                                            </div>
-
-                                            <div className="flex items-center gap-2 text-primary font-bold text-[10px] tracking-widest uppercase mt-auto pt-4 border-t border-white/10">
-                                                Discover Destination <ArrowRight className="w-4 h-4" />
-                                            </div>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
+            {/* DESTINATIONS WITH CATEGORY FILTER */}
+            <DestinationsClient destinations={destinations} />
 
             {/* CTA SECTION */}
             <section className="py-32 bg-primary relative overflow-hidden">
@@ -259,12 +216,12 @@ export default function DestinationsPage() {
                         Speak with our destination experts. We'll help you combine the perfect locations based on the season, wildlife movements, and your travel style.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-white text-primary hover:bg-gray-100 rounded-full px-10 py-6 text-[11px] font-bold tracking-widest uppercase" asChild>
-                            <Link href="/contact">Get Expert Advice</Link>
-                        </Button>
-                        <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-full px-10 py-6 text-[11px] font-bold tracking-widest uppercase" asChild>
-                            <Link href="/safari">Browse Itineraries</Link>
-                        </Button>
+                        <Link href="/contact" className="inline-flex items-center justify-center px-10 py-4 bg-white text-primary rounded-full text-[11px] font-bold tracking-widest uppercase hover:bg-gray-100 transition-colors">
+                            Get Expert Advice
+                        </Link>
+                        <Link href="/safari" className="inline-flex items-center justify-center px-10 py-4 border border-white/30 text-white rounded-full text-[11px] font-bold tracking-widest uppercase hover:bg-white/10 transition-colors">
+                            Browse Itineraries
+                        </Link>
                     </div>
                 </div>
             </section>

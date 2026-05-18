@@ -1,212 +1,292 @@
 "use client"
+import { useEffect, useState, useMemo } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, MapPin, DollarSign, Loader2, Building2, Tent, SlidersHorizontal } from "lucide-react"
 
-const accommodations = [
-    {
-        slug: "serenity-camp-lodges",
-        title: "Serenity Camp & Lodges",
-        description: "Our signature property in the heart of the Seronera region. Nestled amid the Nyabogati Kopjes, this luxury tented sanctuary offers direct access to the Great Migration pathways and authentic Maasai-inspired elegance.",
-        image: "/images/accommodation/serenity-lodge/Serenity_africa_lodge1.webp",
-        features: ["Signature Property", "Central Serengeti", "Great Migration", "Maasai Style"],
-        isSignature: true
-    },
-    {
-        slug: "exclusive-tented-camps",
-        title: "Exclusive Tented Camps",
-        description: "Experience the romance of classic safaris without compromising on modern luxury. Our exclusive tented camps feature expansive canvas walls, en-suite bathrooms, and private verandas where you can listen to the authentic sounds of the African night while enjoying five-star service.",
-        image: "/images/accommodation/serenity-lodge/Serenity_africa_lodge2.webp",
-        features: ["Canvas Walls", "Private Veranda", "En-suite", "Authentic Experience"]
-    },
-    {
-        slug: "luxury-safari-lodges",
-        title: "Luxury Safari Lodges",
-        description: "For those who seek the pinnacle of comfort, our luxury safari lodges offer unparalleled sophistication in the heart of the wild. Enjoy premium amenities including infinity pools, fine dining, and panoramic savannah views from your private suite.",
-        image: "/images/accommodation/serenity-lodge/Serenity_africa_lodge3.webp",
-        features: ["Infinity Pool", "Fine Dining", "Panoramic Views", "Luxury Suites"]
-    },
-    {
-        slug: "treehouse-suites",
-        title: "Treehouse Suites",
-        description: "Elevated luxury nestled within ancient giant baobab and mahogany trees. These unique suites offer absolute privacy and breathtaking vantage points. Fall asleep under a canopy of stars on your private wooden deck, suspended safely above the African wilderness.",
-        image: "/images/accommodation/serenity_africa_safaris_accommodation-3.webp",
-        features: ["Private Decks", "Elevated Views", "Star Beds", "Absolute Privacy"]
-    },
-    {
-        slug: "beachfront-villas",
-        title: "Beachfront Villas",
-        description: "The perfect conclusion to an exhilarating safari. Retreat to the pristine white sands of Zanzibar in a secluded oceanfront villa. Featuring private plunge pools, tropical palm gardens, and direct access to the turquoise waters of the Indian Ocean.",
-        image: "/images/accommodation/serenity_africa_safaris_accommodation-4.webp",
-        features: ["Ocean Views", "Plunge Pools", "White Sand", "Tropical Gardens"]
-    }
-]
-
-const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
+interface Accommodation {
+  id: string
+  name: string
+  slug: string
+  type: string | null
+  destination: string | null
+  description: string | null
+  highlights: string[]
+  priceFrom: number | null
+  coverImage: string | null
+  website: string | null
+  kind: "lodge" | "camp"
 }
 
-const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
+const STATIC_DATA: Accommodation[] = [
+  {
+    id: "s1", name: "Serenity Camp & Lodges", slug: "serenity-camp-lodges",
+    type: "Signature Lodge", destination: "Serengeti",
+    description: "Our flagship sanctuary nestled amid the Nyabogati Kopjes in Seronera — the very heart of Serengeti National Park.",
+    highlights: ["Signature Property", "Central Serengeti", "Great Migration"],
+    priceFrom: 850, coverImage: "/images/accommodation/serenity-lodge/Serenity_africa_lodge1.webp",
+    website: null, kind: "lodge",
+  },
+]
+
+const CATEGORY_ORDER = [
+  "All",
+  "Signature Lodge", "Luxury Lodge", "Boutique Lodge", "Standard Lodge",
+  "Luxury Tented Camp", "Permanent Tented Camp", "Mobile Camp", "Exclusive Camp", "Fly Camp", "Luxury Camp",
+]
+
+const TYPE_COLOR: Record<string, string> = {
+  "Signature Lodge": "bg-[#C5A059] text-white",
+  "Luxury Lodge": "bg-[#1A1A1A] text-white",
+  "Boutique Lodge": "bg-emerald-700 text-white",
+  "Standard Lodge": "bg-stone-600 text-white",
+  "Luxury Tented Camp": "bg-amber-700 text-white",
+  "Permanent Tented Camp": "bg-teal-700 text-white",
+  "Mobile Camp": "bg-indigo-700 text-white",
+  "Exclusive Camp": "bg-rose-700 text-white",
+  "Fly Camp": "bg-sky-700 text-white",
+  "Luxury Camp": "bg-purple-700 text-white",
+}
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+}
+
+function AccommodationCard({ acc }: { acc: Accommodation }) {
+  const isSignature = acc.slug === "serenity-camp-lodges"
+  const image = acc.coverImage || "/images/accommodation/serenity-lodge/Serenity_africa_lodge1.webp"
+  const typeBadge = acc.type ? (TYPE_COLOR[acc.type] ?? "bg-gray-700 text-white") : ""
+
+  return (
+    <motion.div
+      variants={fadeInUp}
+      className="group bg-white border border-[#E2E0DB] overflow-hidden hover:shadow-lg transition-shadow duration-300"
+    >
+      <Link href={`/accommodation/${acc.slug}`} className="block">
+        <div className="relative aspect-[4/3] overflow-hidden">
+          <Image src={image} alt={acc.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+          {isSignature && (
+            <div className="absolute top-3 left-3 bg-[#C5A059] text-white text-[8px] font-bold uppercase tracking-[0.2em] px-2.5 py-1">
+              Signature
+            </div>
+          )}
+          {acc.type && !isSignature && (
+            <div className={`absolute top-3 left-3 text-[8px] font-bold uppercase tracking-[0.15em] px-2.5 py-1 ${typeBadge}`}>
+              {acc.type}
+            </div>
+          )}
+          {acc.priceFrom && (
+            <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white text-[10px] font-bold px-2.5 py-1.5 flex items-center gap-1">
+              <DollarSign className="w-2.5 h-2.5" />
+              From ${acc.priceFrom.toLocaleString()}
+            </div>
+          )}
+        </div>
+      </Link>
+      <div className="p-5">
+        {isSignature && (
+          <div className="mb-3">
+            <Image
+              src="/images/accommodation/serenity-lodge/serenity-camp-logo.png"
+              alt="Serenity Camp & Lodges – Official Partner"
+              width={88}
+              height={36}
+              className="opacity-90"
+            />
+          </div>
+        )}
+        <Link href={`/accommodation/${acc.slug}`}>
+          <h3 className="font-serif text-[#1A1A1A] text-lg leading-tight mb-2 group-hover:text-primary transition-colors">
+            {acc.name}
+          </h3>
+        </Link>
+        {acc.destination && (
+          <div className="flex items-center gap-1 text-xs text-[#737373] mb-3">
+            <MapPin className="w-3 h-3 text-primary shrink-0" />
+            {acc.destination}
+          </div>
+        )}
+        {acc.description && (
+          <p className="text-xs text-gray-400 leading-relaxed line-clamp-2 mb-4">{acc.description}</p>
+        )}
+        <Link
+          href={`/accommodation/${acc.slug}`}
+          className="inline-flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-[#1A1A1A] border-b border-[#1A1A1A] pb-0.5 hover:text-primary hover:border-primary transition-all group/link"
+        >
+          Explore
+          <ArrowRight className="w-3 h-3 group-hover/link:translate-x-0.5 transition-transform" />
+        </Link>
+      </div>
+    </motion.div>
+  )
 }
 
 export default function AccommodationPageContent() {
-    return (
-        <main className="min-h-screen bg-[#FDFBF7]">
-            {/* HERO SECTION */}
-            <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden bg-[#1A1A1A]">
-                <Image
-                    src="/images/accommodation/serenity-lodge/Serenity_africa_lodge1.webp"
-                    alt="Luxury Safari Accommodation"
-                    fill
-                    className="object-cover"
-                    priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/80 via-[#1A1A1A]/40 to-[#1A1A1A]/80" />
+  const [all, setAll] = useState<Accommodation[]>(STATIC_DATA)
+  const [loading, setLoading] = useState(true)
+  const [activeCategory, setActiveCategory] = useState("All")
+  const [activeKind, setActiveKind] = useState<"all" | "lodge" | "camp">("all")
 
-                <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    variants={staggerContainer}
-                    className="relative z-10 container max-w-5xl mx-auto px-6 text-center pt-20"
-                >
-                    <motion.div variants={fadeInUp} className="flex justify-center mb-6">
-                        <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase flex items-center gap-4">
-                            <div className="w-8 h-[1px] bg-primary"></div>
-                            Where You&apos;ll Stay
-                            <div className="w-8 h-[1px] bg-primary"></div>
-                        </span>
-                    </motion.div>
-                    <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-serif text-white leading-[1.1] mb-6">
-                        Sanctuaries of <br />
-                        <span className="italic text-white/70 font-light text-4xl md:text-6xl">the Wild</span>
-                    </motion.h1>
-                    <motion.p variants={fadeInUp} className="text-white/80 font-light leading-relaxed text-lg max-w-2xl mx-auto">
-                        Retreat to sanctuaries of exceptional luxury. We partner only with properties that share our commitment to excellence, sustainability, and authentic hospitality.
-                    </motion.p>
-                </motion.div>
-            </section>
+  useEffect(() => {
+    fetch("/api/accommodation")
+      .then((r) => r.json())
+      .then((data) => {
+        const lodges: Accommodation[] = (data.lodges ?? []).map((l: Accommodation) => ({ ...l, kind: "lodge" as const }))
+        const camps: Accommodation[] = (data.camps ?? []).map((c: Accommodation) => ({ ...c, kind: "camp" as const }))
+        const combined = [...lodges, ...camps]
+        if (combined.length > 0) setAll(combined)
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
 
-            {/* EDITORIAL LISTINGS */}
-            <section className="py-24 lg:py-32 overflow-hidden">
-                <div className="container max-w-7xl mx-auto px-6 space-y-32">
-                    {accommodations.map((acc, index) => {
-                        const isEven = index % 2 === 0;
-                        return (
-                            <div key={index} className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-16 lg:gap-24`}>
-                                {/* IMAGE PANEL */}
-                                <motion.div
-                                    initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true, margin: "-100px" }}
-                                    transition={{ duration: 1, ease: "easeOut" }}
-                                    className="w-full lg:w-1/2"
-                                >
-                                    <Link href={`/accommodation/${acc.slug}`} className="block group">
-                                        <div className="relative aspect-[4/5] md:aspect-[4/3] lg:aspect-[4/5] w-full overflow-hidden rounded-none">
-                                            <Image
-                                                src={acc.image}
-                                                alt={acc.title}
-                                                fill
-                                                className="object-cover transition-transform duration-[2s] group-hover:scale-105"
-                                            />
-                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
-                                            <div className="absolute inset-0 border border-black/5 pointer-events-none" />
-                                        </div>
-                                    </Link>
-                                </motion.div>
+  const categories = useMemo(() => {
+    const found = new Set(all.map((a) => a.type).filter(Boolean) as string[])
+    return CATEGORY_ORDER.filter((c) => c === "All" || found.has(c))
+  }, [all])
 
-                                {/* TEXT PANEL */}
-                                <motion.div
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    viewport={{ once: true, margin: "-100px" }}
-                                    variants={staggerContainer}
-                                    className="w-full lg:w-1/2"
-                                >
-                                    <motion.span variants={fadeInUp} className="text-primary font-serif text-2xl italic block mb-4">
-                                        {acc.isSignature ? "Our Signature Sanctuary" : `0${index}.`}
-                                    </motion.span>
-                                    <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-serif text-[#1A1A1A] mb-8 leading-tight">
-                                        {acc.title}
-                                    </motion.h2>
-                                    <motion.div variants={fadeInUp} className="w-12 h-[1px] bg-primary mb-8" />
-                                    <motion.p variants={fadeInUp} className="text-gray-500 font-light leading-relaxed text-lg mb-12">
-                                        {acc.description}
-                                    </motion.p>
+  const filtered = useMemo(() => {
+    return all.filter((a) => {
+      const kindMatch = activeKind === "all" || a.kind === activeKind
+      const catMatch = activeCategory === "All" || a.type === activeCategory
+      return kindMatch && catMatch
+    })
+  }, [all, activeCategory, activeKind])
 
-                                    <motion.div variants={fadeInUp} className="mb-10">
-                                        <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] mb-6">Signature Elements</h4>
-                                        <ul className="flex flex-wrap gap-3">
-                                            {acc.features.map((feature, i) => (
-                                                <li key={i} className="text-[10px] font-bold tracking-widest uppercase text-gray-500 bg-white border border-gray-100 px-5 py-2.5 shadow-sm">
-                                                    {feature}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </motion.div>
+  const lodgeCount = all.filter((a) => a.kind === "lodge").length
+  const campCount = all.filter((a) => a.kind === "camp").length
 
-                                    <motion.div variants={fadeInUp}>
-                                        <Link
-                                            href={`/accommodation/${acc.slug}`}
-                                            className="inline-flex items-center gap-4 text-xs font-bold tracking-widest uppercase text-[#1A1A1A] border-b border-[#1A1A1A] pb-1 hover:text-primary hover:border-primary transition-all group"
-                                        >
-                                            Explore This Sanctuary
-                                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                        </Link>
-                                    </motion.div>
-                                </motion.div>
-                            </div>
-                        )
-                    })}
-                </div>
-            </section>
+  return (
+    <main className="min-h-screen bg-[#FDFBF7]">
+      {/* Hero */}
+      <section className="relative h-[60vh] min-h-[440px] flex items-center justify-center overflow-hidden bg-[#1A1A1A]">
+        <Image
+          src="/images/accommodation/serenity-lodge/Serenity_africa_lodge1.webp"
+          alt="Luxury Safari Accommodation"
+          fill className="object-cover" priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/80 via-[#1A1A1A]/40 to-[#1A1A1A]/80" />
+        <motion.div
+          initial="hidden" animate="visible"
+          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.15 } } }}
+          className="relative z-10 container max-w-5xl mx-auto px-6 text-center pt-20"
+        >
+          <motion.div variants={fadeInUp} className="flex justify-center mb-6">
+            <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase flex items-center gap-4">
+              <div className="w-8 h-[1px] bg-primary" />
+              Where You&apos;ll Stay
+              <div className="w-8 h-[1px] bg-primary" />
+            </span>
+          </motion.div>
+          <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-serif text-white leading-[1.1] mb-6">
+            Sanctuaries of <br />
+            <span className="italic text-white/70 font-light text-4xl md:text-6xl">the Wild</span>
+          </motion.h1>
+          <motion.p variants={fadeInUp} className="text-white/80 font-light leading-relaxed text-lg max-w-2xl mx-auto">
+            {loading ? "Loading properties…" : `${all.length} handpicked properties across Tanzania — from signature lodges to mobile safari camps.`}
+          </motion.p>
+        </motion.div>
+      </section>
 
-            {/* CALL TO ACTION */}
-            <section className="py-32 bg-[#1A1A1A] relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                </div>
-                <div className="container max-w-4xl mx-auto px-6 text-center relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase mb-6 block">Your Dream Awaits</span>
-                        <h2 className="text-4xl md:text-6xl font-serif text-white mb-8">Begin Crafting <span className="italic font-light opacity-80">Your Journey</span></h2>
-                        <p className="text-white/60 font-light text-lg mb-12 max-w-2xl mx-auto">
-                            Speak directly with our safari artisans to weave these exceptional properties into a bespoke itinerary designed exclusively for you.
-                        </p>
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                            <Link
-                                href="/request-quote"
-                                className="group inline-flex items-center justify-center gap-4 bg-primary text-white px-10 py-5 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-[#1A1A1A] transition-all duration-300 w-full sm:w-auto"
-                            >
-                                Request Complimentary Quote
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                            <a
-                                href="https://wa.me/255626371646"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group inline-flex items-center justify-center gap-4 border border-white/20 text-white px-10 py-5 text-[11px] font-bold tracking-[0.2em] uppercase hover:border-white transition-all duration-300 w-full sm:w-auto"
-                            >
-                                WhatsApp Us
-                            </a>
-                        </div>
-                    </motion.div>
-                </div>
-            </section>
-        </main>
-    )
+      {/* Filters */}
+      <section className="sticky top-0 z-30 bg-white border-b border-[#E2E0DB] shadow-sm">
+        <div className="container max-w-7xl mx-auto px-6">
+          {/* Kind tabs */}
+          <div className="flex items-center gap-0 border-b border-[#F0EDE8]">
+            {[
+              { value: "all", label: "All Properties", icon: SlidersHorizontal, count: all.length },
+              { value: "lodge", label: "Lodges", icon: Building2, count: lodgeCount },
+              { value: "camp", label: "Camps", icon: Tent, count: campCount },
+            ].map(({ value, label, icon: Icon, count }) => (
+              <button
+                key={value}
+                onClick={() => { setActiveKind(value as typeof activeKind); setActiveCategory("All") }}
+                className={`flex items-center gap-2 px-5 py-4 text-xs font-bold tracking-widest uppercase transition-all border-b-2 -mb-px ${activeKind === value ? "border-primary text-primary" : "border-transparent text-[#737373] hover:text-[#1A1A1A]"}`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                {label}
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${activeKind === value ? "bg-primary/10 text-primary" : "bg-[#F5F2ED] text-[#737373]"}`}>{count}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Category filter pills */}
+          <div className="flex items-center gap-2 py-3 overflow-x-auto scrollbar-hide">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`shrink-0 px-4 py-1.5 text-[10px] font-bold tracking-widest uppercase rounded-full transition-all ${activeCategory === cat ? "bg-[#1A1A1A] text-white" : "bg-[#F5F2ED] text-[#737373] hover:bg-[#EBE8E3]"}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Grid */}
+      <section className="py-16">
+        <div className="container max-w-7xl mx-auto px-6">
+          {loading ? (
+            <div className="flex justify-center py-24">
+              <Loader2 className="w-6 h-6 animate-spin text-[#C5A059]" />
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="text-center py-24 text-[#737373]">
+              <p className="text-sm">No properties found for this filter.</p>
+            </div>
+          ) : (
+            <>
+              <p className="text-xs text-[#737373] uppercase tracking-widest mb-8">
+                Showing {filtered.length} {filtered.length === 1 ? "property" : "properties"}
+                {activeCategory !== "All" ? ` · ${activeCategory}` : ""}
+              </p>
+              <motion.div
+                key={`${activeKind}-${activeCategory}`}
+                initial="hidden"
+                animate="visible"
+                variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.06 } } }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              >
+                {filtered.map((acc) => (
+                  <AccommodationCard key={acc.id} acc={acc} />
+                ))}
+              </motion.div>
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 bg-[#1A1A1A] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        </div>
+        <div className="container max-w-4xl mx-auto px-6 text-center relative z-10">
+          <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase mb-6 block">Your Dream Awaits</span>
+          <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">
+            Begin Crafting <span className="italic font-light opacity-80">Your Journey</span>
+          </h2>
+          <p className="text-white/60 font-light text-lg mb-10 max-w-2xl mx-auto">
+            Speak directly with our safari experts to weave these exceptional properties into a bespoke itinerary designed exclusively for you.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/request-quote"
+              className="group inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-[#1A1A1A] transition-all duration-300 w-full sm:w-auto">
+              Request Complimentary Quote
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <a href="https://wa.me/255626371646" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 border border-white/20 text-white px-8 py-4 text-[11px] font-bold tracking-[0.2em] uppercase hover:border-white transition-all duration-300 w-full sm:w-auto">
+              WhatsApp Us
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
 }

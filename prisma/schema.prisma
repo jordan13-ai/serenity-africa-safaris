@@ -1,0 +1,191 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Status {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tour {
+  id          String         @id @default(cuid())
+  title       String
+  slug        String         @unique
+  status      Status         @default(DRAFT)
+  summary     String?
+  description String?        @db.Text
+  price       Decimal?       @db.Decimal(10, 2)
+  duration    Int?
+  groupSize   String?
+  difficulty  String?
+  season      String?
+  category    String?
+  destination String?
+  highlights  String[]
+  includes    String[]
+  excludes    String[]
+  coverImage  String?
+  gallery     String[]
+  itinerary   ItineraryDay[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model ItineraryDay {
+  id            String   @id @default(cuid())
+  tourId        String
+  tour          Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  day           Int
+  title         String
+  description   String   @db.Text
+  meals         String[]
+  accommodation String?
+}
+
+model Destination {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  status      Status   @default(DRAFT)
+  region      String?
+  description String?  @db.Text
+  bestTime    String?
+  climate     String?
+  wildlife    String[]
+  activities  String[]
+  coverImage  String?
+  gallery     String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Experience {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  status      Status   @default(DRAFT)
+  type        String?
+  description String?  @db.Text
+  highlights  String[]
+  coverImage  String?
+  gallery     String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BlogPost {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  status      Status    @default(DRAFT)
+  category    String?
+  excerpt     String?
+  body        String?   @db.Text
+  coverImage  String?
+  tags        String[]
+  author      String?
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Lodge {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  status      Status   @default(DRAFT)
+  destination String?
+  type        String?
+  description String?  @db.Text
+  highlights  String[]
+  amenities   String[]
+  priceFrom   Decimal? @db.Decimal(10, 2)
+  coverImage  String?
+  gallery     String[]
+  website     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Camp {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  status      Status   @default(DRAFT)
+  type        String?
+  destination String?
+  description String?  @db.Text
+  highlights  String[]
+  amenities   String[]
+  priceFrom   Decimal? @db.Decimal(10, 2)
+  coverImage  String?
+  gallery     String[]
+  website     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String
+  location  String?
+  rating    Int      @default(5)
+  quote     String   @db.Text
+  trip      String?
+  avatar    String?
+  featured  Boolean  @default(false)
+  status    Status   @default(DRAFT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PageContent {
+  id        String   @id @default(cuid())
+  page      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  filename  String
+  path      String
+  mimeType  String
+  size      Int
+  alt       String?
+  createdAt DateTime @default(now())
+}
+
+model SeoMeta {
+  id          String   @id @default(cuid())
+  page        String   @unique
+  title       String?
+  description String?  @db.Text
+  keywords    String?
+  ogImage     String?
+  noIndex     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

@@ -1,77 +1,197 @@
 "use client"
-import { Award, Compass, Users, Leaf, ShieldCheck, HeartHandshake } from "lucide-react";
-import { motion } from "framer-motion";
 
-const features = [
-    {
-        icon: Compass,
-        title: "Authentic Safari Experiences",
-        description: "Experience Tanzania through carefully curated safaris designed by local experts who understand the true beauty of Africa."
-    },
-    {
-        icon: Award,
-        title: "Luxury & Comfort",
-        description: "Enjoy premium accommodations, personalized services, and comfortable safari experiences without compromising adventure."
-    },
-    {
-        icon: Users,
-        title: "Professional Safari Guides",
-        description: "Our experienced guides provide deep knowledge of wildlife, culture, and nature to ensure unforgettable journeys."
-    },
-    {
-        icon: HeartHandshake,
-        title: "Tailor-Made Safaris",
-        description: "Every safari is customized based on your interests, travel style, and budget."
-    }
-];
+import Image from "next/image"
+import Link from "next/link"
+import { motion } from "framer-motion"
+import {
+  Compass, Award, Users, HeartHandshake,
+  Leaf, ShieldCheck, Clock, MapPin,
+} from "lucide-react"
+
+const reasons = [
+  {
+    icon: Compass,
+    stat: "100%",
+    statLabel: "Tailor-Made",
+    title: "Bespoke Itineraries",
+    description:
+      "No two travellers are alike. Every safari we craft is built around your vision — your pace, your passions, your story.",
+  },
+  {
+    icon: Users,
+    stat: "Expert",
+    statLabel: "Local Guides",
+    title: "Born-and-Bred Guides",
+    description:
+      "Our naturalist guides grew up in Tanzania's wilderness. They don't just know the bush — they read it like a language.",
+  },
+  {
+    icon: Award,
+    stat: "TATO",
+    statLabel: "Licensed",
+    title: "Licensed Tour Operator",
+    description:
+      "We are a fully licensed member of the Tanzania Association of Tour Operators, giving you complete peace of mind.",
+  },
+  {
+    icon: HeartHandshake,
+    stat: "24/7",
+    statLabel: "Support",
+    title: "White-Glove Support",
+    description:
+      "From first enquiry to final transfer, a dedicated concierge is on hand around the clock — whenever you need us.",
+  },
+  {
+    icon: Leaf,
+    stat: "Eco",
+    statLabel: "Conscious",
+    title: "Responsible Travel",
+    description:
+      "We operate with deep respect for wildlife and communities. Every booking contributes to local conservation efforts.",
+  },
+  {
+    icon: MapPin,
+    stat: "5+",
+    statLabel: "Ecosystems",
+    title: "Multi-Ecosystem Access",
+    description:
+      "Serengeti, Ngorongoro, Kilimanjaro, Zanzibar — we hold exclusive permits across Tanzania's most iconic landscapes.",
+  },
+]
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 32 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.09, ease: "easeOut" as const },
+  }),
+}
 
 export function WhyChooseUs() {
-    return (
-        <section className="py-24 bg-[#FAF7F2] relative overflow-hidden">
-            {/* Subtle Safari Animal Print Pattern Background */}
-            <div className="absolute inset-0 pointer-events-none opacity-[0.03]" 
-                 style={{ 
-                     backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,10 Q20,30 40,20 T80,40 T90,80 T50,90 T20,60 Z M40,60 Q50,70 70,60 T90,20 T70,10 T30,20 T20,40 Z' fill='%23000' fill-rule='evenodd'/%3E%3C/svg%3E")`, 
-                     backgroundSize: "150px 150px" 
-                 }}>
-            </div>
+  return (
+    <section className="relative py-28 lg:py-36 bg-[#1A1A1A] overflow-hidden">
 
-            <div className="container max-w-7xl mx-auto px-4 relative z-10">
-                <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-16 max-w-3xl mx-auto"
-                >
-                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-[#3E2723] mb-6">Why Choose Serenity Africa Safaris</h2>
-                    <p className="text-muted-foreground text-lg leading-relaxed">
-                        We don&apos;t just show you Tanzania; we invite you to experience its soul.
-                        Here is what sets our journeys apart.
-                    </p>
-                </motion.div>
+      {/* ── Background image strip ──────────────────────── */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/destinations/serengeti/serengeti-1.webp"
+          alt=""
+          fill
+          className="object-cover object-center opacity-10"
+          aria-hidden
+        />
+        {/* Left-to-right gradient: solid dark → transparent → solid dark */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A] via-[#1A1A1A]/70 to-[#1A1A1A]" />
+        {/* Bottom fade */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-[#1A1A1A]" />
+      </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {features.map((feature, idx) => (
-                        <motion.div 
-                            key={idx} 
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.5, delay: idx * 0.1 }}
-                            className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-[#8D6E63]/20 group"
-                        >
-                            <div className="w-14 h-14 bg-[#8D6E63]/10 rounded-xl flex items-center justify-center mb-6 text-[#8D6E63] group-hover:bg-[#8D6E63] group-hover:text-white transition-colors duration-300">
-                                <feature.icon size={28} strokeWidth={1.5} />
-                            </div>
-                            <h3 className="text-xl font-bold font-serif mb-3 text-[#4E342E] group-hover:text-[#3E2723] transition-colors">{feature.title}</h3>
-                            <p className="text-muted-foreground leading-relaxed text-sm">
-                                {feature.description}
-                            </p>
-                        </motion.div>
-                    ))}
+      {/* ── Gold top rule ────────────────────────────────── */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="flex items-center gap-4 mb-16">
+          <div className="w-10 h-px bg-primary" />
+          <span className="text-primary text-[11px] font-bold tracking-[0.35em] uppercase">
+            Why Serenity Africa Safaris
+          </span>
+        </div>
+
+        {/* ── Heading ──────────────────────────────────────── */}
+        <div className="grid lg:grid-cols-2 gap-12 mb-20 items-end">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            custom={0}
+            variants={fadeUp}
+          >
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white font-light leading-[1.1]">
+              Africa, experienced{" "}
+              <span className="italic text-white/70">the right way.</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            custom={1}
+            variants={fadeUp}
+            className="lg:text-right"
+          >
+            <p className="text-white/55 font-light leading-relaxed text-lg max-w-lg ml-auto">
+              We don&apos;t just show you Tanzania — we invite you into its soul. Here is what
+              separates a Serenity safari from everything else.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-3 mt-8 text-[11px] font-bold tracking-[0.25em] uppercase text-primary border-b border-primary pb-1 hover:opacity-70 transition-opacity"
+            >
+              Plan Your Safari
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* ── Cards grid ───────────────────────────────────── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5 rounded-2xl overflow-hidden">
+          {reasons.map((r, i) => (
+            <motion.div
+              key={r.title}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              custom={i}
+              variants={fadeUp}
+              className="group relative bg-[#1A1A1A] p-8 hover:bg-[#232323] transition-colors duration-300"
+            >
+              {/* Top row */}
+              <div className="flex items-start justify-between mb-6">
+                <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <r.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
                 </div>
+                <div className="text-right">
+                  <p className="text-2xl font-bold text-primary leading-none">{r.stat}</p>
+                  <p className="text-[10px] text-white/40 font-bold tracking-widest uppercase mt-0.5">
+                    {r.statLabel}
+                  </p>
+                </div>
+              </div>
+
+              {/* Text */}
+              <h3 className="text-lg font-serif text-white mb-3 leading-snug group-hover:text-primary transition-colors duration-300">
+                {r.title}
+              </h3>
+              <p className="text-white/45 text-sm font-light leading-relaxed">
+                {r.description}
+              </p>
+
+              {/* Bottom accent line on hover */}
+              <div className="absolute bottom-0 left-8 right-8 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* ── Bottom trust strip ────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-wrap items-center justify-center gap-10 mt-16 pt-10 border-t border-white/10"
+        >
+          {[
+            { icon: ShieldCheck, text: "TATO Licensed Operator" },
+            { icon: Clock,       text: "24/7 Guest Support" },
+            { icon: Award,       text: "2 Years of Expertise" },
+            { icon: Leaf,        text: "Eco-Responsible Travel" },
+          ].map(({ icon: Icon, text }) => (
+            <div key={text} className="flex items-center gap-2.5 text-white/50 hover:text-white/80 transition-colors">
+              <Icon className="w-4 h-4 text-primary/70 shrink-0" strokeWidth={1.5} />
+              <span className="text-xs font-medium tracking-wide">{text}</span>
             </div>
-        </section>
-    );
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  )
 }
