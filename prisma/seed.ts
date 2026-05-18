@@ -218,6 +218,28 @@ async function seedExperiences() {
   console.log(`✅ Experiences: ${created} created (${EXPERIENCES.length - created} already existed)`)
 }
 
+// ── Reviews ─────────────────────────────────────────────────────────────────
+const REVIEWS = [
+  { name: "The Kensington Family", location: "London, UK", rating: 5, quote: "An ethereal experience that redefined what luxury means to us. Waking to the sounds of the Serengeti from our private deck was simply unforgettable.", trip: "10-Day Serengeti & Zanzibar", featured: true },
+  { name: "Julian & Sarah M.", location: "New York, USA", rating: 5, quote: "The attention to detail was beyond anything we have experienced in our travels. Our guide knew every animal by name and every tree by story.", trip: "Honeymoon Safari", featured: true },
+  { name: "Mark Thompson", location: "Sydney, Australia", rating: 5, quote: "We have been on safaris across Africa but Serenity is on another level. The private camps, the guides, the silence — absolutely world class.", trip: "Photographic Expedition", featured: true },
+  { name: "Dr. & Mrs. Hoffmann", location: "Munich, Germany", rating: 5, quote: "From the very first email to the farewell transfer, every detail was handled with grace and professionalism. We will be back without question.", trip: "7-Day Northern Circuit Safari", featured: false },
+  { name: "Charlotte & Ben", location: "Cape Town, South Africa", rating: 5, quote: "The Ngorongoro Crater at sunrise, completely alone with our guide — that moment alone was worth the entire journey. A true privilege.", trip: "5-Day Big Five Safari", featured: false },
+  { name: "The Okafor Family", location: "Lagos, Nigeria", rating: 5, quote: "Travelling with three children and a grandmother, we were nervous. Serenity made every single one of us feel completely at ease and in awe.", trip: "Family Safari Adventure", featured: false },
+]
+
+async function seedReviews() {
+  let created = 0
+  for (const review of REVIEWS) {
+    const existing = await prisma.review.findFirst({ where: { name: review.name } })
+    if (!existing) {
+      await prisma.review.create({ data: { ...review, status: "PUBLISHED" } })
+      created++
+    }
+  }
+  console.log(`✅ Reviews: ${created} created (${REVIEWS.length - created} already existed)`)
+}
+
 // ── Main ────────────────────────────────────────────────────────────────────
 async function main() {
   console.log("🌿 Seeding database...")
@@ -226,6 +248,7 @@ async function main() {
   await seedDestinations()
   await seedTours()
   await seedExperiences()
+  await seedReviews()
   console.log("🎉 Database seeded successfully!")
 }
 
