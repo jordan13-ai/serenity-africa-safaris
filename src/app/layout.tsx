@@ -117,8 +117,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  // TODO: add Google Search Console verification before launch:
-  // verification: { google: "YOUR_VERIFICATION_CODE_FROM_SEARCH_CONSOLE" },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
+    verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
+  }),
 };
 
 export default function RootLayout({

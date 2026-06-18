@@ -8,16 +8,23 @@ export function Hero() {
         <section className="relative h-screen min-h-[700px] w-full overflow-hidden bg-black">
             {/* Background Media */}
             <div className="absolute inset-0 z-0">
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    className="absolute inset-0 w-full h-full object-cover opacity-70 scale-105"
-                >
-                    <source src="/video/hero-video.mp4" type="video/mp4" />
-                </video>
+                <div className="absolute inset-0 w-full h-full overflow-hidden">
+                    <iframe
+                        src="https://www.youtube.com/embed/2SakZbB8fuQ?autoplay=1&mute=1&loop=1&playlist=2SakZbB8fuQ&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
+                        allow="autoplay; fullscreen"
+                        className="absolute top-1/2 left-1/2 opacity-70"
+                        style={{
+                            transform: "translate(-50%, -50%) scale(1.15)",
+                            width: "177.78vh",
+                            minWidth: "100%",
+                            height: "56.25vw",
+                            minHeight: "100%",
+                            border: "none",
+                            pointerEvents: "none",
+                        }}
+                        title="Serenity Africa Safaris"
+                    />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/40" />
             </div>
 

@@ -48,6 +48,12 @@ next-env.d.ts
 /replace_contact.js
 /all_webp_files.txt
 
+# cPanel deployment files — not needed for Vercel
+/server.js
+/install.sh
+/.home/
+/*.zip
+
 # Video files — too large for GitHub (>100MB limit). Host on CDN/VPS instead.
 public/video/*.mp4
 public/video/*.webm

@@ -39,6 +39,9 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 86400,
   },
 
+  // Prevent Prisma and its pg adapter from being bundled by webpack
+  serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg", "pg"],
+
   trailingSlash: true,
   poweredByHeader: false,
 

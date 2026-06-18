@@ -248,14 +248,86 @@ export const tours: Tour[] = [
         highlights: ["High Success Rate", "Panoramic Views", "Less Crowded", "Shira Plateau"],
         description: "Considered one of the most beautiful routes on Kilimanjaro, Lemosho offers a remote start and excellent acclimatization profile over 8 days.",
         itinerary: [
-            { day: 1, title: "Lemosho Gate to Mti Mkubwa", description: "Start the trek through the pristine rainforest." },
-            { day: 2, title: "Mti Mkubwa to Shira 1 Camp", description: "Enter the heath zone and cross the Shira Ridge." },
-            { day: 3, title: "Shira 1 to Shira 2 Camp", description: "Gentle hike across the plateau with stunning peak views." },
-            { day: 4, title: "Shira 2 to Lava Tower to Barranco", description: "Acclimatization day. Climb high, sleep low." },
-            { day: 5, title: "Barranco to Karanga", description: "Conquer the Barranco Wall." },
-            { day: 6, title: "Karanga to Barafu", description: "Head to base camp." },
-            { day: 7, title: "Summit Night", description: "Uhuru Peak and descent." },
-            { day: 8, title: "Mweka to Gate", description: "Finish the adventure." }
+            {
+                day: 1,
+                title: "Londorossi Gate (2,100m) to Mti Mkubwa (2,750m)",
+                description: "Your Kilimanjaro adventure begins at the remote Londorossi Gate, far from the crowds. After registration, you step into the ancient montane rainforest — a lush, cathedral-like world dripping with moss and alive with birdsong. The trail winds through dense vegetation as colobus monkeys observe from above. Camp tonight beneath the giant forest trees.",
+                accommodation: "Mti Mkubwa Camp (Tented)",
+                meals: "Lunch, Dinner",
+                distance: "8 km",
+                time: "3-4 hours",
+                elevation: "2,100m to 2,750m"
+            },
+            {
+                day: 2,
+                title: "Mti Mkubwa (2,750m) to Shira 1 Camp (3,500m)",
+                description: "Leaving the rainforest behind, the trail ascends steeply through giant heather and moorland. The vegetation becomes increasingly sparse as you climb higher, and for the first time you may catch glimpses of Kilimanjaro's ice-capped summit emerging above the clouds. Shira 1 Camp sits on the vast Shira Plateau with wide open skies.",
+                accommodation: "Shira 1 Camp (Tented)",
+                meals: "Breakfast, Lunch, Dinner",
+                distance: "8 km",
+                time: "5-7 hours",
+                elevation: "2,750m to 3,500m"
+            },
+            {
+                day: 3,
+                title: "Shira 1 (3,500m) to Shira 2 Camp (3,850m)",
+                description: "A relatively gentle day crosses the magnificent Shira Plateau — Africa's largest high-altitude plateau. The route passes Shira Cathedral, a dramatic volcanic plug rising from the moorland. Views of Kibo's summit cone are extraordinary from here. Use this day to breathe, adjust to the altitude, and take in the immensity of the landscape.",
+                accommodation: "Shira 2 Camp (Tented)",
+                meals: "Breakfast, Lunch, Dinner",
+                distance: "9 km",
+                time: "4-6 hours",
+                elevation: "3,500m to 3,850m"
+            },
+            {
+                day: 4,
+                title: "Shira 2 (3,850m) to Lava Tower (4,640m) to Barranco (3,976m)",
+                description: "The most critical acclimatization day of the route. Trek up to the iconic Lava Tower — a jagged volcanic plug — for lunch at 4,640m, then descend to Barranco Camp for the night. This 'climb high, sleep low' strategy dramatically improves your chances of summit success. The descent into the Barranco Valley reveals otherworldly giant groundsels and lobelias.",
+                accommodation: "Barranco Camp (Tented)",
+                meals: "Breakfast, Lunch, Dinner",
+                distance: "14 km",
+                time: "7-8 hours",
+                elevation: "3,850m to 4,640m then 3,976m"
+            },
+            {
+                day: 5,
+                title: "Barranco (3,976m) to Karanga Camp (4,035m)",
+                description: "Begin with the legendary Barranco Wall — a hands-and-feet scramble that appears daunting but is a highlight of the entire route. Your guides lead you confidently up each ledge with rewarding views expanding below. The traverse through the Southern Icefields to Karanga is beautiful, crossing glacier-carved ridges and valleys with the summit looming overhead.",
+                accommodation: "Karanga Camp (Tented)",
+                meals: "Breakfast, Lunch, Dinner",
+                distance: "5 km",
+                time: "4-6 hours",
+                elevation: "3,976m to 4,035m"
+            },
+            {
+                day: 6,
+                title: "Karanga (4,035m) to Barafu Camp (4,673m)",
+                description: "A short but altitude-testing climb takes you to Barafu — your final base camp before the summit. The terrain is rocky alpine desert, completely barren and windswept. Arrive early for a hot meal and mandatory rest. Guides brief you on the summit night strategy. Lights out by 7pm as you prepare for the most significant night of the expedition.",
+                accommodation: "Barafu Camp (Tented)",
+                meals: "Breakfast, Lunch, Early Dinner",
+                distance: "4 km",
+                time: "3-4 hours",
+                elevation: "4,035m to 4,673m"
+            },
+            {
+                day: 7,
+                title: "Summit: Barafu (4,673m) to Uhuru Peak (5,895m) to Mweka (3,100m)",
+                description: "The ultimate night begins at midnight. Under a canopy of stars, your team starts the zigzagging ascent through volcanic scree. Step after slow step, you push through the cold and thin air. Stella Point at sunrise rewards you with views across the glaciers. Then the final push to Uhuru Peak — the Roof of Africa. After photographs and tears of joy, descend the long Mweka trail to camp.",
+                accommodation: "Mweka Camp (Tented)",
+                meals: "Breakfast, Dinner",
+                distance: "5 km up / 12 km down",
+                time: "6-8 hours up / 4-5 hours down",
+                elevation: "4,673m to 5,895m to 3,100m"
+            },
+            {
+                day: 8,
+                title: "Mweka Camp (3,100m) to Mweka Gate (1,640m)",
+                description: "A celebratory final descent through the rainforest. The forest comes alive around you as your legs carry you down the muddy trail to Mweka Gate, where certificates are waiting. Say farewell to your incredible crew — porters, guides, and cooks who made this summit possible. Transfer to your hotel in Moshi for a hot shower and a hard-earned celebratory dinner.",
+                accommodation: "Hotel in Moshi",
+                meals: "Breakfast, Lunch",
+                distance: "10 km",
+                time: "3-4 hours",
+                elevation: "3,100m to 1,640m"
+            }
         ],
         inclusions: ["All fees", "Camping gear", "Oxygen cylinder", "AMREF Flying Doctors cover", "All meals"],
         exclusions: ["Gear rental", "Tips", "Travel insurance"],
@@ -291,16 +363,76 @@ export const tours: Tour[] = [
         highlights: ["Great Migration", "Luxury Tented Camps", "Zanzibar Relaxation", "Stone Town Tour"],
         description: "The perfect blend of adventure and relaxation. Witness the dramatic river crossings of the Great Migration before unwinding on the white sands of Zanzibar.",
         itinerary: [
-            { day: 1, title: "Arrival Kilimanjaro", description: "Transfer to Arusha hotel." },
-            { day: 2, title: "Tarangire National Park", description: "Game drive amongst giant baobabs." },
-            { day: 3, title: "Serengeti (Central)", description: "Head to the heart of the park." },
-            { day: 4, title: "Serengeti (North/West)", description: "Follow the migration herds." },
-            { day: 5, title: "Ngorongoro Crater", description: "The world's largest inactive volcanic caldera." },
-            { day: 6, title: "Fly to Zanzibar", description: "Transfer to airport and flight to paradise." },
-            { day: 7, title: "Stone Town Tour", description: "Explore the historic alleyways and spice markets." },
-            { day: 8, title: "Beach Relaxation", description: "Leisure time at your resort." },
-            { day: 9, title: "Blue Lagoon Snorkeling", description: "Discover underwater marine life." },
-            { day: 10, title: "Departure", description: "Transfer to airport." }
+            {
+                day: 1,
+                title: "Arrival in Tanzania — Welcome to Arusha",
+                description: "Touch down at Kilimanjaro International Airport where your Serenity representative meets you with a warm welcome. Transfer to your hotel in Arusha, Tanzania's adventure capital, nestled between Mount Kilimanjaro and Mount Meru. Enjoy a welcome dinner and a briefing on the incredible journey ahead.",
+                accommodation: "Arusha Coffee Lodge or similar",
+                meals: "Dinner"
+            },
+            {
+                day: 2,
+                title: "Tarangire National Park — Giants of the Baobab Forest",
+                description: "Depart Arusha after breakfast and enter Tarangire National Park, a landscape dominated by the ancient baobab tree and the Tarangire River. This park holds Africa's highest concentration of elephants outside Botswana. Scan the riverine woodland for lions lounging in baobab shade, large herds of buffalo, and hundreds of bird species including the enormous ground hornbill.",
+                accommodation: "Maramboi Tented Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 3,
+                title: "Serengeti (Central) — Into the Endless Plains",
+                description: "Cross the Ngorongoro Highlands en route to the world-famous Serengeti National Park. As the road gives way to endless golden savannah, the sense of scale is breathtaking. Check in to your luxury tented camp before an afternoon game drive in the predator-rich Seronera Valley, where cheetahs hunt and leopards drape themselves across acacia branches.",
+                accommodation: "Luxury Tented Camp, Central Serengeti",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 4,
+                title: "Serengeti (North/West) — Following the Migration",
+                description: "Rise before dawn and head north to intercept the Great Migration herds. Millions of wildebeest and zebra follow ancient instincts across the Serengeti plains in one of nature's greatest spectacles. Between July and October, dramatic river crossings at the Mara River draw enormous crocodiles to the frenzy. At other times of year, the herds carpet the open plains in every direction.",
+                accommodation: "Luxury Tented Camp, Serengeti",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 5,
+                title: "Ngorongoro Crater — The World in a Bowl",
+                description: "Drive to the rim of the Ngorongoro Crater, a UNESCO World Heritage Site formed by the collapse of an ancient supervolcano 2-3 million years ago. Descend 600 metres to the crater floor, home to some 25,000 animals including the endangered black rhino, lions, hyenas, flamingos turning the soda lake pink, and dense herds of zebra and wildebeest in a self-contained ecosystem.",
+                accommodation: "Crater rim lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 6,
+                title: "Fly to Zanzibar — Welcome to the Spice Island",
+                description: "Bid farewell to the savannah as your domestic flight carries you east over the Tanzanian coast to Zanzibar — an island of powdery white sand beaches, turquoise Indian Ocean waters, and 2,000 years of layered history. Transfer to your beachfront resort on the North or East Coast and feel the Indian Ocean breeze for the first time.",
+                accommodation: "4-5 Star Beach Resort, Zanzibar",
+                meals: "Breakfast, Dinner"
+            },
+            {
+                day: 7,
+                title: "Stone Town — A UNESCO World Heritage City",
+                description: "Spend the morning exploring the winding alleyways of Stone Town, Zanzibar's atmospheric old quarter recognized as a UNESCO World Heritage Site. Visit the spice farm to smell cinnamon, cloves, and vanilla at the source, explore the famous Forodhani Night Market, and peek into the House of Wonders. The afternoon is free at the beach.",
+                accommodation: "4-5 Star Beach Resort, Zanzibar",
+                meals: "Breakfast, Lunch"
+            },
+            {
+                day: 8,
+                title: "Beach Relaxation — Days of Sun and Sand",
+                description: "Today is entirely yours. Zanzibar's beaches are among the finest in Africa — powder-fine coral sand, warm shallow waters, and a horizon that dissolves into sky and sea. Whether you choose to do absolutely nothing with a book and a cocktail, explore the resort's facilities, or arrange a sunset dhow cruise, this day belongs to you completely.",
+                accommodation: "4-5 Star Beach Resort, Zanzibar",
+                meals: "Breakfast"
+            },
+            {
+                day: 9,
+                title: "Blue Lagoon Snorkeling — Underwater Zanzibar",
+                description: "Board a traditional dhow and sail to the crystal-clear waters of the Blue Lagoon near Nakupenda sandbank. Snorkel amongst spectacular coral gardens, sea turtles, tropical fish, and if you're lucky, dolphins playing in the bow wave. Return to shore for a fresh seafood lunch before a final afternoon of beach relaxation.",
+                accommodation: "4-5 Star Beach Resort, Zanzibar",
+                meals: "Breakfast, Lunch"
+            },
+            {
+                day: 10,
+                title: "Departure — Until Next Time",
+                description: "Savour a final breakfast with the sound of the Indian Ocean before transferring to Zanzibar International Airport for your homeward flight. Leave with sun-kissed skin, a camera full of memories, and the quiet certainty that Tanzania has changed you forever.",
+                accommodation: "N/A",
+                meals: "Breakfast"
+            }
         ],
         inclusions: ["Domestic flights", "Luxury accommodation", "All park fees", "Zanzibar transfers", "Safari vehicle"],
         exclusions: ["International flights", "Visas", "Tips", "Laundry"]
@@ -323,9 +455,27 @@ export const tours: Tour[] = [
         highlights: ["Aerial Views", "Central Serengeti", "Maximized Time", "Big Cat Action"],
         description: "Short on time but want the full experience? This fly-in safari maximizes your game viewing time by skipping the long drives.",
         itinerary: [
-            { day: 1, title: "Flight to Seronera", description: "Morning flight from Arusha/Zanzibar. Afternoon game drive." },
-            { day: 2, title: "Full Day Serengeti", description: "Dawn to dusk game viewing in the predator-rich Seronera valley." },
-            { day: 3, title: "Morning Game Drive & Departure", description: "Final game drive en route to airstrip for flight back." }
+            {
+                day: 1,
+                title: "Fly In to Seronera — Aerial Africa",
+                description: "Board your light aircraft for a spectacular low-level flight over the Serengeti plains — a perspective few travellers ever experience. Touch down at Seronera Airstrip in the very heart of the park and meet your guide. The afternoon game drive begins immediately. The Seronera Valley is renowned as one of Africa's premier big-cat habitats, home to the highest density of resident lions and leopards on the continent. Arrive at your luxury tented camp as the sun turns the savannah gold.",
+                accommodation: "Luxury Tented Camp, Seronera",
+                meals: "Lunch, Dinner"
+            },
+            {
+                day: 2,
+                title: "Full Day in the Serengeti — Dawn to Dusk",
+                description: "Wake before sunrise for a pre-dawn game drive — the hour when predators finish their night's hunt and the savannah stirs to life. Spend the entire day exploring the Central Serengeti, tracking lion prides, searching for leopards draped in acacia trees, watching cheetahs teach cubs to hunt, and observing massive elephant families at the rivers. A bush lunch is served in the wild under a shade tree. Return for another golden-hour drive before an open-air dinner under the stars.",
+                accommodation: "Luxury Tented Camp, Seronera",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 3,
+                title: "Final Game Drive & Departure",
+                description: "Squeeze every last moment from this extraordinary experience with an early morning game drive before transferring to the airstrip. The short flight back offers a final bird's-eye view of the endless plains below — a farewell that deepens the impression these landscapes leave on every soul that passes through them.",
+                accommodation: "N/A",
+                meals: "Breakfast"
+            }
         ],
         inclusions: ["Return flights", "Luxury tented camp", "Park fees", "4x4 use"],
         exclusions: ["Tips", "Drinks", "Insurance"]
@@ -349,11 +499,41 @@ export const tours: Tour[] = [
         highlights: ["Walking Safaris", "Huge Elephant Herds", "River Scenes", "Baobab Valley"],
         description: "Dive deep into Tanzania's largest park. Ruaha offers a raw, uncrowded experience with massive elephant herds and high predator densities along the Great Ruaha River.",
         itinerary: [
-            { day: 1, title: "Fly to Ruaha", description: "Afternoon game drive along the river." },
-            { day: 2, title: "Game Drives", description: "Explore the core game viewing areas." },
-            { day: 3, title: "Walking Safari", description: "Experience the bush on foot with armed guides." },
-            { day: 4, title: "Birding & Predators", description: "Search for wild dogs and greater kudu." },
-            { day: 5, title: "Departure", description: "Morning drive and flight out." }
+            {
+                day: 1,
+                title: "Fly In to Ruaha — Into the Wild Interior",
+                description: "Your flight from Dar es Salaam drops you into Tanzania's raw, untamed heart. Ruaha National Park is the country's largest park and among Africa's most underrated wilderness destinations — vast, rugged, and largely crowd-free. Your guide meets you at Msembe Airstrip and the afternoon game drive begins along the Great Ruaha River, where enormous elephant herds come to drink alongside hippos and crocodiles in the shallows.",
+                accommodation: "Luxury River Lodge",
+                meals: "Lunch, Dinner"
+            },
+            {
+                day: 2,
+                title: "Deep Ruaha Game Drives — Predator Country",
+                description: "Full day exploring the diverse habitats of Ruaha — from riverine woodland to open miombo savannah and rocky kopjes. Ruaha holds one of East Africa's largest lion populations, and encountering a pride mid-hunt on the open plains is an experience that demands silence. Look for the park's charismatic greater kudu and sable antelope — animals rarely seen on the Northern Circuit. Picnic lunch is served at a scenic viewpoint overlooking the river.",
+                accommodation: "Luxury River Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 3,
+                title: "Walking Safari — The Bush at Eye Level",
+                description: "Put your boots on the ground for a guided walking safari — the most intimate way to experience the African wilderness. Led by a professional walking guide and a ranger, you track animals on foot, reading the language of the bush: paw prints, animal droppings, broken branches, and the sounds that signal predators nearby. What seemed just scenery from a vehicle becomes an immersive, living world. Afternoon game drive after a riverside lunch.",
+                accommodation: "Luxury River Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 4,
+                title: "Birding & Wild Dogs — Africa's Rarest Predator",
+                description: "Ruaha is one of East Africa's premier destinations for African wild dogs — the continent's most endangered large predator, with only around 6,000 individuals remaining. Your guide knows the territories and tracks the pack in the early morning. The park's birdlife is equally staggering, with over 570 species recorded including carmine bee-eaters, Pel's fishing owl, and the martial eagle. Evening sundowners from a riverside cliff.",
+                accommodation: "Luxury River Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 5,
+                title: "Final Morning — Departure",
+                description: "A final dawn game drive along the river before transferring back to Msembe Airstrip for your return flight to Dar es Salaam. Ruaha leaves an impression that stays with you long after you've left — the feeling of a wilderness truly uncompromised by tourism. You'll be planning your return before you board.",
+                accommodation: "N/A",
+                meals: "Breakfast"
+            }
         ],
         inclusions: ["Flights", "Accommodation", "Park fees", "Game drives"],
         exclusions: ["Tips", "Drinks"]
@@ -376,13 +556,55 @@ export const tours: Tour[] = [
         highlights: ["Ruaha Predators", "Nyerere Boat Safari", "Walking Safari", "Fly-in Ease"],
         description: "The ultimate Southern Tanzania combination. Experience the rugged beauty of Ruaha and the riverine magic of Nyerere National Park in one seamless trip.",
         itinerary: [
-            { day: 1, title: "Dar to Nyerere", description: "Fly to Nyerere, afternoon boat safari." },
-            { day: 2, title: "Nyerere Game Drive", description: "Full day exploring the lakes and savannah." },
-            { day: 3, title: "Walking Safari", description: "Morning walk, afternoon game drive." },
-            { day: 4, title: "Fly to Ruaha", description: "Transfer to the rugged interior." },
-            { day: 5, title: "Ruaha Exploration", description: "Track lions and leopards." },
-            { day: 6, title: "Remote Ruaha", description: "Visit the distant corners of the park." },
-            { day: 7, title: "Back to Dar", description: "Flight back to the coast." }
+            {
+                day: 1,
+                title: "Dar es Salaam to Nyerere — Arrival on the Rufiji",
+                description: "Fly from Dar es Salaam to Nyerere National Park (formerly Selous), touching down in Africa's largest national park by area. The scale is extraordinary — larger than Switzerland. Your guide whisks you directly onto the Rufiji River for a late-afternoon boat safari. Hippos grunt and wallow in the shallows, Nile crocodiles bask on sandbanks, and African fish eagles scream from riverine trees as the sun drops behind the baobabs.",
+                accommodation: "Luxury Riverside Camp",
+                meals: "Lunch, Dinner"
+            },
+            {
+                day: 2,
+                title: "Nyerere — Lakes, Plains, and Predators",
+                description: "A full day exploring Nyerere's incredible variety of habitats — from the open Lake Manze floodplains, where lion prides stalk herds of buffalo, to the palm-fringed channels teeming with hippos and water birds. Game drives venture deep into the southern sector, far from any other vehicle. Look for wild dogs — Nyerere holds one of Africa's largest remaining populations — alongside sable antelope, elephant herds, and packs of spotted hyena.",
+                accommodation: "Luxury Riverside Camp",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 3,
+                title: "Walking Safari & Boat — The Bush in Full Dimension",
+                description: "Morning brings a guided walking safari led by experienced rangers who track animals on foot through the miombo woodland. The afternoon is dedicated to another boat safari on the Rufiji — drift quietly along channels where elephants wade chest-deep to reach islands, crocodiles launch off banks with shocking speed, and the air fills with kingfishers, herons, and giant stork. Bush sundowners served riverside.",
+                accommodation: "Luxury Riverside Camp",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 4,
+                title: "Fly to Ruaha — The Rugged Interior",
+                description: "After a morning game drive, board your charter flight for the dramatic flight northwest into the Ruaha highlands. The landscape transforms dramatically — from lowland miombo to steep escarpments, baobab valleys, and the rocky terrain of the Great Ruaha River. Arrive at your lodge in time for an afternoon game drive, immediately discovering Ruaha's distinct character — wilder, rawer, and more dramatic than the parks of the north.",
+                accommodation: "Ruaha River Lodge or similar",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 5,
+                title: "Ruaha — Lions, Leopards, and Wild Dogs",
+                description: "Ruaha's terrain rewards patient game drives. Lion prides here are some of Africa's largest, adapted to hunting buffalo and even giraffe. Follow your guide into the rocky kopjes where leopards den amongst the boulders. The evening game drive as the sun goes down over the Great Ruaha River — with hippos grunting below and a blood-red sky above — is one of the defining images of a Tanzania safari.",
+                accommodation: "Ruaha River Lodge or similar",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 6,
+                title: "Remote Ruaha — Off the Beaten Track",
+                description: "Today ventures into the more remote areas of Ruaha's vast wilderness, where your vehicle may be the only one for miles. The sense of solitude and wildness is profound. Track the park's sable and roan antelopes — rare and beautiful animals often absent from busier parks. Visit the baobab forests in the north of the park, where ancient trees thousands of years old cast dramatic shadows. Final evening dinner under the African stars.",
+                accommodation: "Ruaha River Lodge or similar",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 7,
+                title: "Final Morning & Return to Dar es Salaam",
+                description: "One final sunrise game drive as the bush awakens, before transferring to the airstrip for your return flight to Dar es Salaam. The Southern Circuit has given you something the Northern Circuit rarely can: space, solitude, and the feeling of a wilderness truly your own. You'll have seen more wildlife, covered more terrain, and felt more alone with Africa than almost any other itinerary can provide.",
+                accommodation: "N/A",
+                meals: "Breakfast"
+            }
         ],
         inclusions: ["Internal Flights", "Full Board Accommodation", "Park Fees", "Activities"],
         exclusions: ["International Flights", "Visas"]
@@ -406,9 +628,27 @@ export const tours: Tour[] = [
         highlights: ["Rufiji River Boat Trip", "Hippo Pools", "Walking Safari", "Bird Watching"],
         description: "A quick but immersive escape to Africa's largest reserve. The focus is on the mighty Rufiji River and its abundant aquatic wildlife.",
         itinerary: [
-            { day: 1, title: "Fly In & Boat Safari", description: "Arrive and immediately hit the water for sunset." },
-            { day: 2, title: "Full Day Game Drive", description: "Explore the vast game reserve." },
-            { day: 3, title: "Walking & Fly Out", description: "Morning bush walk and return flight." }
+            {
+                day: 1,
+                title: "Fly In to Nyerere — Straight Onto the River",
+                description: "Your 45-minute flight from Dar es Salaam lands in Nyerere National Park just as the afternoon light turns golden. There's no check-in formality — within minutes of landing you're aboard a motorised boat sliding along the Rufiji River. Hippos surface and submerge, enormous Nile crocodiles line the banks, and African skimmers skim the water's surface. A sundowner is served mid-river as the park settles into its evening routine.",
+                accommodation: "Riverside Camp",
+                meals: "Lunch, Dinner"
+            },
+            {
+                day: 2,
+                title: "Full Day — Lakes, Channels & Open Plains",
+                description: "Today opens up Nyerere in its full grandeur. Game drives circle the oxbow lakes teeming with hippos and waterfowl before crossing into the open grasslands where lion prides patrol and cheetahs scan the horizon from termite mounds. The afternoon boat safari drifts along quiet backchannels draped in overhanging fig trees — utterly silent but for birdsong and the occasional splash of a monitor lizard entering the water.",
+                accommodation: "Riverside Camp",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 3,
+                title: "Walking Safari & Departure — Into the Bush on Foot",
+                description: "Rise early for a guided walking safari — the most immersive way to experience Nyerere's extraordinary ecosystem. Reading tracks in the soft mud, pausing to identify plants used in traditional medicine, and getting close to grazing impala on foot changes your entire relationship with the wild. Fly back to Dar es Salaam before midday, arriving with eyes full of wild Africa and a quiet reluctance to leave.",
+                accommodation: "N/A",
+                meals: "Breakfast"
+            }
         ],
         inclusions: ["Flights from Dar", "Camp Stay", "Park Fees", "Boat Safari"],
         exclusions: ["Tips", "Drinks"]
@@ -432,11 +672,41 @@ export const tours: Tour[] = [
         highlights: ["Beach Relaxation", "Stone Town Tour", "Spice Farm", "Blue Lagoon"],
         description: "Relax and recharge on the Spice Island. Includes a balance of cultural exploration in Stone Town and pure leisure on the white sand beaches.",
         itinerary: [
-            { day: 1, title: "Arrival", description: "Transfer to Stone Town hotel." },
-            { day: 2, title: "Stone Town & Spices", description: "Guided city tour and spice farm visit. Transfer to beach resort." },
-            { day: 3, title: "Beach Day", description: "Leisure time at the resort." },
-            { day: 4, title: "Blue Lagoon", description: "Optional snorkeling trip." },
-            { day: 5, title: "Departure", description: "Transfer to airport." }
+            {
+                day: 1,
+                title: "Arrival in Zanzibar — The Spice Island Welcomes You",
+                description: "Step off the plane into warm, salt-scented Indian Ocean air. Your driver meets you at Zanzibar International Airport and transfers you to your Stone Town hotel — one of Africa's most evocative historic quarters. Check in, take a slow walk through the labyrinthine alleyways of carved wooden doors and faded Ottoman architecture, and enjoy dinner at a candlelit rooftop restaurant overlooking the harbour.",
+                accommodation: "Stone Town Boutique Hotel",
+                meals: "Dinner"
+            },
+            {
+                day: 2,
+                title: "Stone Town & Spice Farm — Culture, History & Aroma",
+                description: "Start the morning with a guided walking tour of Stone Town's UNESCO-listed old quarter. Visit the former slave market, the Palace Museum, and the birthplace of Freddie Mercury. Then venture to a working spice farm where cloves, cinnamon, vanilla, and turmeric are grown — taste them fresh from the plant and learn their uses in Swahili cooking. After lunch, transfer to your beachside resort on Zanzibar's East Coast.",
+                accommodation: "4-Star Beach Resort, East Coast",
+                meals: "Breakfast, Lunch"
+            },
+            {
+                day: 3,
+                title: "Beach Day — Pure Paradise",
+                description: "Zanzibar's East Coast beaches are among the finest in the world — powder-white coral sand shelving gently into warm, crystal-clear turquoise water. Today is yours entirely. Read, swim, snorkel the house reef, or simply listen to the ocean. Lunches of fresh-caught grilled fish and coconut rice are served in the shade of palm trees that lean out over the sand.",
+                accommodation: "4-Star Beach Resort, East Coast",
+                meals: "Breakfast"
+            },
+            {
+                day: 4,
+                title: "Blue Lagoon & Snorkeling — Underwater Zanzibar",
+                description: "Board a traditional dhow for a sailing trip to the stunning Blue Lagoon. Below the surface, a kaleidoscopic coral garden teems with parrotfish, angelfish, sea turtles, and reef sharks. Snorkelling equipment is provided and guides point out the most remarkable marine life. Return to shore for a grilled seafood lunch served on a sandbank before your final afternoon at the resort.",
+                accommodation: "4-Star Beach Resort, East Coast",
+                meals: "Breakfast, Lunch"
+            },
+            {
+                day: 5,
+                title: "Departure — Zanzibar Sends You Home",
+                description: "A final breakfast with the sound of the Indian Ocean before transferring to the airport. Zanzibar has a way of slowing people down, making the world feel a little more beautiful and unhurried — a feeling that tends to linger long after the flight home.",
+                accommodation: "N/A",
+                meals: "Breakfast"
+            }
         ],
         inclusions: ["All Transfers", "Hotel (B&B)", "Tours mentioned"],
         exclusions: ["Flights", "Lunches/Dinners", "Tips"]
@@ -459,14 +729,62 @@ export const tours: Tour[] = [
         highlights: ["Private Sunset Cruise", "Candlelit Dinners", "Spa Treatments", "Secluded Beach"],
         description: "The ultimate romantic getaway. Private villas, personalized service, and exclusive experiences designed for couples.",
         itinerary: [
-            { day: 1, title: "Honeymoon Welcome", description: "VIP arrival and transfer." },
-            { day: 2, title: "Private Island Picnic", description: "Boat trip to a sandbank." },
-            { day: 3, title: "Spa Day", description: "Couples massage and wellness." },
-            { day: 4, title: "Sunset Dhow Cruise", description: "Romantic sail with drinks." },
-            { day: 5, title: "Leisure", description: "Relax at your private pool." },
-            { day: 6, title: "Stone Town Dinner", description: "Evening tour and rooftop dining." },
-            { day: 7, title: "Leisure", description: "Final day of relaxation." },
-            { day: 8, title: "Departure", description: "VIP transfer out." }
+            {
+                day: 1,
+                title: "Honeymoon Arrival — A Private Welcome",
+                description: "Your villa manager meets you at the airport with a hand-written welcome card and a garland of frangipani. The drive to your private villa takes you along coastal roads lined with palm trees and glimpses of turquoise ocean. Upon arrival, chilled champagne and a flower-petal-decorated bed await. Dinner is served on your private terrace under the stars — just the two of you.",
+                accommodation: "Exclusive 5-Star Private Villa",
+                meals: "Dinner"
+            },
+            {
+                day: 2,
+                title: "Private Island Picnic — A Sandbank to Yourselves",
+                description: "Board your private boat and sail to a remote sandbank that emerges from the Indian Ocean at low tide. Your villa team has prepared a lavish picnic: chilled wines, smoked fish, fresh tropical fruit, and handmade chocolates. Snorkel the surrounding reef, swim in the warm shallows, or simply sit together at the edge of the world. Return by late afternoon as the tide begins to reclaim the island.",
+                accommodation: "Exclusive 5-Star Private Villa",
+                meals: "Breakfast, Picnic Lunch, Dinner"
+            },
+            {
+                day: 3,
+                title: "Spa Day — Wellness for Two",
+                description: "A full day of rest, renewal, and connection. Begin with a couples' sunrise yoga session on the deck, followed by a private spa treatment — warm stone massage, deep tissue, or a traditional Zanzibar coconut oil ritual, your choice. The afternoon is spent at your private plunge pool with fresh juices and light snacks. The evening brings a candlelit bath drawn with rose petals and essential oils.",
+                accommodation: "Exclusive 5-Star Private Villa",
+                meals: "Breakfast, Dinner"
+            },
+            {
+                day: 4,
+                title: "Sunset Dhow Cruise — A Sailing Romance",
+                description: "Board a traditional Zanzibar dhow as the afternoon softens into evening. The crew sets the white sails and you glide across the calm water as the sky turns amber, rose, and violet. Cold champagne, oysters, and fresh prawns are served as the sun dips below the horizon. Return to shore under the first stars of the night, the scent of the ocean still on your skin.",
+                accommodation: "Exclusive 5-Star Private Villa",
+                meals: "Breakfast, Dinner"
+            },
+            {
+                day: 5,
+                title: "Leisure — Your Private Paradise",
+                description: "No schedule. No obligations. Sleep as late as you wish, breakfast in bed if you prefer. The villa's private pool, the beach beyond, and the endless ocean are entirely yours. Arrange snorkelling, a deep-sea fishing trip, or a cycling tour of the nearby villages if you wish — or simply do nothing at all. This is the luxury of time, freely given.",
+                accommodation: "Exclusive 5-Star Private Villa",
+                meals: "Breakfast"
+            },
+            {
+                day: 6,
+                title: "Stone Town — A Private Evening in the Old City",
+                description: "Your private guide leads you through the enchanting alleyways of Stone Town as the old city comes alive in the evening light. Visit the spice market, watch craftsmen carve the famous Zanzibar doors, and discover hidden courtyards. Dinner is reserved at one of Stone Town's finest rooftop restaurants — a candlelit table with views over the harbour — followed by an evening stroll along the waterfront.",
+                accommodation: "Exclusive 5-Star Private Villa",
+                meals: "Breakfast, Dinner"
+            },
+            {
+                day: 7,
+                title: "Final Leisure Day — Savour Every Moment",
+                description: "Your last full day is designed to be savoured slowly. A private chef prepares your favourite breakfast at your requested time. The afternoon can include whatever you haven't yet done — a snorkelling trip, a cooking class learning Swahili cuisine, a beachside massage — or simply watching the sun slide into the ocean one final time from your private terrace.",
+                accommodation: "Exclusive 5-Star Private Villa",
+                meals: "Breakfast, Dinner"
+            },
+            {
+                day: 8,
+                title: "Departure — Carrying Zanzibar Home",
+                description: "A private vehicle collects you and your luggage with care. Your villa team lines up to bid you farewell — a warmth that reflects everything about your stay. At the airport, you board your flight carrying not just memories but a renewed sense of closeness. Zanzibar gave you eight days of beauty, peace, and romance. It will stay with you always.",
+                accommodation: "N/A",
+                meals: "Breakfast"
+            }
         ],
         inclusions: ["Luxury Villa", "All Meals", "Private Transfers", "Spa Treatment"],
         exclusions: ["Flights", "Premium Alcohol"]
@@ -490,8 +808,20 @@ export const tours: Tour[] = [
         highlights: ["Elephants", "Baobabs", "Crater Views", "Big Five"],
         description: "A short but action-packed safari hitting two of the most famous parks in the North.",
         itinerary: [
-            { day: 1, title: "Arusha to Tarangire", description: "Full day game drive." },
-            { day: 2, title: "Ngorongoro Crater to Arusha", description: "Morning crater tour and return." }
+            {
+                day: 1,
+                title: "Arusha to Tarangire National Park — The Elephant Kingdom",
+                description: "Depart Arusha in the morning and drive to Tarangire National Park, a landscape shaped by ancient baobab trees and the lifegiving Tarangire River. This park supports Africa's highest elephant density outside Botswana — it is not uncommon to encounter herds of 100 or more gathered at the river to drink. Spend the full day in game drives through diverse woodland and swamp habitats. Lions rest in the shade of massive trees. Hundreds of bird species fill the air. Overnight at a lodge near the park.",
+                accommodation: "Mid-Range Lodge, Karatu",
+                meals: "Lunch, Dinner"
+            },
+            {
+                day: 2,
+                title: "Ngorongoro Crater — The World in a Bowl",
+                description: "Rise early and drive to the Ngorongoro Conservation Area, descending 600 metres into the caldera of an extinct supervolcano. The crater floor is home to approximately 25,000 animals — lions, elephants, hippos, hyenas, zebra, wildebeest, flamingos, and the critically endangered black rhino in one of its last strongholds. Enjoy a picnic lunch on the crater floor before ascending and driving back to Arusha with memories that will never fade.",
+                accommodation: "N/A (return to Arusha)",
+                meals: "Breakfast, Lunch"
+            }
         ],
         inclusions: ["Transport", "Park Fees", "Accommodation", "Meals"],
         exclusions: ["Tips", "Drinks"]
@@ -514,12 +844,48 @@ export const tours: Tour[] = [
         highlights: ["Mikumi Plains", "Ruaha Wilderness", "Udzungwa Mountains", " scenic drive"],
         description: "A road safari exploring the Southern Circuit. Drive through the Mikumi plains and into the heart of Ruaha.",
         itinerary: [
-            { day: 1, title: "Dar to Mikumi", description: "Drive to Mikumi, afternoon game drive." },
-            { day: 2, title: "Mikumi Full Day", description: "Explore the Mkata floodplain." },
-            { day: 3, title: "Mikumi to Ruaha", description: "Scenic drive up the escarpment." },
-            { day: 4, title: "Ruaha Game Drive", description: "Full day with picnic lunch." },
-            { day: 5, title: "Ruaha to Mikumi", description: "Return drive." },
-            { day: 6, title: "Mikumi to Dar", description: "Morning drive and return to coast." }
+            {
+                day: 1,
+                title: "Dar es Salaam to Mikumi — The Gateway Park",
+                description: "Depart Dar es Salaam in the morning for the 4-hour scenic drive through the Eastern Arc Mountains. As you descend into the Mikumi basin, the Mkata Floodplain stretches ahead — a vast, flat grassland teeming with wildlife visible from the roadside. Arrive at your lodge in time for an afternoon game drive on the open plains where lions, giraffes, wildebeest, and zebra graze within metres of your vehicle.",
+                accommodation: "Mikumi Wildlife Lodge",
+                meals: "Lunch, Dinner"
+            },
+            {
+                day: 2,
+                title: "Mikumi Full Day — Floodplain Abundance",
+                description: "A full day on the Mkata Floodplain reveals Mikumi's extraordinary wealth of wildlife. Early morning drives find lions and leopards returning from their night's hunt. Later, hippos wallow in the Hippo Pool while hundreds of birds including the iconic lilac-breasted roller flash colour across the grasslands. Mikumi borders Nyerere National Park to the south, forming one of Africa's largest protected wildlife areas. Picnic lunch in the park.",
+                accommodation: "Mikumi Wildlife Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 3,
+                title: "Mikumi to Ruaha — Over the Escarpment",
+                description: "Today's drive west through the Southern Highlands is one of Tanzania's most scenic road journeys. The road climbs through the Iringa Highlands, passing tea estates, highland villages, and ancient granite formations before descending dramatically into the Ruaha basin. The landscape becomes progressively wilder and more rugged. Arrive at your river lodge in time for an afternoon game drive along the Great Ruaha River.",
+                accommodation: "Ruaha River Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 4,
+                title: "Ruaha — Tanzania's Wildest Park",
+                description: "A full day in Ruaha reveals why this vast, uncrowded wilderness is considered Tanzania's best-kept safari secret. Lion prides of extraordinary size patrol the riverine woodland. Huge elephant herds navigate the rocky landscape with surprising grace. The greater kudu — one of Africa's most magnificent antelopes — emerges from the bush along the river. Picnic lunch is served at a remote viewpoint overlooking the river and its abundant birdlife.",
+                accommodation: "Ruaha River Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 5,
+                title: "Ruaha to Mikumi — The Return Journey",
+                description: "A final morning game drive captures Ruaha's early-morning magic — predators finishing their hunts, elephants at the water. Then begin the scenic return drive east over the Iringa Highlands. The evening arrives back at Mikumi, where the familiar floodplain is bathed in late afternoon light. A final game drive finds fresh wildlife encounters as the sun sets over the plains.",
+                accommodation: "Mikumi Wildlife Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 6,
+                title: "Mikumi to Dar es Salaam — A Southern Circuit Farewell",
+                description: "One last morning game drive on the Mkata Floodplain — the perfect farewell to 6 days in Tanzania's remarkable Southern Circuit. Then drive back east through the mountains to Dar es Salaam. This itinerary gives you something the Northern Circuit rarely can: raw wilderness, solitude, and the profound satisfaction of a road safari that covered genuine distance through genuinely wild Tanzania.",
+                accommodation: "N/A",
+                meals: "Breakfast, Lunch"
+            }
         ],
         inclusions: ["Vehicle", "Driver Guide", "Park Fees", "Accommodation"],
         exclusions: ["Tips", "Drinks"]
@@ -542,10 +908,34 @@ export const tours: Tour[] = [
         highlights: ["Boat Safari", "Walking Safari", "Game Drives", "Bush Lunch"],
         description: "An extended weekend in the wild. Perfect for adding onto a Zanzibar beach holiday.",
         itinerary: [
-            { day: 1, title: "Arrival", description: "Fly in, afternoon boat safari." },
-            { day: 2, title: "Game Drive", description: "Full day exploring lakes." },
-            { day: 3, title: "Walking & Game", description: "Morning walk, afternoon drive." },
-            { day: 4, title: "Departure", description: "Morning activity and flight out." }
+            {
+                day: 1,
+                title: "Fly In — Straight to the River",
+                description: "Your flight from Dar es Salaam or Zanzibar deposits you in Africa's largest national reserve within 45 minutes. The transition from beach holiday to wild Africa is immediate and extraordinary. Meet your guide at the airstrip and head straight to the Rufiji River for a late-afternoon boat safari. The river is busy: hippos surface and groan, crocodiles bask along every sandbank, and the banks are thick with waterbirds as the sun turns the water gold.",
+                accommodation: "Luxury River Lodge",
+                meals: "Lunch, Dinner"
+            },
+            {
+                day: 2,
+                title: "Game Drive — Lakes and Open Plains",
+                description: "Today explores Nyerere's spectacular lake system and open grasslands. Lake Manze is renowned for its lion pride activity — these big cats are often seen hunting on the floodplain surrounding the lake in full view. Deeper into the reserve, wild dog packs trot along sandy tracks and sable antelope — rare in East Africa — emerge from the woodland. Afternoon boat safari drifts quietly through channels draped with fig trees and alive with kingfishers.",
+                accommodation: "Luxury River Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 3,
+                title: "Walking Safari & Game Drive — The Bush on Your Terms",
+                description: "An armed ranger leads your morning walking safari through the miombo woodland, tracking animal prints and reading the subtle signs of a landscape in constant motion. The afternoon game drive covers the more remote northern reaches of the reserve. Bush lunch is served in a clearing beside the river, with hippos grunting in the reeds 20 metres away.",
+                accommodation: "Luxury River Lodge",
+                meals: "Breakfast, Lunch, Dinner"
+            },
+            {
+                day: 4,
+                title: "Final Morning & Departure",
+                description: "A final dawn activity — either a short boat ride or a morning game drive — extracts the last magic from this extraordinary destination before your guide transfers you to the airstrip. The flight back carries you above the vast green canopy of Nyerere with a new appreciation for just how large and wild this place truly is. The perfect complement to a Zanzibar beach holiday.",
+                accommodation: "N/A",
+                meals: "Breakfast"
+            }
         ],
         inclusions: ["Flights", "Full Board", "Activities", "Fees"],
         exclusions: ["Premium drinks", "Tips"]
