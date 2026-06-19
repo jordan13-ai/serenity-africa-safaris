@@ -2,10 +2,31 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 
 export function Hero() {
-    const [videoReady, setVideoReady] = useState(false)
+    const [videoPlaying, setVideoPlaying] = useState(false)
+    const iframeRef = useRef<HTMLIFrameElement>(null)
+
+    useEffect(() => {
+        function onMessage(e: MessageEvent) {
+            try {
+                const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data
+                // YouTube sends playerState 1 = playing
+                if (data?.event === "onStateChange" && data?.info === 1) {
+                    setVideoPlaying(true)
+                }
+                // Also catch the "infoDelivery" format some browsers use
+                if (data?.info?.playerState === 1) {
+                    setVideoPlaying(true)
+                }
+            } catch {
+                // ignore non-JSON messages
+            }
+        }
+        window.addEventListener("message", onMessage)
+        return () => window.removeEventListener("message", onMessage)
+    }, [])
 
     return (
         <section className="relative h-screen min-h-[700px] w-full overflow-hidden bg-black">
@@ -13,9 +34,9 @@ export function Hero() {
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 w-full h-full overflow-hidden">
                     <iframe
-                        src="https://www.youtube.com/embed/2SakZbB8fuQ?autoplay=1&mute=1&loop=1&playlist=2SakZbB8fuQ&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&disablekb=1&fs=0&cc_load_policy=0&origin=https://serenityafricasafaris.com"
+                        ref={iframeRef}
+                        src="https://www.youtube.com/embed/2SakZbB8fuQ?autoplay=1&mute=1&loop=1&playlist=2SakZbB8fuQ&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&disablekb=1&fs=0&cc_load_policy=0&enablejsapi=1"
                         allow="autoplay; fullscreen"
-                        onLoad={() => setTimeout(() => setVideoReady(true), 800)}
                         className="absolute top-1/2 left-1/2 opacity-70"
                         style={{
                             transform: "translate(-50%, -50%) scale(1.15)",
@@ -30,10 +51,10 @@ export function Hero() {
                     />
                 </div>
 
-                {/* Hides YouTube controls/logo while video loads */}
+                {/* Covers YouTube UI until the video is actually playing */}
                 <div
-                    className="absolute inset-0 bg-black transition-opacity duration-[1200ms] ease-in-out pointer-events-none"
-                    style={{ opacity: videoReady ? 0 : 1, zIndex: 1 }}
+                    className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-700 ease-in-out"
+                    style={{ opacity: videoPlaying ? 0 : 1, zIndex: 1 }}
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/40" style={{ zIndex: 2 }} />
