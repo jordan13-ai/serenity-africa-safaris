@@ -2,16 +2,20 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { useState } from "react"
 
 export function Hero() {
+    const [videoReady, setVideoReady] = useState(false)
+
     return (
         <section className="relative h-screen min-h-[700px] w-full overflow-hidden bg-black">
-            {/* Background Media */}
+            {/* Background Video */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 w-full h-full overflow-hidden">
                     <iframe
-                        src="https://www.youtube.com/embed/2SakZbB8fuQ?autoplay=1&mute=1&loop=1&playlist=2SakZbB8fuQ&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
+                        src="https://www.youtube.com/embed/2SakZbB8fuQ?autoplay=1&mute=1&loop=1&playlist=2SakZbB8fuQ&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&disablekb=1&fs=0&cc_load_policy=0&origin=https://serenityafricasafaris.com"
                         allow="autoplay; fullscreen"
+                        onLoad={() => setTimeout(() => setVideoReady(true), 800)}
                         className="absolute top-1/2 left-1/2 opacity-70"
                         style={{
                             transform: "translate(-50%, -50%) scale(1.15)",
@@ -25,11 +29,18 @@ export function Hero() {
                         title="Serenity Africa Safaris"
                     />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/40" />
+
+                {/* Hides YouTube controls/logo while video loads */}
+                <div
+                    className="absolute inset-0 bg-black transition-opacity duration-[1200ms] ease-in-out pointer-events-none"
+                    style={{ opacity: videoReady ? 0 : 1, zIndex: 1 }}
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/40" style={{ zIndex: 2 }} />
             </div>
 
             {/* Content */}
-            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+            <div className="relative h-full flex flex-col items-center justify-center text-center px-4" style={{ zIndex: 10 }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
