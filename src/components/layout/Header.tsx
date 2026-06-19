@@ -15,11 +15,13 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
+import EnquireModal from "@/components/EnquireModal"
 
 export function Header() {
     const router = useRouter()
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [enquireOpen, setEnquireOpen] = useState(false)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -154,16 +156,16 @@ export function Header() {
 
                     {/* CALL TO ACTION */}
                     <div className="flex items-center gap-6">
-                        <Button 
+                        <Button
+                            onClick={() => setEnquireOpen(true)}
                             className={cn(
                                 "hidden md:flex rounded-full px-8 py-6 text-[11px] font-bold tracking-[0.2em] uppercase transition-all duration-500",
-                                isScrolled 
-                                    ? "bg-primary text-white hover:bg-primary/90" 
+                                isScrolled
+                                    ? "bg-primary text-white hover:bg-primary/90"
                                     : "bg-white text-foreground hover:bg-white/90"
                             )}
-                            asChild
                         >
-                            <Link href="/request-quote">Enquire Now</Link>
+                            Enquire Now
                         </Button>
 
                         {/* MOBILE MENU TOGGLE */}
@@ -241,10 +243,11 @@ export function Header() {
                                 transition={{ delay: 0.4 }}
                                 className="w-full max-w-xs mt-4"
                             >
-                                <Button className="w-full rounded-full py-8 text-sm font-bold tracking-[0.2em] uppercase bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20" asChild>
-                                    <Link href="/request-quote" onClick={() => setIsMobileMenuOpen(false)}>
-                                        Enquire Now
-                                    </Link>
+                                <Button
+                                    onClick={() => { setIsMobileMenuOpen(false); setEnquireOpen(true) }}
+                                    className="w-full rounded-full py-8 text-sm font-bold tracking-[0.2em] uppercase bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20"
+                                >
+                                    Enquire Now
                                 </Button>
                             </motion.div>
                         </div>
@@ -256,6 +259,8 @@ export function Header() {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <EnquireModal isOpen={enquireOpen} onClose={() => setEnquireOpen(false)} />
         </header>
     )
 }

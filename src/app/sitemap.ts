@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next"
 import { prisma } from "@/lib/prisma"
+import { tours as staticTours } from "@/lib/tours-data"
 
 export const revalidate = 3600 // regenerate sitemap every hour
 
@@ -60,13 +61,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         "boat-safaris","mountain-climbing","beach-escapes"]
       .map((s) => url(`/activities/${s}/`, 0.7)),
 
-    // ── DB: Tours ─────────────────────────────────────────────────────────
-    ...tours.map((t: { slug: string; updatedAt: Date }) => ({
-      url: `${BASE}/itineraries/${t.slug}/`,
-      lastModified: t.updatedAt,
-      changeFrequency: "monthly" as const,
-      priority: 0.85,
-    })),
+    // ── Itinerary pages — DB tours merged with static fallback slugs ──────
+    ...(() => {
+      const dbSlugs = new Set(tours.map((t: { slug: string }) => t.slug))
+      const dbEntries = tours.map((t: { slug: string; updatedAt: Date }) => ({
+        url: `${BASE}/itineraries/${t.slug}/`,
+        lastModified: t.updatedAt,
+        changeFrequency: "monthly" as const,
+        priority: 0.85,
+      }))
+      const staticEntries = staticTours
+        .filter(t => !dbSlugs.has(t.slug))
+        .map(t => ({ url: `${BASE}/itineraries/${t.slug}/`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 }))
+      return [...dbEntries, ...staticEntries]
+    })(),
 
     // ── DB: Destinations ──────────────────────────────────────────────────
     ...destinations.map((d: { slug: string; updatedAt: Date }) => ({

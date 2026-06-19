@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Phone, Mail, ArrowRight, ExternalLink } from "lucide-react";
+import { MapPin, Phone, Mail, ExternalLink } from "lucide-react";
+import { NewsletterForm } from "@/components/NewsletterForm";
 
 export function Footer() {
     const currentYear = 2026;
@@ -45,16 +46,7 @@ export function Footer() {
                             <h3 className="text-xl md:text-2xl font-serif text-white">Receive Exclusive Safari Insights</h3>
                             <p className="text-white/40 text-sm mt-1 font-light">Migration calendars, hidden gems, and bespoke offer updates.</p>
                         </div>
-                        <div className="flex w-full md:w-auto gap-0 min-w-[340px]">
-                            <input
-                                type="email"
-                                placeholder="Your email address"
-                                className="flex-1 bg-white/5 border border-white/10 text-white placeholder-white/30 text-sm px-5 py-4 rounded-l-full outline-none focus:border-primary/50 transition-colors"
-                            />
-                            <button className="bg-primary hover:bg-primary/80 text-white text-[10px] font-bold tracking-widest uppercase px-7 py-4 rounded-r-full transition-colors whitespace-nowrap flex items-center gap-2">
-                                Subscribe <ArrowRight className="w-3.5 h-3.5" />
-                            </button>
-                        </div>
+                        <NewsletterForm />
                     </div>
                 </div>
 
