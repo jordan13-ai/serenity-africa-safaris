@@ -287,7 +287,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title,
         description,
         keywords: [...data.seoKeywords.split(", "), "Serenity Africa Safaris", "Tanzania safari", "luxury safari Africa"],
-        alternates: { canonical: `https://serenityafricasafaris.com/destinations/${slug}` },
+        alternates: { canonical: `https://serenityafricasafaris.com/destinations/${slug}/` },
         openGraph: {
             title,
             description,

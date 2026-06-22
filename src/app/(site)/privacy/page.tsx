@@ -1,5 +1,13 @@
 
+import type { Metadata } from "next"
 import { Badge } from "@/components/ui/badge";
+
+export const metadata: Metadata = {
+    title: "Privacy Policy | Serenity Africa Safaris",
+    description: "Read Serenity Africa Safaris' privacy policy — how we collect, use and protect your personal information when you book a Tanzania safari.",
+    alternates: { canonical: "https://serenityafricasafaris.com/privacy/" },
+    robots: { index: false, follow: false },
+}
 
 export default function PrivacyPolicyPage() {
     return (

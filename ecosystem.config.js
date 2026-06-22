@@ -5,8 +5,11 @@ module.exports = {
       name: "serenity-africa",
       script: "node_modules/.bin/next",
       args: "start",
-      cwd: "/var/www/serenityafricasafaris",
-      instances: "max",          // use all CPU cores
+      // ⚠ Update this path to match your VPS deployment directory
+      cwd: process.env.APP_DIR || "/var/www/serenityafricasafaris.com",
+      // Prisma uses a connection pool — limit instances to avoid exhausting DB connections
+      // With a free-tier DB (Neon/Railway): keep at 1–2; with PgBouncer: use "max"
+      instances: 2,
       exec_mode: "cluster",
       watch: false,
       max_memory_restart: "512M",

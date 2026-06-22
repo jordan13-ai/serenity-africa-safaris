@@ -18,11 +18,11 @@ export const metadata: Metadata = {
         "5 star safari lodge Tanzania",
         "where to stay Tanzania safari"
     ],
-    alternates: { canonical: "https://serenityafricasafaris.com/accommodation" },
+    alternates: { canonical: "https://serenityafricasafaris.com/accommodation/" },
     openGraph: {
         title: "Luxury Safari Accommodations | Serenity Africa Safaris",
         description: "Handpicked sanctuaries from the Serengeti to Zanzibar. Exclusive tented camps, luxury lodges, treehouse suites & beachfront villas for your Tanzania safari.",
-        url: "https://serenityafricasafaris.com/accommodation",
+        url: "https://serenityafricasafaris.com/accommodation/",
         images: [{ url: "/images/accommodation/serenity-lodge/Serenity_africa_lodge1.webp", width: 1200, height: 630, alt: "Serenity Camp and Lodges – Tanzania Serengeti" }]
     }
 }

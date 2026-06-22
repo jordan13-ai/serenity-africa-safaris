@@ -5,9 +5,6 @@ import Link from "next/link"
 import {
     Clock,
     Check,
-    X,
-    Calendar,
-    MapPin,
     ArrowRight,
     TrendingUp,
     Shield,
@@ -19,21 +16,63 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { tours } from "@/lib/tours-data"
+import { seedTours, SeedTour } from "@/lib/seed-tours-data"
 import { ImageGallery } from "@/components/sections/ImageGallery"
+import type { Metadata } from "next"
+import type { Tour } from "@/lib/tours-data"
+
+function normalizeSeedTour(t: SeedTour): Tour {
+    return {
+        id: t.slug,
+        title: t.title,
+        slug: t.slug,
+        image: t.coverImage,
+        duration: `${t.duration} Days`,
+        difficulty: t.difficulty,
+        location: t.destination,
+        category: t.category,
+        highlights: t.highlights,
+        description: t.description,
+        bestTime: t.season,
+        itinerary: t.itinerary.map((d) => ({
+            day: d.day,
+            title: d.title,
+            description: d.description,
+            accommodation: d.accommodation || undefined,
+            meals: Array.isArray(d.meals) ? d.meals.join(", ") : d.meals,
+        })),
+        inclusions: t.includes,
+        exclusions: t.excludes,
+        packingList: [],
+        gallery: t.gallery.map((src) => ({ src, alt: t.title })),
+    }
+}
+
+const ALL_TOURS: Tour[] = [
+    ...tours,
+    ...seedTours.filter((s) => !tours.some((t) => t.slug === s.slug)).map(normalizeSeedTour),
+]
 
 export async function generateStaticParams() {
-    return tours.map((tour) => ({
-        slug: tour.slug,
-    }))
+    return ALL_TOURS.map((tour) => ({ slug: tour.slug }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params
+    const tour = ALL_TOURS.find((t) => t.slug === slug)
+    if (!tour) return {}
+    return {
+        title: tour.title,
+        description: `${tour.description.slice(0, 155)}…`,
+        alternates: { canonical: `https://serenityafricasafaris.com/itineraries/${slug}/` },
+        openGraph: {
+            title: `${tour.title} | Serenity Africa Safaris`,
+            description: tour.description.slice(0, 155),
+            images: [{ url: tour.image, width: 1200, height: 630, alt: tour.title }],
+            type: "article",
+        },
+    }
 }
 
 interface ItineraryPageProps {
@@ -44,7 +83,7 @@ interface ItineraryPageProps {
 
 export default async function ItineraryPage({ params }: ItineraryPageProps) {
     const { slug } = await params
-    const tour = tours.find((t) => t.slug === slug)
+    const tour = ALL_TOURS.find((t) => t.slug === slug)
 
     if (!tour) {
         notFound()
@@ -201,7 +240,7 @@ export default async function ItineraryPage({ params }: ItineraryPageProps) {
                             </div>
 
                             <div className="space-y-10">
-                                {tour.itinerary.map((day, idx) => (
+                                {tour.itinerary.map((day) => (
                                     <div key={day.day} className="group relative flex flex-col md:flex-row gap-12 bg-white p-10 md:p-14 rounded-[3rem] border border-[#EAE3D6] transition-all duration-700 hover:shadow-2xl hover:-translate-y-2">
                                         <div className="md:w-1/4 flex flex-col">
                                             <div className="flex items-baseline gap-2 mb-6">
@@ -379,7 +418,7 @@ export default async function ItineraryPage({ params }: ItineraryPageProps) {
                             <div className="bg-[#EAE3D6] p-12 rounded-[3rem] space-y-8">
                                 <h4 className="text-2xl font-serif text-[#1A1A1A]">Discover <span className="italic">More</span></h4>
                                 <div className="space-y-5">
-                                    {tours.filter(t => t.slug !== tour.slug).slice(0, 3).map((t) => (
+                                    {ALL_TOURS.filter(t => t.slug !== tour.slug).slice(0, 3).map((t) => (
                                         <Link key={t.slug} href={`/itineraries/${t.slug}`} className="group block">
                                             <div className="bg-white/40 p-8 rounded-[2rem] border border-transparent hover:border-primary hover:bg-white transition-all duration-700 shadow-sm hover:shadow-xl">
                                                 <h5 className="text-[11px] font-bold text-[#1A1A1A] mb-3 uppercase tracking-widest">{t.title}</h5>

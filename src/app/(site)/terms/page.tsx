@@ -1,6 +1,14 @@
 
+import type { Metadata } from "next"
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+    title: "Terms & Conditions | Serenity Africa Safaris",
+    description: "Review the booking terms and conditions for Serenity Africa Safaris — cancellation policy, payment schedule, and safari booking terms.",
+    alternates: { canonical: "https://serenityafricasafaris.com/terms/" },
+    robots: { index: false, follow: false },
+}
 
 export default function TermsPage() {
     return (

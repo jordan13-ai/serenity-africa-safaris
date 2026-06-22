@@ -1,6 +1,19 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { SafariItineraries } from "@/components/sections/SafariItineraries"
+
+export const metadata: Metadata = {
+  title: "Tanzania Safari Itineraries | All Safari Packages",
+  description: "Browse all Tanzania safari itineraries from Serenity Africa Safaris — Serengeti, Ngorongoro, Tarangire, Ruaha, Zanzibar, Kilimanjaro and more. Luxury to mid-range, 5 to 21 days.",
+  alternates: { canonical: "https://serenityafricasafaris.com/safari/" },
+  openGraph: {
+    title: "Tanzania Safari Itineraries | Serenity Africa Safaris",
+    description: "Explore 54 expertly crafted safari packages across Tanzania. Luxury safaris, family trips, honeymoons, mountain climbs and beach holidays.",
+    url: "https://serenityafricasafaris.com/safari/",
+    images: [{ url: "/images/destinations/serengeti/serengeti-18.webp", width: 1200, height: 630, alt: "Tanzania Safari Itineraries" }],
+  },
+}
 
 export default function SafariPage() {
   return (

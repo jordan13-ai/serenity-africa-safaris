@@ -8,6 +8,7 @@ import {
   LayoutDashboard, Map, Compass, Sparkles, BookOpen, Building2,
   Tent, LogOut, ChevronRight, Settings, Star, Info, ImageIcon,
   SearchCheck, Users, ShieldCheck, Shield, PenLine, ExternalLink,
+  Home, Phone,
 } from "lucide-react"
 
 type Role = "SUPER_ADMIN" | "ADMIN" | "EDITOR"
@@ -30,6 +31,8 @@ const nav = [
   { href: "/admin/media",        label: "Media Library", icon: ImageIcon },
   { href: "/admin/seo",          label: "SEO",           icon: SearchCheck },
   { href: "/admin/about",        label: "About Us",      icon: Info },
+  { href: "/admin/home",         label: "Home Page",     icon: Home },
+  { href: "/admin/contact",      label: "Contact Page",  icon: Phone },
   { href: "/admin/settings",     label: "Settings",      icon: Settings },
 ]
 

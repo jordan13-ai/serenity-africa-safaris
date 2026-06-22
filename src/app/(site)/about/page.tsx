@@ -1,6 +1,19 @@
+import type { Metadata } from "next"
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+
+export const metadata: Metadata = {
+    title: "About Us | Tanzania's Premier Safari Specialists",
+    description: "Meet the Serenity Africa Safaris team — Tanzanian-born guides and safari specialists with 15+ years crafting extraordinary, responsible wildlife experiences across the Serengeti, Ngorongoro and beyond.",
+    alternates: { canonical: "https://serenityafricasafaris.com/about/" },
+    openGraph: {
+        title: "About Serenity Africa Safaris | Our Story & Team",
+        description: "Tanzanian-born guides and safari specialists dedicated to responsible luxury travel. Discover our heritage and passion for Africa's wild places.",
+        url: "https://serenityafricasafaris.com/about/",
+        images: [{ url: "/images/hero/slide-2.webp", width: 1200, height: 630, alt: "About Serenity Africa Safaris" }],
+    },
+}
 import { Compass, Sparkles, MapPin, Shield, CheckCircle2, Heart, Leaf, Mountain } from "lucide-react";
 import { LatestStories } from "@/components/sections/LatestStories";
 import { TravelerReviews } from "@/components/sections/TravelerReviews";

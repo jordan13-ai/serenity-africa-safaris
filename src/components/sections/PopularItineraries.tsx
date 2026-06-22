@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Tag, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react"
 import useEmblaCarousel from "embla-carousel-react"
 import { cn } from "@/lib/utils"
-import { tours as staticTours } from "@/lib/tours-data"
+import { seedTours } from "@/lib/seed-tours-data"
 
 const CATEGORIES = [
   "All",
@@ -35,16 +35,16 @@ interface Tour {
 }
 
 function normalizeStatic(): Tour[] {
-  return staticTours.map((t) => ({
-    id: t.id,
+  return seedTours.map((t) => ({
+    id: t.slug,
     title: t.title,
     slug: t.slug,
-    image: t.image,
-    duration: t.duration,
-    location: t.location || "",
-    category: t.category || "Safaris",
-    price: undefined,
-    includes: t.inclusions?.slice(0, 1) ?? [],
+    image: t.coverImage,
+    duration: `${t.duration} Days`,
+    location: t.destination,
+    category: t.category,
+    price: t.price,
+    includes: t.includes.slice(0, 1),
     highlights: t.highlights,
   }))
 }
@@ -103,24 +103,22 @@ export function PopularItineraries() {
       .then((r) => r.json())
       .then((data) => {
         const items: Record<string, unknown>[] = Array.isArray(data) ? data : (data.data ?? [])
-        if (items.length > 0) {
-          setTours(
-            items.map((t) => ({
-              id: t.id as string,
-              title: t.title as string,
-              slug: t.slug as string,
-              image: (t.coverImage as string) || "/images/destinations/serengeti/serengeti-18.webp",
-              duration: t.duration ? `${t.duration} Days` : "",
-              location: (t.destination as string) || "",
-              category: (t.category as string) || "Safaris",
-              price: t.price as number | undefined,
-              includes: (t.includes as string[]) || [],
-              highlights: (t.highlights as string[]) || [],
-            }))
-          )
-        } else {
-          setTours(normalizeStatic())
-        }
+        const dbTours: Tour[] = items.map((t) => ({
+          id: t.id as string,
+          title: t.title as string,
+          slug: t.slug as string,
+          image: (t.coverImage as string) || "/images/destinations/serengeti/serengeti-18.webp",
+          duration: t.duration ? `${t.duration} Days` : "",
+          location: (t.destination as string) || "",
+          category: (t.category as string) || "Safaris",
+          price: t.price as number | undefined,
+          includes: (t.includes as string[]) || [],
+          highlights: (t.highlights as string[]) || [],
+        }))
+        // Merge: DB tours first, then seed tours not already in DB
+        const dbSlugs = new Set(dbTours.map((t) => t.slug))
+        const extras = normalizeStatic().filter((t) => !dbSlugs.has(t.slug))
+        setTours([...dbTours, ...extras])
       })
       .catch(() => setTours(normalizeStatic()))
   }, [])

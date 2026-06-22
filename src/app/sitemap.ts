@@ -1,6 +1,13 @@
 import { MetadataRoute } from "next"
 import { prisma } from "@/lib/prisma"
-import { tours as staticTours } from "@/lib/tours-data"
+import { seedTours } from "@/lib/seed-tours-data"
+import { tours as kiliTours } from "@/lib/tours-data"
+
+// All statically-known slugs: 54 seed tours + Kilimanjaro routes from tours-data
+const allStaticSlugs = [
+  ...seedTours.map((t) => t.slug),
+  ...kiliTours.filter((t) => !seedTours.some((s) => s.slug === t.slug)).map((t) => t.slug),
+]
 
 export const revalidate = 3600 // regenerate sitemap every hour
 
@@ -70,9 +77,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "monthly" as const,
         priority: 0.85,
       }))
-      const staticEntries = staticTours
-        .filter(t => !dbSlugs.has(t.slug))
-        .map(t => ({ url: `${BASE}/itineraries/${t.slug}/`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 }))
+      const staticEntries = allStaticSlugs
+        .filter((slug) => !dbSlugs.has(slug))
+        .map((slug) => ({ url: `${BASE}/itineraries/${slug}/`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 }))
       return [...dbEntries, ...staticEntries]
     })(),
 

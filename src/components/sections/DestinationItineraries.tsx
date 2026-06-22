@@ -4,22 +4,21 @@ import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { tours } from "@/lib/tours-data"
+import { seedTours } from "@/lib/seed-tours-data"
 
 interface DestinationItinerariesProps {
-    location: string; // e.g., "Serengeti", "Ruaha", "Zanzibar"
-    title?: string;
-    subtitle?: string;
+    location: string // e.g., "Serengeti", "Ruaha", "Zanzibar"
+    title?: string
+    subtitle?: string
 }
 
 export function DestinationItineraries({ location, title, subtitle }: DestinationItinerariesProps) {
-    // Filter tours that include the location string in their 'location' field or title
-    const filteredTours = tours.filter(tour =>
-        tour.location?.toLowerCase().includes(location.toLowerCase()) ||
+    const filteredTours = seedTours.filter((tour) =>
+        tour.destination.toLowerCase().includes(location.toLowerCase()) ||
         tour.title.toLowerCase().includes(location.toLowerCase())
-    );
+    )
 
-    if (filteredTours.length === 0) return null;
+    if (filteredTours.length === 0) return null
 
     return (
         <section className="py-24 bg-muted/20">
@@ -39,7 +38,7 @@ export function DestinationItineraries({ location, title, subtitle }: Destinatio
                             {/* Image Section */}
                             <div className="relative h-[60%] w-full overflow-hidden">
                                 <Image
-                                    src={tour.image}
+                                    src={tour.coverImage}
                                     alt={tour.title}
                                     fill
                                     loading="lazy"
@@ -48,21 +47,19 @@ export function DestinationItineraries({ location, title, subtitle }: Destinatio
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
 
-                                {/* Floating Badges */}
                                 <div className="absolute top-4 right-4 z-10">
                                     <Badge className="bg-white/90 text-black hover:bg-white backdrop-blur-md border-0 shadow-sm px-3 py-1 text-sm font-medium">
-                                        {tour.duration}
+                                        {tour.duration} Days
                                     </Badge>
                                 </div>
 
-                                {/* Title over Image (Bottom of image area) */}
                                 <div className="absolute bottom-4 left-4 right-4 z-10 transition-transform duration-300 group-hover:-translate-y-2">
                                     <h3 className="text-2xl font-serif font-bold text-white drop-shadow-md leading-tight mb-1">
                                         {tour.title}
                                     </h3>
-                                    <div className="flex items-center gap-2 text-white/90 text-sm">
-                                        <span className="text-[10px] uppercase tracking-widest font-bold text-white/60">Bespoke Experience</span>
-                                    </div>
+                                    <span className="text-[10px] uppercase tracking-widest font-bold text-white/60">
+                                        {tour.category}
+                                    </span>
                                 </div>
                             </div>
 
@@ -87,18 +84,15 @@ export function DestinationItineraries({ location, title, subtitle }: Destinatio
                                         className="p-0 hover:bg-transparent hover:text-primary font-semibold text-foreground transition-colors"
                                         asChild
                                     >
-                                        <Link href={`/itineraries/${tour.slug}`} className="flex items-center gap-2">
+                                        <Link href={`/itineraries/${tour.slug}/`} className="flex items-center gap-2">
                                             View Details <ArrowRight size={16} />
                                         </Link>
                                     </Button>
-                                    <div className="flex -space-x-2">
-                                        {/* Placeholder for user avatars or rating */}
-                                        <div className="w-8 h-8 rounded-full border-2 border-white bg-gray-200" />
-                                        <div className="w-8 h-8 rounded-full border-2 border-white bg-gray-300" />
-                                        <div className="w-8 h-8 rounded-full border-2 border-white bg-primary text-[10px] text-white flex items-center justify-center font-bold">
-                                            5.0
-                                        </div>
-                                    </div>
+                                    {tour.price && (
+                                        <span className="text-sm font-bold text-primary">
+                                            From ${tour.price.toLocaleString()}
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -107,7 +101,7 @@ export function DestinationItineraries({ location, title, subtitle }: Destinatio
 
                 <div className="mt-12 text-center">
                     <Button variant="outline" size="lg" className="gap-2" asChild>
-                        <Link href="/all-safaris">View All Safaris <ArrowRight size={16} /></Link>
+                        <Link href="/safari/">View All Safaris <ArrowRight size={16} /></Link>
                     </Button>
                 </div>
             </div>

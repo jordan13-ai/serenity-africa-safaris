@@ -1,74 +1,70 @@
-import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
-import { headers } from 'next/headers';
+import { NextResponse } from "next/server"
+import { headers } from "next/headers"
+import { transporter, FROM, RECEIVER } from "@/lib/mailer"
 
-const rateLimitStore = new Map<string, { count: number; reset: number }>();
+const rateLimitStore = new Map<string, { count: number; reset: number }>()
 
 function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const window = 10 * 60 * 1000;
-  const limit = 3;
-  const entry = rateLimitStore.get(ip);
+  const now = Date.now()
+  const window = 10 * 60 * 1000
+  const limit = 3
+  const entry = rateLimitStore.get(ip)
   if (!entry || now > entry.reset) {
-    rateLimitStore.set(ip, { count: 1, reset: now + window });
-    return true;
+    rateLimitStore.set(ip, { count: 1, reset: now + window })
+    return true
   }
-  if (entry.count >= limit) return false;
-  entry.count++;
-  return true;
+  if (entry.count >= limit) return false
+  entry.count++
+  return true
 }
 
 function isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
 export async function POST(req: Request) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json({ error: 'Email service unavailable.' }, { status: 503 });
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    return NextResponse.json({ error: "Email service unavailable." }, { status: 503 })
   }
 
-  const headersList = await headers();
+  const headersList = await headers()
   const ip =
-    headersList.get('x-forwarded-for')?.split(',')[0]?.trim() ??
-    headersList.get('x-real-ip') ??
-    'unknown';
+    headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    headersList.get("x-real-ip") ??
+    "unknown"
 
   if (!checkRateLimit(ip)) {
-    return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 })
   }
 
-  let body: { email?: unknown };
+  let body: { email?: unknown }
   try {
-    body = await req.json();
+    body = await req.json()
   } catch {
-    return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
+    return NextResponse.json({ error: "Invalid request body." }, { status: 400 })
   }
 
-  const email = typeof body.email === 'string' ? body.email.trim() : '';
+  const email = typeof body.email === "string" ? body.email.trim() : ""
   if (!email || !isValidEmail(email)) {
-    return NextResponse.json({ error: 'A valid email address is required.' }, { status: 400 });
+    return NextResponse.json({ error: "A valid email address is required." }, { status: 400 })
   }
 
-  const resend = new Resend(apiKey);
-  const from =
-    process.env.RESEND_FROM_EMAIL ?? 'Serenity Africa Safaris <onboarding@resend.dev>';
-  const receiver =
-    process.env.CONTACT_FORM_RECEIVER ?? 'info@serenityafricasafaris.com';
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://serenityafricasafaris.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    ? "https://serenityafricasafaris.com"
+    : "https://serenityafricasafaris.com"
 
   try {
     await Promise.all([
-      resend.emails.send({
-        from,
-        to: receiver,
+      transporter.sendMail({
+        from: FROM,
+        to: RECEIVER,
         subject: `New Newsletter Subscriber — ${email}`,
         html: `<p>A new subscriber joined the Serenity Africa Safaris newsletter.</p><p><strong>Email:</strong> ${email}</p>`,
       }),
-      resend.emails.send({
-        from,
+      transporter.sendMail({
+        from: FROM,
         to: email,
-        subject: 'Welcome to Serenity Africa Safaris',
+        subject: "Welcome to Serenity Africa Safaris",
         html: `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Welcome</title></head>
@@ -95,7 +91,7 @@ export async function POST(req: Request) {
                 Explore Our Safaris
               </a>
               <p style="margin:40px 0 0;font-size:13px;color:#aaa;font-family:Arial,sans-serif;">
-                You're receiving this because you subscribed at <a href="${siteUrl}" style="color:#C9A84C;">${siteUrl.replace(/^https?:\/\//, '')}</a>. Reply to unsubscribe.
+                You're receiving this because you subscribed at <a href="${siteUrl}" style="color:#C9A84C;">serenityafricasafaris.com</a>. Reply to unsubscribe.
               </p>
             </td>
           </tr>
@@ -106,10 +102,10 @@ export async function POST(req: Request) {
 </body>
 </html>`,
       }),
-    ]);
+    ])
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true })
   } catch {
-    return NextResponse.json({ error: 'Failed to send email. Please try again.' }, { status: 500 });
+    return NextResponse.json({ error: "Failed to send email. Please try again." }, { status: 500 })
   }
 }

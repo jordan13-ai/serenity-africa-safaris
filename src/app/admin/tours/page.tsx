@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Plus, Pencil, Trash2, Loader2, ChevronLeft, ChevronRight } from "lucide-react"
+import { Plus, Pencil, Trash2, Loader2, ChevronLeft, ChevronRight, DatabaseZap } from "lucide-react"
 import { StatusBadge } from "@/components/admin/StatusBadge"
 
 type Status = "ALL" | "DRAFT" | "PUBLISHED" | "ARCHIVED"
@@ -21,6 +21,7 @@ export default function ToursPage() {
   const [tours, setTours] = useState<Tour[]>([])
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [seeding, setSeeding] = useState(false)
   const [filter, setFilter] = useState<Status>("ALL")
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
@@ -39,6 +40,21 @@ export default function ToursPage() {
       setTotalPages(json.pages)
     } catch { /* leave state as-is */ } finally {
       setLoading(false)
+    }
+  }
+
+  async function seedAll() {
+    if (!confirm("Seed all 54 tours to the database? Existing tours will be updated.")) return
+    setSeeding(true)
+    try {
+      const res = await fetch("/api/admin/reseed-tours", { method: "POST" })
+      const data = await res.json()
+      alert(`Done — ${data.created} created, ${data.updated} updated.${data.errors ? `\nErrors: ${data.errors.join(", ")}` : ""}`)
+      load(filter, page)
+    } catch {
+      alert("Seeding failed — check the console.")
+    } finally {
+      setSeeding(false)
     }
   }
 
@@ -61,9 +77,19 @@ export default function ToursPage() {
           <h2 className="text-2xl font-serif text-[#1A1A1A] font-light">Tours</h2>
           <p className="text-sm text-[#737373] mt-0.5">Manage safari itineraries</p>
         </div>
-        <Link href="/admin/tours/new" className="flex items-center gap-2 px-4 py-2.5 bg-[#C5A059] text-[#1A1A1A] text-sm font-bold tracking-wide rounded-lg hover:bg-[#D4B06A] transition-colors">
-          <Plus className="w-4 h-4" />New Tour
-        </Link>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={seedAll}
+            disabled={seeding}
+            className="flex items-center gap-2 px-4 py-2.5 border border-[#C5A059] text-[#C5A059] text-sm font-bold tracking-wide rounded-lg hover:bg-[#C5A059]/10 transition-colors disabled:opacity-50"
+          >
+            {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <DatabaseZap className="w-4 h-4" />}
+            {seeding ? "Seeding…" : "Seed All Tours"}
+          </button>
+          <Link href="/admin/tours/new" className="flex items-center gap-2 px-4 py-2.5 bg-[#C5A059] text-[#1A1A1A] text-sm font-bold tracking-wide rounded-lg hover:bg-[#D4B06A] transition-colors">
+            <Plus className="w-4 h-4" />New Tour
+          </Link>
+        </div>
       </div>
 
       <div className="flex gap-1 mb-4 bg-white border border-[#E2E0DB] rounded-lg p-1 w-fit">
