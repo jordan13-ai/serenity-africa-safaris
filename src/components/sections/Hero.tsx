@@ -77,7 +77,7 @@ export function Hero() {
                     <div className="flex flex-col md:flex-row items-center justify-center gap-8">
                         <Link
                             href="/safari"
-                            className="px-10 py-4 bg-primary text-white font-bold tracking-widest uppercase text-[12px] hover:bg-primary/90 transition-all hover:scale-105"
+                            className="px-10 py-4 bg-primary text-white font-bold tracking-widest uppercase text-[12px] hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:outline-none focus-visible:scale-105 transition-all hover:scale-105"
                         >
                             Discover the Collection
                         </Link>

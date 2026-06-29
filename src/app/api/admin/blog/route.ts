@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { generateSlug } from "@/lib/slug"
+import { revalidatePath } from "next/cache"
 
 async function guard() {
   const session = await getServerSession(authOptions)
@@ -41,5 +42,6 @@ export async function POST(req: NextRequest) {
       publishedAt: body.status === "PUBLISHED" ? new Date() : null,
     },
   })
+  revalidatePath("/blog", "layout")
   return NextResponse.json(row, { status: 201 })
 }

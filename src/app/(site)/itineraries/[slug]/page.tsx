@@ -16,11 +16,11 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { tours } from "@/lib/tours-data"
 import { seedTours, SeedTour } from "@/lib/seed-tours-data"
 import { ImageGallery } from "@/components/sections/ImageGallery"
 import type { Metadata } from "next"
 import type { Tour } from "@/lib/tours-data"
+import { prisma } from "@/lib/prisma"
 
 function normalizeSeedTour(t: SeedTour): Tour {
     return {
@@ -49,18 +49,52 @@ function normalizeSeedTour(t: SeedTour): Tour {
     }
 }
 
-const ALL_TOURS: Tour[] = [
-    ...tours,
-    ...seedTours.filter((s) => !tours.some((t) => t.slug === s.slug)).map(normalizeSeedTour),
-]
+const STATIC_TOURS: Tour[] = seedTours.map(normalizeSeedTour)
+
+async function getTour(slug: string): Promise<Tour | null> {
+    try {
+        const row = await prisma.tour.findFirst({
+            where: { slug, status: "PUBLISHED" },
+            include: { itinerary: { orderBy: { day: "asc" } } },
+        })
+        if (row) {
+            return {
+                id: row.id,
+                title: row.title,
+                slug: row.slug,
+                image: row.coverImage || "/images/destinations/serengeti/serengeti-18.webp",
+                duration: row.duration ? `${row.duration} Days` : "",
+                difficulty: row.difficulty || "Moderate",
+                location: row.destination || "",
+                category: row.category || "Safaris",
+                highlights: (row.highlights as string[]) || [],
+                description: row.description || row.summary || "",
+                bestTime: row.season || "",
+                itinerary: row.itinerary.map((d) => ({
+                    day: d.day,
+                    title: d.title,
+                    description: d.description || "",
+                    accommodation: d.accommodation || undefined,
+                    meals: d.meals ? (Array.isArray(d.meals) ? (d.meals as string[]).join(", ") : String(d.meals)) : undefined,
+                })),
+                inclusions: (row.includes as string[]) || [],
+                exclusions: (row.excludes as string[]) || [],
+                packingList: [],
+                gallery: ((row.gallery as string[]) || []).map((src) => ({ src, alt: row.title })),
+            }
+        }
+    } catch { /* fall through to static */ }
+    return STATIC_TOURS.find((t) => t.slug === slug) ?? null
+}
 
 export async function generateStaticParams() {
-    return ALL_TOURS.map((tour) => ({ slug: tour.slug }))
+    return STATIC_TOURS.map((tour) => ({ slug: tour.slug }))
 }
+
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params
-    const tour = ALL_TOURS.find((t) => t.slug === slug)
+    const tour = await getTour(slug)
     if (!tour) return {}
     return {
         title: tour.title,
@@ -83,7 +117,7 @@ interface ItineraryPageProps {
 
 export default async function ItineraryPage({ params }: ItineraryPageProps) {
     const { slug } = await params
-    const tour = ALL_TOURS.find((t) => t.slug === slug)
+    const tour = await getTour(slug)
 
     if (!tour) {
         notFound()
@@ -418,7 +452,7 @@ export default async function ItineraryPage({ params }: ItineraryPageProps) {
                             <div className="bg-[#EAE3D6] p-12 rounded-[3rem] space-y-8">
                                 <h4 className="text-2xl font-serif text-[#1A1A1A]">Discover <span className="italic">More</span></h4>
                                 <div className="space-y-5">
-                                    {ALL_TOURS.filter(t => t.slug !== tour.slug).slice(0, 3).map((t) => (
+                                {STATIC_TOURS.filter(t => t.slug !== tour.slug).slice(0, 3).map((t) => (
                                         <Link key={t.slug} href={`/itineraries/${t.slug}`} className="group block">
                                             <div className="bg-white/40 p-8 rounded-[2rem] border border-transparent hover:border-primary hover:bg-white transition-all duration-700 shadow-sm hover:shadow-xl">
                                                 <h5 className="text-[11px] font-bold text-[#1A1A1A] mb-3 uppercase tracking-widest">{t.title}</h5>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { revalidatePath } from "next/cache"
 
 async function guard() {
   const session = await getServerSession(authOptions)
@@ -46,6 +47,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     },
     include: { itinerary: { orderBy: { day: "asc" } } },
   })
+  revalidatePath("/safari", "layout")
+  revalidatePath("/itineraries", "layout")
   return NextResponse.json(tour)
 }
 
@@ -53,5 +56,7 @@ export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id:
   const unauth = await guard(); if (unauth) return unauth
   const { id } = await params
   await prisma.tour.delete({ where: { id } })
+  revalidatePath("/safari", "layout")
+  revalidatePath("/itineraries", "layout")
   return new NextResponse(null, { status: 204 })
 }

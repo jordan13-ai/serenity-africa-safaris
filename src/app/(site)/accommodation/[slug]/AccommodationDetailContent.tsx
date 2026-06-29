@@ -28,7 +28,7 @@ export function AccommodationDetailContent({ data }: { data: Record<string, any>
                     <div className="absolute top-6 right-6 z-20 bg-black/40 backdrop-blur-sm px-4 py-3 flex flex-col items-center gap-2">
                         <span className="text-[8px] font-bold tracking-[0.3em] uppercase text-[#C5A059]">Official Partner</span>
                         <Image
-                            src="/images/accommodation/serenity-lodge/serenity-camp-logo.png"
+                            src="/images/accommodation/serenity-lodge/serenity-camp-logo.webp"
                             alt="Serenity Camp & Lodges"
                             width={110}
                             height={45}
@@ -122,7 +122,7 @@ export function AccommodationDetailContent({ data }: { data: Record<string, any>
                                         <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-[#C5A059]">Signature Partner Property</span>
                                         <a href="https://serenitycampandlodges.com/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
                                             <Image
-                                                src="/images/accommodation/serenity-lodge/serenity-camp-logo.png"
+                                                src="/images/accommodation/serenity-lodge/serenity-camp-logo.webp"
                                                 alt="Serenity Camp & Lodges"
                                                 width={140}
                                                 height={57}

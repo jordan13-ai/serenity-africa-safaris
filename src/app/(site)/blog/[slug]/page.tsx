@@ -52,7 +52,17 @@ async function getRelated(slug: string, category: string): Promise<RelatedPost[]
 }
 
 export async function generateStaticParams() {
-    return staticPosts.map((post) => ({ slug: post.slug }));
+    try {
+        const posts = await prisma.blogPost.findMany({
+            where: { status: "PUBLISHED" },
+            select: { slug: true },
+        })
+        const dbSlugs = new Set(posts.map(p => p.slug))
+        const staticSlugs = staticPosts.map(p => p.slug).filter(s => !dbSlugs.has(s))
+        return [...posts.map(p => ({ slug: p.slug })), ...staticSlugs.map(s => ({ slug: s }))]
+    } catch {
+        return staticPosts.map((post) => ({ slug: post.slug }));
+    }
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {

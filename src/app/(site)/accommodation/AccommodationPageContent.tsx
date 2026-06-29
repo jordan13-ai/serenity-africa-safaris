@@ -90,7 +90,7 @@ function AccommodationCard({ acc }: { acc: Accommodation }) {
         {isSignature && (
           <div className="mb-3">
             <Image
-              src="/images/accommodation/serenity-lodge/serenity-camp-logo.png"
+              src="/images/accommodation/serenity-lodge/serenity-camp-logo.webp"
               alt="Serenity Camp & Lodges – Official Partner"
               width={88}
               height={36}

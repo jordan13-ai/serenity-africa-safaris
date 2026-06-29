@@ -4,6 +4,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowRight, ArrowLeft, MapPin, Clock, Users, Calendar, Star } from "lucide-react"
 import { DestinationContent } from "./DestinationContent"
+import { prisma } from "@/lib/prisma"
 
 // ─── DESTINATION DATA ───────────────────────────────────────────────────────
 const destinationData: Record<string, any> = {
@@ -273,11 +274,46 @@ const destinationData: Record<string, any> = {
     }
 }
 
+async function getDest(slug: string) {
+    try {
+        const row = await prisma.destination.findFirst({
+            where: { slug, status: "PUBLISHED" },
+        })
+        if (row) {
+            const staticFallback = destinationData[slug] ?? {}
+            return {
+                ...staticFallback,
+                name: row.title,
+                fullName: row.title,
+                tagline: staticFallback.tagline ?? "",
+                heroSubtitle: staticFallback.heroSubtitle ?? row.region ?? "",
+                description: row.description || staticFallback.description || "",
+                longDescription: staticFallback.longDescription ?? row.description ?? "",
+                heroImage: row.coverImage || staticFallback.heroImage || "/images/destinations/serengeti/serengeti-18.webp",
+                portraitImage: staticFallback.portraitImage ?? row.coverImage ?? "",
+                experienceImage: staticFallback.experienceImage ?? row.coverImage ?? "",
+                highlights: (row.wildlife as string[] ?? []).concat(row.activities as string[] ?? []).concat(staticFallback.highlights ?? []).filter(Boolean),
+                gallery: (row.gallery as string[] ?? []).length > 0
+                    ? (row.gallery as string[]).map(src => src)
+                    : (staticFallback.gallery ?? []),
+                bestTime: row.bestTime || staticFallback.bestTime || "",
+                location: row.region || staticFallback.location || "",
+                duration: staticFallback.duration ?? "",
+                travelTime: staticFallback.travelTime ?? "",
+                stats: staticFallback.stats ?? [],
+                experiences: staticFallback.experiences ?? [],
+                seoKeywords: staticFallback.seoKeywords ?? row.title,
+            }
+        }
+    } catch { /* fall through */ }
+    return destinationData[slug] ?? null
+}
+
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params
-    const data = destinationData[slug]
+    const data = await getDest(slug)
     if (!data) return { title: "Destination Not Found" }
 
     const title = `${data.fullName} Safari | ${data.tagline} | Serenity Africa Safaris`
@@ -303,7 +339,7 @@ export function generateStaticParams() {
 
 export default async function DestinationPage({ params }: Props) {
     const { slug } = await params
-    const data = destinationData[slug]
+    const data = await getDest(slug)
     if (!data) notFound()
 
     const jsonLd = {

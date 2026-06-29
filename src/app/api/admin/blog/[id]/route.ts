@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { revalidatePath } from "next/cache"
 
 async function guard() {
   const session = await getServerSession(authOptions)
@@ -38,6 +39,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
           : existing?.publishedAt ?? null,
     },
   })
+  revalidatePath("/blog", "layout")
   return NextResponse.json(row)
 }
 
@@ -45,5 +47,6 @@ export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id:
   const unauth = await guard(); if (unauth) return unauth
   const { id } = await params
   await prisma.blogPost.delete({ where: { id } })
+  revalidatePath("/blog", "layout")
   return new NextResponse(null, { status: 204 })
 }
