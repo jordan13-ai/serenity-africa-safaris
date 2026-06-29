@@ -1,28 +1,39 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 export function Hero() {
-    const [visible, setVisible] = useState(false)
-
-    useEffect(() => {
-        // Hard fallback — always reveal after 6s even if onLoad never fires
-        const fallback = setTimeout(() => setVisible(true), 6000)
-        return () => clearTimeout(fallback)
-    }, [])
+    const [videoReady, setVideoReady] = useState(false)
 
     function onIframeLoad() {
-        // Wait 3.5s after iframe load — YouTube shows its initial controls
-        // for ~2s, this ensures they've auto-hidden before the overlay clears
-        setTimeout(() => setVisible(true), 3500)
+        setTimeout(() => setVideoReady(true), 1500)
     }
 
     return (
         <section className="relative h-screen min-h-[700px] w-full overflow-hidden bg-black">
-            {/* Background Video */}
-            <div className="absolute inset-0 z-0">
+            {/* Poster image — loads instantly, fades out when video is ready */}
+            <div
+                className="absolute inset-0 z-0 pointer-events-none"
+                style={{ opacity: videoReady ? 0 : 1, transition: "opacity 1.2s ease-in-out" }}
+            >
+                <Image
+                    src="/images/hero/slide-1.webp"
+                    alt="Serenity Africa Safaris luxury Tanzania safari"
+                    fill
+                    priority
+                    className="object-cover opacity-70"
+                    sizes="100vw"
+                />
+            </div>
+
+            {/* YouTube video — fades in when ready */}
+            <div
+                className="absolute inset-0 z-0"
+                style={{ opacity: videoReady ? 1 : 0, transition: "opacity 1.2s ease-in-out" }}
+            >
                 <div className="absolute inset-0 w-full h-full overflow-hidden">
                     <iframe
                         src="https://www.youtube-nocookie.com/embed/2SakZbB8fuQ?autoplay=1&mute=1&loop=1&playlist=2SakZbB8fuQ&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&disablekb=1&fs=0&cc_load_policy=0"
@@ -41,23 +52,11 @@ export function Hero() {
                         title="Serenity Africa Safaris"
                     />
                 </div>
-
-                {/* Transparent pointer-events blocker — sits above iframe to prevent
-                    any hover that could wake YouTube's control overlay */}
                 <div className="absolute inset-0 pointer-events-auto" style={{ zIndex: 1 }} />
-
-                {/* Black cover — hides YouTube controls while they auto-dismiss on load */}
-                <div
-                    className="absolute inset-0 bg-black pointer-events-none"
-                    style={{
-                        zIndex: 2,
-                        opacity: visible ? 0 : 1,
-                        transition: visible ? "opacity 1.2s ease-in-out" : "none",
-                    }}
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/40" style={{ zIndex: 3 }} />
             </div>
+
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/40" style={{ zIndex: 3 }} />
+
 
             {/* Content */}
             <div className="relative h-full flex flex-col items-center justify-center text-center px-4" style={{ zIndex: 10 }}>

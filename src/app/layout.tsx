@@ -161,9 +161,9 @@ export default function RootLayout({
     <html lang="en" className={`scroll-smooth ${playfair.variable} ${poppins.variable} ${greatVibes.variable}`}>
       <head>
         {/* Preconnect to YouTube for faster video load */}
-        <link rel="preconnect" href="https://www.youtube.com" />
-        <link rel="preconnect" href="https://www.youtube-nocookie.com" />
-        <link rel="dns-prefetch" href="https://i.ytimg.com" />
+        <link rel="preconnect" href="https://www.youtube-nocookie.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.youtube.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://yt3.ggpht.com" />
         <script
           type="application/ld+json"
