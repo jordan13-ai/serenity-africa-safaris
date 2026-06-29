@@ -23,7 +23,7 @@ export default function LoginPage() {
     })
     setLoading(false)
     if (res?.ok) {
-      router.push("/admin")
+      router.push("/admin/")
     } else {
       setError("Invalid email or password")
     }

@@ -11,7 +11,7 @@ export default async function ProtectedAdminLayout({ children }: { children: Rea
   const session = await getServerSession(authOptions)
 
   if (!session) {
-    redirect("/admin/login/")
+    redirect("/login/")
   }
 
   return (
